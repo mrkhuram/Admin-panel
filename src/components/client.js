@@ -319,6 +319,14 @@ class Companies extends React.Component {
                                             </tr>
                                         </tbody>
                                     </table>
+
+                                    <button type="submit" class="btn btn-default btnAdd"
+                                        style={{
+                                            float: 'right'
+                                        }}
+                                    ><i class="fa fa-search" ></i> Generate Report</button>
+
+
                                 </div>
                             </div>
                         </div>
@@ -338,27 +346,27 @@ class Companies extends React.Component {
                             // margin: 0,
                             overFlow: 'hidden'
                         }}>
-                            <div 
-                            style={{
-                                padding: 30
-                            }}
+                            <div
+                                style={{
+                                    padding: 30
+                                }}
                             >
 
 
                                 <button type="submit" class="btn btn-default btnAdd"
-                                
-                                onClick={() => {
-                                    this.handleClickOpen('openPop')
-                                }}
+
+                                    onClick={() => {
+                                        this.handleClickOpen('openPop')
+                                    }}
                                 ><i class="fa fa-search" ></i> Add Employee</button>
 
                                 <button type="submit" class="btn btn-default btnAdd"
-                                 onClick={() => {
-                                     this.handleClose('open')
+                                    onClick={() => {
+                                        this.handleClose('open')
                                     }}
-                                    
-                                    style={{marginLeft: 20}}
-                                    ><i class="fa fa-search"></i> Reset</button>
+
+                                    style={{ marginLeft: 20 }}
+                                ><i class="fa fa-search"></i> Reset</button>
 
                             </div>
                         </MuiDialogContent>

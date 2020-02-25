@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-class ClientDetail extends React.Component {
+class CompanyDetail extends React.Component {
     render() {
         return (
             <div style={{ margin: "50px 0px" }}>
@@ -20,57 +20,46 @@ class ClientDetail extends React.Component {
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <th class="active" width="200">Username</th>
-                                            <td>MeherSamar</td>
+                                            <th class="active" width="200">Company Name</th>
+                                            <td>John</td>
                                         </tr>
                                         <tr>
-                                            <th class="active">First Name</th>
-                                            <td>Meher</td>
+                                            <th class="active">Work Email</th>
+                                            <td>john@gmail.com</td>
                                         </tr>
                                         <tr>
-                                            <th class="active">Last Name</th>
-                                            <td>Samar</td>
+                                            <th class="active">Employee</th>
+                                            <td>12</td>
                                         </tr>
                                         <tr>
-                                            <th class="active">Email Address</th>
-                                            <td>Meher@gmail.com</td>
+                                            <th class="active">Status</th>
+                                            <td>Active</td>
                                         </tr>
                                         <tr>
-                                            <th class="active">Password</th>
-                                            <td>rrt45002</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="active">Joining Date</th>
+                                            <th class="active">Created Date</th>
                                             <td>23/02/2019</td>
                                         </tr>
+                                        
                                         <tr>
-                                            <th class="active">Gender</th>
-                                            <td>Female</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="active">Phone Number</th>
-                                            <td>+92241223232</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="active">Specialties</th>
+                                            <th class="active">Employee Detail</th>
                                             <td>
                                                 <ul class="check">
-                                                    <li><a href="#">Psychic Readings</a></li>
-                                                    <li><a href="#">Love & Relationships</a></li>
-                                                    <li><a href="#">Life Questions</a></li>
-                                                    <li><a href="#">Tarot Readings</a></li>
-                                                    <li><a href="#">Spiritual Readings</a></li>
-                                                    <li><a href="#">Psychic Mediums</a></li>
+                                                    <li><a href="#">John</a></li>
+                                                    <li><a href="#">Doe</a></li>
+                                                    <li><a href="#">Demo</a></li>
+                                                    <li><a href="#">Test</a></li>
+                                                    <li><a href="#">Demo</a></li>
+                                                    <li><a href="#">Test</a></li>
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        {/* <tr>
                                             <th class="active">Ban</th>
                                             <td>
                                                 <p><strong>By Admin: </strong>Smith Jen </p>
                                                 <p><strong>Reason: </strong>Non professional behave</p>
                                             </td>
-                                        </tr>
+                                        </tr> */}
                                         <tr>
                                         </tr>
                                     </tbody>
@@ -83,4 +72,4 @@ class ClientDetail extends React.Component {
         )
     }
 }
-export default ClientDetail
+export default CompanyDetail

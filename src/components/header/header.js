@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart, faBoxOpen } from '@fortawesome/free-solid-svg-icons'
 import { faBell, faEnvelope, faUser, faGem, faCommentAlt, faComment, } from '@fortawesome/free-regular-svg-icons'
 import { fa } from '@fortawesome/fontawesome-svg-core'
 import { withRouter, Route } from 'react-router-dom'
@@ -17,7 +17,6 @@ import NewCoupon from '../couponNew';
 import NewAnnouncement from '../announcementAddNew';
 import priceAddNew from '../priceAddNew';
 import AdminSignup from '../adminSignup';
-import ClientDetail from '../clientDetail'
 import ClientStatus from '../clientStatus'
 import ReaderDetail from '../readerDetail'
 import ReaderStatus from '../readerStatus'
@@ -37,6 +36,8 @@ import ClientMessages from '../clientMessages';
 import ReaderMessages from '../readersMessages'
 import NewCompany from '../addCompany';
 
+import $ from 'jquery'
+import CompanyDetail from '../companyDetail';
 
 
 
@@ -103,18 +104,32 @@ const useStyles = makeStyles(theme => ({
         }),
         marginLeft: 0,
     },
-}));    
+
+}));
 
 export default function Header() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [admin, setAdmin] = React.useState(false);
+
 
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
+    const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
+    const toggle = () => setDropdownOpen(prevState => !prevState);
 
+    const handleAdmin = ()=>{
+        setAdmin(!admin)
+    }
+    
+    // const handleCompany = ()=>{
+        
+    //     setAdmin({admin: false})
+    // }
+ 
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -160,9 +175,9 @@ export default function Header() {
                                     <li class="hide"><a href="index8d2f.html?p=messages"><i class="fa fa-comments-o"></i><span class="hidden-xs">Live</span> Chat</a></li>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle btnAlert" data-toggle="dropdown" href="#"
-                                    
+
                                         >
-                                          
+
                                             <FontAwesomeIcon icon={faBell}
                                                 className='icon'
                                             />
@@ -181,9 +196,9 @@ export default function Header() {
                                     </li>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle btnAlert" data-toggle="dropdown" href="#"
-                                   
+
                                         >
-                        
+
 
                                             <FontAwesomeIcon icon={faEnvelope}
                                                 className='icon'
@@ -201,22 +216,27 @@ export default function Header() {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown ">
-                                        <a class="dropdown-toggle btnAlert " data-toggle="dropdown" href="#"
-                                        //  onClick={() => {
-                                        //     $(".meu-liust").slideToggle(400);
-                                        // }}
 
+                                    <li class="dropdown ">
+
+                                        {/* <label for="email">Select Status</label>     */}
+
+                                        <a class="dropdown-toggle btnAlert " data-toggle="dropdown" href="#"
+                                            onClick={() => {
+                                                $(".meu-liust").slideToggle(400);
+                                            }}
                                         >Hi,
                                         {/* {props.auth.userDetail.first_name} */}
                                             <span class="caret"></span></a>
                                         <ul class="dropdown-menu meu-liust signoutoptions">
-                                            <li><a href="indexbdc9.html?p=my_profile"><i class="fa fa-user-o"></i> My Profile</a></li>
+                                            <li><a href="#"
+                                            onClick={handleAdmin}
+                                            ><i class="fa fa-user-o"></i> Admin</a></li>
                                             <li><a href="#"
 
-                                            // onClick={logout}
+                                            onClick={handleAdmin}
 
-                                            ><i class="fa fa-sign-out" ></i> Logout</a></li>
+                                            ><i class="fa fa-sign-out" ></i> Company</a></li>
                                         </ul>
                                     </li>
                                     {/* <li class="hide"><a href="#contactus" class="scroll"><i class="fa fa-user-o"></i>Hi, User</a></li>
@@ -262,16 +282,14 @@ export default function Header() {
 
                     <span class="heading"></span>
                     <div class="media hide">
-                        <div class="media-left">
-                            <img src="assets/images/testimonial/testimonial1.png" class="media-object" style={{ width: "60px" }} />
-                        </div>
+
                         <div class="media-body">
                             <p>Admin</p>
                             <h4 class="media-heading">John Doe</h4>
                         </div>
                     </div>
                     <ul>
-                        <li>
+                        <li className='drawerLi'>
                             <Link to="/" class="">
                                 <FontAwesomeIcon icon={faHome}
                                     className='iconDrawer'
@@ -285,17 +303,25 @@ export default function Header() {
                                 />
 
                                 Companies</Link></li>
+
+                        <li><Link to='/admin/reportCenter' class="">
+                            <FontAwesomeIcon icon={faInfoCircle}
+                                className='iconDrawer'
+                            />
+                            Report Center</Link></li>
+
+                        <li><Link to='/admin/readerTestimony' class="">
+                            <FontAwesomeIcon icon={faBoxOpen}
+                                className='iconDrawer'
+                            />
+                            All Expenditure</Link></li>
                         {/* <li><Link to='/admin/reader' class="">
                             <FontAwesomeIcon icon={faUser}
                                 className='iconDrawer'
                             />
 
                             Readers</Link></li>
-                        <li><Link to='/admin/readerTestimony' class="">
-                            <FontAwesomeIcon icon={faGem}
-                                className='iconDrawer'
-                            />
-                            Readers Testimonials</Link></li>
+                      
                         <li>
                             <Link to='/admin/announcement' class="">
                                 <FontAwesomeIcon icon={faBullhorn}
@@ -313,11 +339,7 @@ export default function Header() {
                                 className='iconDrawer'
                             />
                             Invoices</Link></li>
-                        <li><Link to='/admin/reportCenter' class="">
-                            <FontAwesomeIcon icon={faInfoCircle}
-                                className='iconDrawer'
-                            />
-                            Report Center</Link></li>
+                        
                         <li><Link to='/admin/pricingAdmin' class="">
                             <FontAwesomeIcon icon={faDollarSign}
                                 className='iconDrawer'
@@ -375,10 +397,12 @@ export default function Header() {
             >
                 <div className={classes.drawerHeader} />
 
-                <Route exact path='/' component={HomePanel} />
+                <Route exact path='/' component={()=>{
+                    return <HomePanel  admin={admin}/>
+                }} />
                 <Route exact path='/admin/chat' component={ChatSection} />
                 <Route exact path='/admin/client' component={Companies} />
-                <Route exact path='/admin/clientDetail' component={ClientDetail} />
+                <Route exact path='/admin/clientDetail' component={CompanyDetail} />
                 <Route exact path='/admin/clientStatus' component={ClientStatus} />
                 <Route exact path='/admin/reader' component={ReaderAdmin} />
                 <Route exact path='/admin/readerDetail' component={ReaderDetail} />

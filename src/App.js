@@ -9,19 +9,26 @@ import './components/styling.css'
 
 
 
-function App() {
-  return (
-    <BrowserRouter 
-    // history={history}
-    >
+class App extends React.Component {
 
-    <div className="App">
-      <Admin />
 
-    </div>
-    </BrowserRouter>
 
-  );
+
+  render() {
+
+    return (
+      <BrowserRouter
+      // history={history}
+      >
+
+        <div className="App">
+          <Admin />
+
+        </div>
+      </BrowserRouter>
+
+    );
+  }
 }
 
 export default App;

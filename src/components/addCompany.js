@@ -97,7 +97,7 @@ class NewCompany extends React.Component {
                       <select class="form-control" name='to_client' onChange={this.onTo}>
                       <option value="client">Select Payment Type</option>
 
-                        <option value="client">Check</option>
+                        <option value="client">Cheque</option>
                         <option value="reader">Credit Card</option>
                       </select>
                     </div>

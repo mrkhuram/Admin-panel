@@ -1101,6 +1101,10 @@
      .content-wrapper{
          padding:0px;
     }
+    .leftbar{
+        left: 239px !important;
+        box-shadow: none !important;
+    }
      .payment_secion .no-padding-left,.refund_section .no-padding-left{
          padding:0px 
     }
