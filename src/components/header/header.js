@@ -12,7 +12,7 @@ import { fa } from '@fortawesome/fontawesome-svg-core'
 import { withRouter, Route } from 'react-router-dom'
 import '../assets/css/style.css'
 // Components
-import EditCoupon from '../couponEdit';
+import EditSetting from '../settingEdit';
 import NewCoupon from '../couponNew';
 import NewAnnouncement from '../announcementAddNew';
 import priceAddNew from '../priceAddNew';
@@ -41,7 +41,7 @@ import CompanyDetail from '../companyDetail';
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 241;
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -80,6 +80,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth,
+     
     },
     drawerHeader: {
         display: 'flex',
@@ -110,13 +111,13 @@ const useStyles = makeStyles(theme => ({
 export default function Header() {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-    const [admin, setAdmin] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
+    const [admin, setAdmin] = React.useState(true);
 
 
-    const handleDrawerOpen = () => {
-        setOpen(!open);
-    };
+    // const handleDrawerOpen = () => {
+    //     setOpen(!open);
+    // };
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
@@ -155,7 +156,7 @@ export default function Header() {
 
                             <div class="collapse navbar-collapse" id="myNavbar">
                                 <ul class="nav navbar-nav navbar-left">
-                                    <li>
+                                    {/* <li>
 
                                         <a href="#" class="btnLeftBarToggle"
                                             onClick={handleDrawerOpen}
@@ -168,7 +169,7 @@ export default function Header() {
 
 
                                         </a>
-                                    </li>
+                                    </li> */}
                                 </ul>
                                 <ul class="nav navbar-nav navbar-right">
 
@@ -194,7 +195,7 @@ export default function Header() {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown">
+                                    {/* <li class="dropdown">
                                         <a class="dropdown-toggle btnAlert" data-toggle="dropdown" href="#"
 
                                         >
@@ -215,7 +216,7 @@ export default function Header() {
                                                 <p>Hi, Babar your order is in process kindly wait a while</p>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> */}
 
                                     <li class="dropdown ">
 
@@ -302,19 +303,19 @@ export default function Header() {
                                     className='iconDrawer'
                                 />
 
-                                Companies</Link></li>
+                                All Companies</Link></li>
 
-                        <li><Link to='/admin/reportCenter' class="">
+                        {/* <li><Link to='/admin/reportCenter' class="">
                             <FontAwesomeIcon icon={faInfoCircle}
                                 className='iconDrawer'
                             />
-                            Report Center</Link></li>
+                            Report Center</Link></li> */}
 
-                        <li><Link to='/admin/readerTestimony' class="">
+                        <li><Link to='/edit_setting' class="">
                             <FontAwesomeIcon icon={faBoxOpen}
                                 className='iconDrawer'
                             />
-                            All Expenditure</Link></li>
+                            Setting</Link></li>
                         {/* <li><Link to='/admin/reader' class="">
                             <FontAwesomeIcon icon={faUser}
                                 className='iconDrawer'
@@ -417,11 +418,11 @@ export default function Header() {
                 <Route exact path='/admin/blogs-and-articals' component={BlogsAndArticalsAdmin} />
                 <Route exact path='/admin/client-messages' component={ClientMessages} />
                 <Route exact path='/admin/reader-messages' component={ReaderMessages} />
-                <Route exact path='/edit_coupon' component={EditCoupon} />
                 <Route exact path='/new_coupon' component={NewCoupon} />
                 <Route exact path='/new_announcement' component={NewAnnouncement} />
                 <Route exact path='/new_company' component={NewCompany} />
 
+                <Route exact path='/edit_setting' component={EditSetting} />
                 <Route exact path='/new_package' component={priceAddNew} />
                 <Route exact path='/new_admin' component={AdminSignup} />
 

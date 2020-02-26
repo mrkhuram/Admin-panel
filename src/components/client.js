@@ -21,6 +21,12 @@ import {
 } from 'reactstrap';
 import classnames from 'classnames';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import ClientStatus from './clientStatus';
+
+
 
 class Companies extends React.Component {
 
@@ -212,11 +218,11 @@ class Companies extends React.Component {
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-                                    <Link className='link' to='/' style={{
+                                    {/* <Link className='link' to='/' style={{
                                         marginLeft: 10
                                     }}>
                                         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Back </button>
-                                    </Link>
+                                    </Link> */}
 
                                 </form>
                             </Col>
@@ -246,14 +252,23 @@ class Companies extends React.Component {
                                                     <span class="badge">Active</span>
                                                 </td>
                                                 <td>
-                                                    <Link to='/admin/clientDetail' class="badge blue" > <i class="fa fa-external-link"></i> View Detail</Link>
-                                                    <a class="badge del"
+                                                    <Link
+                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
-
-                                                        data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i> Add Employee/Reset</a>
-                                                    <Link to='/admin/clientStatus' class="badge del" >Set Status</Link>
+                                                        to='#'
+                                                        class="badge blue" > <FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                    <Link
+                                                        to='/admin/clientDetail'
+                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
+                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+                                                    </Link>
+                                                    <Link to='#' 
+                                                    onClick={() => {
+                                                            this.handleClickOpen('openPop')
+                                                        }}
+                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -266,14 +281,23 @@ class Companies extends React.Component {
                                                     <span class="badge">Active</span>
                                                 </td>
                                                 <td>
-                                                    <Link to='/admin/clientDetail' class="badge blue" > <i class="fa fa-external-link"></i> View Detail</Link>
-                                                    <a class="badge del"
+                                                    <Link
+                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
-
-                                                        data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i> Add Employee/Reset</a>
-                                                    <Link to='/admin/clientStatus' class="badge del" >Set Status</Link>
+                                                        to='#'
+                                                        class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                    <Link
+                                                        to='/admin/clientDetail'
+                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
+                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+                                                    </Link>
+                                                    <Link to='#' 
+                                                    onClick={() => {
+                                                            this.handleClickOpen('openPop')
+                                                        }}
+                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -286,15 +310,23 @@ class Companies extends React.Component {
                                                     <span class="badge">Active</span>
                                                 </td>
                                                 <td>
-                                                    <Link to='/admin/clientDetail' class="badge blue" > <i class="fa fa-external-link"></i> View Detail</Link>
-                                                    <a class="badge del"
+                                                    <Link
+                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
-
-                                                        data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i> Add Employee/Reset</a>
-
-                                                    <Link to='/admin/clientStatus' class="badge del" >Set Status</Link>
+                                                        to='#'
+                                                        class="badge blue" > <FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                    <Link
+                                                        to='/admin/clientDetail'
+                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
+                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+                                                    </Link>
+                                                    <Link to='#' 
+                                                    onClick={() => {
+                                                            this.handleClickOpen('openPop')
+                                                        }}
+                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -307,24 +339,33 @@ class Companies extends React.Component {
                                                     <span class="badge">Close</span>
                                                 </td>
                                                 <td>
-                                                    <Link to='/admin/clientDetail' class="badge blue" > <i class="fa fa-external-link"></i> View Detail</Link>
-                                                    <a class="badge del"
+                                                    <Link
+                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
-
-                                                        data-toggle="modal" data-target="#myModal"> <i class="fa fa-trash"></i> Add Employee/Reset</a>
-                                                    <Link to='/admin/clientStatus' class="badge del" >Set Status</Link>
+                                                        to='#'
+                                                        class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                    <Link
+                                                        to='/admin/clientDetail'
+                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
+                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+                                                    </Link>
+                                                    <Link to='#' 
+                                                    onClick={() => {
+                                                            this.handleClickOpen('openPop')
+                                                        }}
+                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-
+                                    {/* 
                                     <button type="submit" class="btn btn-default btnAdd"
                                         style={{
                                             float: 'right'
                                         }}
-                                    ><i class="fa fa-search" ></i> Generate Report</button>
+                                    ><i class="fa fa-search" ></i> Generate Report</button> */}
 
 
                                 </div>
@@ -344,30 +385,84 @@ class Companies extends React.Component {
                         <MuiDialogContent style={{
 
                             // margin: 0,
-                            overFlow: 'hidden'
+                            overFlow: 'hidden',
+                            width: 600
                         }}>
                             <div
                                 style={{
-                                    padding: 30
+                                    padding: 30,
+
                                 }}
                             >
 
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="active" >Company Name</th>
+                                                    <td >John</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Work Email</th>
+                                                    <td>john@gmail.com</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Phone</th>
+                                                    <td>09876543213</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Employee Limit</th>
+                                                    <td>13</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Payment Type</th>
+                                                    <td>Cheque</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Expense Group</th>
+                                                    <td>B</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Expense Image</th>
+                                                    <td>No</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Email Templates</th>
+                                                    <td>Yes</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="active">Logo</th>
+                                                    <td>Yes</td>
+                                                </tr>
 
-                                <button type="submit" class="btn btn-default btnAdd"
 
-                                    onClick={() => {
-                                        this.handleClickOpen('openPop')
-                                    }}
-                                ><i class="fa fa-search" ></i> Add Employee</button>
-
-                                <button type="submit" class="btn btn-default btnAdd"
-                                    onClick={() => {
-                                        this.handleClose('open')
-                                    }}
-
-                                    style={{ marginLeft: 20 }}
-                                ><i class="fa fa-search"></i> Reset</button>
-
+                                                <tr>
+                                                    <th class="active">Employee Detail</th>
+                                                    <td>
+                                                        <ul class="check">
+                                                            <li><a href="#">John</a></li>
+                                                            <li><a href="#">Doe</a></li>
+                                                            <li><a href="#">Demo</a></li>
+                                                            <li><a href="#">Test</a></li>
+                                                            <li><a href="#">Demo</a></li>
+                                                            <li><a href="#">Test</a></li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                {/* <tr>
+                                            <th class="active">Ban</th>
+                                            <td>
+                                                <p><strong>By Admin: </strong>Smith Jen </p>
+                                                <p><strong>Reason: </strong>Non professional behave</p>
+                                            </td>
+                                        </tr> */}
+                                                <tr>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </MuiDialogContent>
                     </Dialog>
@@ -384,9 +479,29 @@ class Companies extends React.Component {
                             margin: 0,
                             overFlow: 'hidden'
                         }}>
-                            <div>
-                                <AddEmployee />
+                            <div 
+                                style={{
+                                    padding: 30,
+                                    textAlign:'center'
+                                }}
+                            >
+                                <FontAwesomeIcon icon={faTimesCircle} 
+                                style={{
+                                    fontSize: 35,
+                                    color: 'red'
+                                }}
+                                />
+                                <h4 
+                                style={{
+                                    marginTop: 10,
+                                    marginBottom: 20
+                                }}
+                                >Are you sure you want to delete it?</h4>
+                            
+                            <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                            <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"></i> No</button>
                             </div>
+                           
                         </MuiDialogContent>
                     </Dialog>
 

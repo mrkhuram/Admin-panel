@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faFile, faBullhorn, faDollarSign, faChartBar } from '@fortawesome/free-solid-svg-icons'
-import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
+import { faUsers, faFile, faBullhorn, faDollarSign, faChartBar, faCogs } from '@fortawesome/free-solid-svg-icons'
+import { faFileAlt, faListAlt } from '@fortawesome/free-regular-svg-icons';
 import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -65,7 +65,7 @@ class HomePanel extends React.Component {
                                             </p>
                                         </div>
                                         <div class="col-xs-8 col">
-                                            <h2 class="section-title" >Create Company</h2>
+                                            <h2 class="section-title" >New Company</h2>
 
                                         </div>
                                     </div>
@@ -84,13 +84,13 @@ class HomePanel extends React.Component {
                                         <p class="icon color1">
 
                                             <i class="fa fa-users"></i>
-                                            <FontAwesomeIcon icon={faUsers}
+                                            <FontAwesomeIcon icon={faListAlt}
                                             />
 
                                         </p>
                                     </div>
                                     <div class="col-xs-8 col">
-                                        <h2 class="section-title" >Companies</h2>
+                                        <h2 class="section-title" >All Companies</h2>
 
                                     </div>
 
@@ -98,7 +98,7 @@ class HomePanel extends React.Component {
                             </Link>
                         </div>
                         <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                            <Link to='#' class="link " onClick={this.handleClickOpen}>
+                            <Link to='/edit_setting' class="link " onClick={this.handleClickOpen}>
                                 <div class="box">
 
 
@@ -106,20 +106,20 @@ class HomePanel extends React.Component {
                                         <p class="icon color1">
 
                                             <i class="fa fa-users"></i>
-                                            <FontAwesomeIcon icon={faUsers}
+                                            <FontAwesomeIcon icon={faCogs}
                                             />
 
                                         </p>
                                     </div>
                                     <div class="col-xs-8 col">
-                                        <h2 class="section-title" >Add Expense</h2>
+                                        <h2 class="section-title" >Setting</h2>
 
                                     </div>
 
                                 </div>
                             </Link>
                         </div>
-                        <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
+                        {/* <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
                             <Link to='/admin/readerTestimony' class="link " >
                                 <div class="box">
 
@@ -140,7 +140,7 @@ class HomePanel extends React.Component {
 
                                 </div>
                             </Link>
-                        </div>
+                        </div> */}
 
                     </div>
 

@@ -57,8 +57,10 @@ class NewCompany extends React.Component {
             <Row className="table-header">
 
               <Col xs='12' md='12'>
-                <h2 class="section-title">New Company <Link to='/'
-                  class="btn btn-default pull-right"><i class="fa fa-chevron-left"></i> Back</Link></h2>
+                <h2 class="section-title">New Company 
+                {/* <Link to='/'
+                  class="btn btn-default pull-right"><i class="fa fa-chevron-left"></i> Back</Link> */}
+                  </h2>
               </Col>
             </Row>
             <div class="row">
@@ -108,20 +110,38 @@ class NewCompany extends React.Component {
 
                 <Col xs='12' md='5'>
                   <form>
-                    <div class="form-group">
-                      <label for="pwd">Logo</label>
-                      <input type="text" class="form-control" name="companyName" onChange={this.onChangeHandler} />
+                  <div class="form-group">
+                      <label for="pwd">Expense Group</label>
+                      <select class="form-control" name='to_client' onChange={this.onTo}>
+                      <option value="client">Select Expense Group</option>
+
+                        <option value="client">1</option>
+                        <option value="reader">2</option>
+                        <option value="reader">3</option>
+
+                      </select>
                     </div>
                     <div class="form-group">
-                      <label for="pwd">Expense Category</label>
-                      <input type="number" class="form-control" name="limit" onChange={this.onChangeHandler} />
+                      <label for="pwd">Expense Image</label>
+                      <select class="form-control" name='to_client' onChange={this.onTo}>
+                      <option value="client">Select Expense Image</option>
+
+                        <option value="client">Yes</option>
+                        <option value="reader">No</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="pwd">Email Templates</label>
-                      <input type="text" class="form-control" name="workEmail" onChange={this.onChangeHandler} />
+                      <select class="form-control" name='to_client' onChange={this.onTo}>
+                      <option value="client">Select Email Templates</option>
+
+                        <option value="client">1</option>
+                        <option value="reader">2</option>
+                        <option value="reader">3</option>
+                      </select>
                     </div>
                     <div class="form-group">
-                      <label for="pwd">Upload Photo</label>
+                      <label for="pwd">Upload Logo</label>
                       <input type="file" class="form-control" name="phone" onChange={this.onChangeHandler} />
                     </div>
                     {/* <div class="form-group">
@@ -143,7 +163,7 @@ class NewCompany extends React.Component {
                       </label>
                     </div>
                     <button type="submit" class="btn btn-default" onClick={this.onSubmit}
-                    style={{marginTop: 10, float: 'right'}}
+                    style={{marginTop: 10, float: 'right',padding: '8px 16px',fontSize: 16}}
                     >Create</button>
                   </form>
                 </Col>
