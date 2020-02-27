@@ -163,7 +163,7 @@ class NewCompany extends React.Component {
                       </div>
                       <button type="submit" class="btn btn-default" onClick={this.onSubmit}
                       style={{marginTop: 10, float: 'right',padding: '8px 16px',fontSize: 16}}
-                      >Create</button>
+                      >Save</button>
                     </form>
                   </Col>
   

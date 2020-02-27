@@ -1,7 +1,39 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import history from './history/history'
 
-class EditSetting extends React.Component {
+class ConfirmPasswordToMoveSetting extends React.Component {
+
+
+    state={
+        password: ''
+    }
+
+
+    onChangeHandler =(e)=>{
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    confirmSetting = (e)=>{
+        if(this.state.password == ''){
+            e.preventDefault()
+
+            this.setState({
+                msg: "Password doesn't match"
+            })
+            return true
+
+        }
+        if(this.state.password !== ''){
+            this.setState({
+                msg: ""
+            })
+            history.push('/editSettings')
+        }
+    }
+
+
     render() {
         return (
             <>
@@ -12,7 +44,7 @@ class EditSetting extends React.Component {
                         style={{visibility: "visible", animationName: "fadeInUp",margin: 'auto',width: 600}}>
                         <div className="row table-header">
                             <div className="col-xs-12 col-md-12">
-                                <h2 className="section-title">Edit Settings 
+                                <h2 className="section-title">Confirm Password to Access 
                                 {/* <Link to='/admin/couponAdmin'
                                     className="btn btn-default pull-right"><i className="fa fa-chevron-left"></i> Back</Link> */}
                                     </h2>
@@ -24,19 +56,23 @@ class EditSetting extends React.Component {
                         }}
                         >
                             <div className="col-xs-12 col-md-12">
-                                <form>
+                                <form onSubmit={this.confirmSetting}>
                                     <div className="form-group">
                                         <label for="pwd">User Name:</label>
-                                        <input type="text" className="form-control" />
+                                        <input type="text" className="form-control"  value="admin@gmail.com"/>
                                     </div>
                                     <div className="form-group">
                                         <label for="pwd">Password:</label>
-                                        <input type="password" className="form-control" />
+                                        <input type="password" className="form-control" onChange={this.onChangeHandler} name='password'/>
                                     </div>
-                                    {/* <div className="form-group">
-                                        <label for="pwd">Coupon Detail:</label>
-                                        <textarea type="text" className="form-control"></textarea>
-                                    </div> */}
+                                    <div className="form-group"
+                                    style={{
+                                        textAlign: 'right',
+                                        color:'red'
+                                    }}
+                                    >
+                                        <label for="pwd">{this.state.msg}</label>
+                                    </div>
                                     {/* <div className="form-group">
                                         <label for="pwd">Publish:</label>
                                         <label className="switch">
@@ -46,7 +82,8 @@ class EditSetting extends React.Component {
                                     </div> */}
                                     <button type="submit" className="btn btn-default"
                                     style={{float: 'right'}}
-                                    >Update</button>
+                                    
+                                    >Confirm</button>
                                 </form>
                             </div>
                         </div>
@@ -56,4 +93,4 @@ class EditSetting extends React.Component {
         )
     }
 }
-export default EditSetting;
+export default ConfirmPasswordToMoveSetting;

@@ -22,8 +22,8 @@ import {
 import classnames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import ClientStatus from './clientStatus';
 
 
@@ -264,11 +264,11 @@ class Companies extends React.Component {
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
-                                                    <Link to='#' 
-                                                    onClick={() => {
+                                                    <Link to='#'
+                                                        onClick={() => {
                                                             this.handleClickOpen('openPop')
                                                         }}
-                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -293,11 +293,11 @@ class Companies extends React.Component {
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
-                                                    <Link to='#' 
-                                                    onClick={() => {
+                                                    <Link to='#'
+                                                        onClick={() => {
                                                             this.handleClickOpen('openPop')
                                                         }}
-                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -322,11 +322,11 @@ class Companies extends React.Component {
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
-                                                    <Link to='#' 
-                                                    onClick={() => {
+                                                    <Link to='#'
+                                                        onClick={() => {
                                                             this.handleClickOpen('openPop')
                                                         }}
-                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -340,7 +340,7 @@ class Companies extends React.Component {
                                                 </td>
                                                 <td>
                                                     <Link
-                                                        //  to='/admin/clientDetail' 
+                                                        to='/admin/clientDetail'
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
@@ -351,11 +351,11 @@ class Companies extends React.Component {
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
-                                                    <Link to='#' 
-                                                    onClick={() => {
+                                                    <Link to='#'
+                                                        onClick={() => {
                                                             this.handleClickOpen('openPop')
                                                         }}
-                                                    class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -396,49 +396,69 @@ class Companies extends React.Component {
                             >
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-md-12">
+                                    <p
+                                        style={{
+                                            float: 'right',
+                                            marginTop: -20,
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() => {
+                                            this.handleClose('open')
+                                        }}
+                                    >X</p>
+                                    <div class="col-xs-12 col-md-12"
+                                    style={{
+                                        textAlign:'center'
+                                    }}
+                                    >
+                                            <h4 class="section-title"
+                                            style={{
+                                                marginBottom: 40
+                                            }}
+                                            >Company Details</h4>
+                                        
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
-                                                    <th class="active" >Company Name</th>
+                                                    <th  >Company Name</th>
                                                     <td >John</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Work Email</th>
+                                                    <th >Work Email</th>
                                                     <td>john@gmail.com</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Phone</th>
+                                                    <th >Phone</th>
                                                     <td>09876543213</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Employee Limit</th>
+                                                    <th >Employee Limit</th>
                                                     <td>13</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Payment Type</th>
+                                                    <th >Payment Type</th>
                                                     <td>Cheque</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Expense Group</th>
+                                                    <th  >Expense Group</th>
                                                     <td>B</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Expense Image</th>
+                                                    <th >Expense Image</th>
                                                     <td>No</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Email Templates</th>
+                                                    <th >Email Templates</th>
                                                     <td>Yes</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="active">Logo</th>
+                                                    <th >Logo</th>
                                                     <td>Yes</td>
                                                 </tr>
 
 
-                                                <tr>
-                                                    <th class="active">Employee Detail</th>
+                                                {/* <tr>
+                                                    <th >Employee Detail</th>
                                                     <td>
                                                         <ul class="check">
                                                             <li><a href="#">John</a></li>
@@ -449,7 +469,7 @@ class Companies extends React.Component {
                                                             <li><a href="#">Test</a></li>
                                                         </ul>
                                                     </td>
-                                                </tr>
+                                                </tr> */}
                                                 {/* <tr>
                                             <th class="active">Ban</th>
                                             <td>
@@ -461,6 +481,29 @@ class Companies extends React.Component {
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <Link
+                                        to='/expenseList'
+                                        className='link'
+                                        >
+                                        <button type="submit" class="btn btn-default noBtn"
+                                        style={{
+                                            marginLeft: 30
+                                        }}
+                                        
+                                        ><i class="fa fa-search"></i> Expense List</button>
+                                        </Link>
+                                        <Link
+                                         to='/addEmployee'
+                                        className='link'
+                                        >
+                                        <button type="submit" class="btn btn-default noBtn"
+                                        style={{
+                                            marginLeft: 30
+                                        }}
+                                        
+                                        ><i class="fa fa-search"></i> Employee</button>
+                                        </Link>
+
                                     </div>
                                 </div>
                             </div>
@@ -479,29 +522,37 @@ class Companies extends React.Component {
                             margin: 0,
                             overFlow: 'hidden'
                         }}>
-                            <div 
+                            <p
+                            style={{
+                                float: 'right',
+                                marginTop: '-20',
+                                cursor: 'pointer'
+                            }}
+                            >X</p>
+                            <div
                                 style={{
                                     padding: 30,
-                                    textAlign:'center'
+                                    textAlign: 'center'
                                 }}
                             >
-                                <FontAwesomeIcon icon={faTimesCircle} 
-                                style={{
-                                    fontSize: 35,
-                                    color: 'red'
-                                }}
-                                />
-                                <h4 
-                                style={{
-                                    marginTop: 10,
-                                    marginBottom: 20
-                                }}
-                                >Are you sure you want to delete it?</h4>
-                            
-                            <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
-                            <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"></i> No</button>
+                                {/* <FontAwesomeIcon icon={faTimesCircle}
+                                    style={{
+                                        fontSize: 35,
+                                        color: 'red',
+
+                                    }}
+                                /> */}
+                                <h4
+                                    style={{
+                                        marginTop: 30,
+                                        marginBottom: 50
+                                    }}
+                                >Are you sure you want to delete?</h4>
+
+                                <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                                <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"></i> No</button>
                             </div>
-                           
+
                         </MuiDialogContent>
                     </Dialog>
 

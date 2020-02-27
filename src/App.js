@@ -5,6 +5,7 @@ import Admin from './components/admin'
 import { BrowserRouter, Route } from 'react-router-dom'
 import Home from './components/home'
 import './components/styling.css'
+import history from './components/history/history'
 
 
 
@@ -18,7 +19,8 @@ class App extends React.Component {
 
     return (
       <BrowserRouter
-      // history={history}
+      history={history}
+      
       >
 
         <div className="App">

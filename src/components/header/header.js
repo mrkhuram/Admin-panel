@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart, faBoxOpen } from '@fortawesome/free-solid-svg-icons'
+import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart, faBoxOpen, faCogs } from '@fortawesome/free-solid-svg-icons'
 import { faBell, faEnvelope, faUser, faGem, faCommentAlt, faComment, } from '@fortawesome/free-regular-svg-icons'
 import { fa } from '@fortawesome/fontawesome-svg-core'
 import { withRouter, Route } from 'react-router-dom'
@@ -29,15 +29,16 @@ import Announcement from '../announcement';
 import Invoices from '../invoices';
 import ReportCenterAdmin from '../reportCenter';
 import PricingAdmin from '../pricingAdmin';
-import CouponAdmin from '../couponAdmin';
-import Admins from '../admins';
-import BlogsAndArticalsAdmin from '../blogsAndArticalAdmin';
+import CouponAdmin from '../expenseCategory';
+import Admins from '../expenseList';
+import BlogsAndArticalsAdmin from '../addEmployee';
 import ClientMessages from '../clientMessages';
 import ReaderMessages from '../readersMessages'
 import NewCompany from '../addCompany';
 
 import $ from 'jquery'
 import CompanyDetail from '../companyDetail';
+import ConfirmPasswordToMoveSetting from '../pwSetting';
 
 
 
@@ -305,14 +306,14 @@ export default function Header() {
 
                                 All Companies</Link></li>
 
-                        {/* <li><Link to='/admin/reportCenter' class="">
+                        <li><Link to='/expenseCategory' class="">
                             <FontAwesomeIcon icon={faInfoCircle}
                                 className='iconDrawer'
                             />
-                            Report Center</Link></li> */}
+                            Expense Group</Link></li>
 
-                        <li><Link to='/edit_setting' class="">
-                            <FontAwesomeIcon icon={faBoxOpen}
+                        <li><Link to="/confirmPassword-first" class="">
+                            <FontAwesomeIcon icon={faCogs}
                                 className='iconDrawer'
                             />
                             Setting</Link></li>
@@ -413,18 +414,20 @@ export default function Header() {
                 <Route exact path='/admin/invoices' component={Invoices} />
                 <Route exact path='/admin/reportCenter' component={ReportCenterAdmin} />
                 <Route exact path='/admin/pricingAdmin' component={PricingAdmin} />
-                <Route exact path='/admin/couponAdmin' component={CouponAdmin} />
-                <Route exact path='/admin/admins-page' component={Admins} />
-                <Route exact path='/admin/blogs-and-articals' component={BlogsAndArticalsAdmin} />
+                <Route exact path='/expenseCategory' component={CouponAdmin} />
+                <Route exact path='/expenseList' component={Admins} />
+                <Route exact path='/addEmployee' component={BlogsAndArticalsAdmin} />
                 <Route exact path='/admin/client-messages' component={ClientMessages} />
                 <Route exact path='/admin/reader-messages' component={ReaderMessages} />
                 <Route exact path='/new_coupon' component={NewCoupon} />
                 <Route exact path='/new_announcement' component={NewAnnouncement} />
                 <Route exact path='/new_company' component={NewCompany} />
 
-                <Route exact path='/edit_setting' component={EditSetting} />
+                <Route exact path='/confirmPassword-first' component={ConfirmPasswordToMoveSetting} />
                 <Route exact path='/new_package' component={priceAddNew} />
                 <Route exact path='/new_admin' component={AdminSignup} />
+                <Route exact path='/editSettings' component={EditSetting} />
+
 
 
 

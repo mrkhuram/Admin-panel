@@ -97,8 +97,32 @@ class HomePanel extends React.Component {
                                 </div>
                             </Link>
                         </div>
+
                         <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                            <Link to='/edit_setting' class="link " onClick={this.handleClickOpen}>
+                            <Link to='/expenseCategory' class="link " onClick={this.handleClickOpen}>
+                                <div class="box">
+
+
+                                    <div class="col-xs-4 col">
+                                        <p class="icon color1">
+
+                                            <i class="fa fa-users"></i>
+                                            <FontAwesomeIcon icon={faCogs}
+                                            />
+
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-8 col">
+                                        <h2 class="section-title" >Expense Group</h2>
+
+                                    </div>
+
+                                </div>
+                            </Link>
+                        </div>
+
+                        <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
+                            <Link to="/confirmPassword-first"  class="link " onClick={this.handleClickOpen}>
                                 <div class="box">
 
 
