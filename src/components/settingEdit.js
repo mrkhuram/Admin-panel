@@ -27,10 +27,14 @@ class EditSetting extends React.Component {
                                 <form>
                                     <div className="form-group">
                                         <label for="pwd">User Name:</label>
-                                        <input type="text" className="form-control" />
+                                        <input type="text" className="form-control" value="admin@gmail.com"  />
                                     </div>
                                     <div className="form-group">
                                         <label for="pwd">Password:</label>
+                                        <input type="password" className="form-control" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label for="pwd">Confirm Password:</label>
                                         <input type="password" className="form-control" />
                                     </div>
                                     {/* <div className="form-group">

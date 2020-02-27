@@ -13,8 +13,8 @@ import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-
 
 // class Hello extends React.Component{
 // 	render(){
-		
-			
+
+
 // 				 React.createElement(React.Fragment, null, React.createElement("div", {
 // 					className: "form-group"
 // 				}, " ", React.createElement("label", {
@@ -30,8 +30,8 @@ import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-
 // 					type: "text",
 // 					className: "form-control"
 // 				})));
-			
-		
+
+
 // 	}
 // }
 
@@ -68,7 +68,8 @@ class BlogsAndArticalsAdmin extends React.Component {
 
 		],
 		checked: true,
-		openPop: false
+		openPop: false,
+		open: true
 	}
 
 
@@ -232,7 +233,7 @@ class BlogsAndArticalsAdmin extends React.Component {
 								this.handleClose('openPop')
 							}}
 						>X</p>
-						<div className="content-wrapper"
+						{/* <div className="content-wrapper"
 							style={{
 								padding: 30,
 								overflowY: 'hidden'
@@ -265,7 +266,7 @@ class BlogsAndArticalsAdmin extends React.Component {
 												<label for="pwd">Added By:</label>
 												<input type="text" className="form-control" />
 											</div>
-											{/* <Hello /> */}
+											<Hello />
 											<button type="submit" className="btn btn-default noBtn"
 												style={{ margin: 'auto', float: 'right' }}
 											>Add</button>
@@ -273,10 +274,253 @@ class BlogsAndArticalsAdmin extends React.Component {
 									</div>
 								</div>
 							</div>
+						</div> */}
+
+						<div>
+							<div class="col-xs-12 col-md-12"
+								style={{
+									textAlign: 'center',
+
+								}}
+							>
+								<h4 class="section-title"
+									style={{
+										marginBottom: 40,
+										// marginTop: -30,
+										float: 'left'
+									}}
+								>Employee Details</h4>
+
+								<img src={require("./assets/images/logo.png")} alt=""
+									style={{
+										width: 100,
+										float: 'right'
+									}}
+								/>
+
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th  >Title</th>
+											<td >John Doe</td>
+										</tr>
+										<tr>
+											<th  >Employee Name</th>
+											<td >John Doe</td>
+										</tr>
+										<tr>
+											<th >Work Email</th>
+											<td>john@gmail.com</td>
+										</tr>
+										<tr>
+											<th >Phone</th>
+											<td>09876543213</td>
+										</tr>
+										<tr>
+											<th >Position</th>
+											<td>X</td>
+										</tr>
+										<tr>
+											<th >Starting Date</th>
+											<td>20/02/2018</td>
+										</tr>
+										<tr>
+											<th  >Employee Status</th>
+											<td>Contract</td>
+										</tr>
+										<tr>
+											<th >Direct Manager</th>
+											<td>No</td>
+										</tr>
+										<tr>
+											<th >Team</th>
+											<td>Yes</td>
+										</tr>
+										<tr>
+											<th >Location</th>
+											<td>Faisalad, Pakistan</td>
+										</tr>
+										<tr>
+											<th >Public Holiday Group</th>
+											<td>Yes</td>
+										</tr>
+										<tr>
+											<th >Access Level</th>
+											<td>Employee</td>
+										</tr>
+										<tr>
+											<th >Driving License #</th>
+											<td>NHL12341018</td>
+										</tr>
+										<tr>
+											<th >Employee No.</th>
+											<td>007635</td>
+										</tr>
+										<tr>
+											<th >LinkedIn</th>
+											<td>/ksalex23</td>
+										</tr>
+										<tr>
+											<th >Skype</th>
+											<td>/ksalex23</td>
+										</tr>
+
+
+										
+										<tr>
+										</tr>
+									</tbody>
+								</table>
+								
+								<Link
+									// to='/addEmployee'
+									className='link'
+								>
+									<button type="submit" class="btn btn-default noBtn"
+										style={{
+											marginLeft: 30
+										}}
+										onClick={() => {
+											this.handleClose('openPop')
+
+											this.handleClickOpen('open')
+										}}
+									><i class="fa fa-search"></i> Next</button>
+								</Link>
+
+							</div>
 						</div>
 
+
 					</MuiDialogContent>
-				</Dialog>
+				</Dialog >
+
+
+				<Dialog onClose={() => {
+					this.handleClose('open')
+				}} open={this.state.open}
+					style={{
+						margin: 0
+					}}
+				>
+					<MuiDialogContent style={{
+
+						margin: 0,
+						overFlow: 'hidden'
+					}}>
+						<p
+							style={{
+								float: 'right',
+								marginTop: '-20',
+								cursor: 'pointer'
+							}}
+							onClick={() => {
+								this.handleClose('open')
+							}}
+						>X</p>
+						
+						<div>
+							<div class="col-xs-12 col-md-12"
+								style={{
+									textAlign: 'center',
+
+								}}
+							>
+								<h4 class="section-title"
+									style={{
+										marginBottom: 40,
+										// marginTop: -30,
+										float: 'left'
+									}}
+								>Employee Personal Detail</h4>
+
+								<img src={require("./assets/images/logo.png")} alt=""
+									style={{
+										width: 100,
+										float: 'right'
+									}}
+								/>
+
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th  >Street 1</th>
+											<td >St#4, NY</td>
+										</tr>
+										<tr>
+											<th  >Street 2</th>
+											<td ></td>
+										</tr>
+										<tr>
+											<th >City</th>
+											<td>New York</td>
+										</tr>
+										<tr>
+											<th >State</th>
+											<td>Punjab</td>
+										</tr>
+										<tr>
+											<th >PostCode</th>
+											<td>38000</td>
+										</tr>
+										<tr>
+											<th >Country</th>
+											<td>Pakistan</td>
+										</tr>
+										<tr>
+											<th  >Nationality</th>
+											<td>Pakistan</td>
+										</tr>
+										<tr>
+											<th >Home Phone</th>
+											<td>098787867</td>
+										</tr>
+										<tr>
+											<th >Mobile Phone</th>
+											<td>098767877</td>
+										</tr>
+										<tr>
+											<th >Location</th>
+											<td>Faisalad, Pakistan</td>
+										</tr>
+										<tr>
+											<th >Personal Email</th>
+											<td>john@gmail.com</td>
+										</tr>
+										<tr>
+											<th >Gender</th>
+											<td>Male</td>
+										</tr>
+										<tr>
+											<th >Marital Status</th>
+											<td>Married</td>
+										</tr>
+										
+
+										
+										<tr>
+										</tr>
+									</tbody>
+								</table>
+								
+								<Link
+									// to='/addEmployee'
+									className='link'
+								>
+									<button type="submit" class="btn btn-default noBtn"
+										style={{
+											marginLeft: 30
+										}}
+
+									><i class="fa fa-search"></i> Save </button>
+								</Link>
+
+							</div>
+						</div>
+
+
+					</MuiDialogContent>
+				</Dialog >
 
 			</>
 		)

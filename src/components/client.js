@@ -408,14 +408,24 @@ class Companies extends React.Component {
                                     >X</p>
                                     <div class="col-xs-12 col-md-12"
                                     style={{
-                                        textAlign:'center'
+                                        textAlign:'center',
+                                        
                                     }}
                                     >
                                             <h4 class="section-title"
                                             style={{
-                                                marginBottom: 40
+                                                marginBottom: 40,
+                                                // marginTop: -30,
+                                                float: 'left'
                                             }}
                                             >Company Details</h4>
+                                             
+                                             <img src={require("./assets/images/logo.png")} alt=""
+                                                style={{
+                                                    width: 100,
+                                                    float: 'right'
+                                                }}
+                                             />
                                         
                                         <table class="table table-bordered">
                                             <tbody>

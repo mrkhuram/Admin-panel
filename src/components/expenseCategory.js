@@ -102,7 +102,7 @@ class CouponAdmin extends React.Component {
 
     onChangeHandler = (e, ind) => {
         console.log('working');
-        
+
         if (["eName", "eAmount"].includes(e.target.className)) {
             let arr = [...this.state.arr]
             arr[e.target.dataset.id][e.target.className] = e.target.value
@@ -290,7 +290,11 @@ class CouponAdmin extends React.Component {
                                             textAlign: 'center'
                                         }}
                                     >
-                                        <h2 className="section-title">Add New Expense
+                                        <h2 className="section-title"
+                                        style={{
+                                            marginTop: -30
+                                        }}
+                                        >Add New Expense
 
 										</h2>
                                     </div>
@@ -299,9 +303,10 @@ class CouponAdmin extends React.Component {
                                     <div className="col-xs-12 col-md-12"
                                         id='div'
                                     >
-                                        {/* <form
+                                        <form
                                             style={{
-                                                display: 'flex'
+                                                display: 'flex',
+                                                marginLeft: 20
                                             }}
                                         >
 
@@ -320,7 +325,7 @@ class CouponAdmin extends React.Component {
                                             </div>
                                             <br />
 
-                                        </form> */}
+                                        </form>
 
                                         {
 
@@ -334,15 +339,24 @@ class CouponAdmin extends React.Component {
                                                         key={ind}
                                                         onChange={this.onChangeHandler}
                                                     >
-                                                        <div className="form-group">
-                                                            <label for="pwd">{`Expense Name #${ind + 1}`}</label>
-                                                            <input type="text" className="form-control"
+                                                        <div className="form-group"
+                                                            style={{
+                                                                width: "87%"
+                                                            }}
+                                                        >
+                                                            {/* <label for="pwd">{`Expense Name #${ind + 1}`}</label> */}
+                                                            <textarea type="text" className="form-control"
                                                                 name={eName}
                                                                 data-id={ind}
                                                                 id={eName}
-                                                                 />
+                                                                style={{
+                                                                    width: "100%",
+                                                                    marginLeft: 20
+                                                                }}
+                                                            >
+                                                            </textarea>
                                                         </div>
-                                                        <div className="form-group"
+                                                        {/* <div className="form-group"
                                                             style={{
                                                                 marginLeft: 20
                                                             }}
@@ -355,7 +369,7 @@ class CouponAdmin extends React.Component {
 
 
                                                                  />
-                                                        </div>
+                                                        </div> */}
                                                     </form>
                                                 </>
                                             })}
