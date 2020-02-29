@@ -161,42 +161,51 @@ class Admins extends React.Component {
                     </div>
                 </div>
                 <Dialog onClose={this.handleClose} open={this.state.open}
-                    style={{
-                        margin: 0
-                    }}
-                >
-                    <MuiDialogContent style={{
-                        padding: 0,
-                        margin: 0
-                    }}>
-                         <p
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        <MuiDialogContent style={{
+
+                            margin: 0,
+                            overFlow: 'hidden'
+                        }}>
+                            <p
                             style={{
                                 float: 'right',
                                 marginTop: '-20',
                                 cursor: 'pointer'
                             }}
+                            onClick={this.handleClose}
                             >X</p>
-                        <div class=" customPopup">
-                            <div class="modal-dialog modal-sm" style={{
-                                margin: 0
-                            }}>
-                                {/* <!-- Modal content--> */}
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <p><i class="fa fa-trash"></i><br />Are you sure you want to delete</p>
-                                        <p>
-                                            <button type="button" class="btn btn-default yes" data-dismiss="modal"
-                                                onClick={this.props.deleteAccount}
-                                            >Yes</button>
-                                            <button type="button" class="btn btn-default no" data-dismiss="modal"
-                                                onClick={this.handleClose}
-                                            >No</button></p>
-                                    </div>
-                                </div>
+                            <div
+                                style={{
+                                    padding: 30,
+                                    textAlign: 'center'
+                                }}
+                            >
+                                {/* <FontAwesomeIcon icon={faTimesCircle}
+                                    style={{
+                                        fontSize: 35,
+                                        color: 'red',
+
+                                    }}
+                                /> */}
+                                <h4
+                                    style={{
+                                        marginTop: 30,
+                                        marginBottom: 50
+                                    }}
+                                >Are you sure you want to delete?</h4>
+
+                                <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                                <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"
+                                 onClick={this.handleClose}
+                                ></i> No</button>
                             </div>
-                        </div>
-                    </MuiDialogContent>
-                </Dialog>
+
+                        </MuiDialogContent>
+                    </Dialog>
 
             </>
         )

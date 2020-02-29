@@ -33,7 +33,8 @@ class Companies extends React.Component {
     state = {
         open: false,
         activeTab: 1,
-        openPop: false
+        openPop: false,
+        delete: false
     }
 
     handleClickOpen = (element) => {
@@ -266,7 +267,7 @@ class Companies extends React.Component {
                                                     </Link>
                                                     <Link to='#'
                                                         onClick={() => {
-                                                            this.handleClickOpen('openPop')
+                                                            this.handleClickOpen('delete')
                                                         }}
                                                         class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
@@ -295,7 +296,7 @@ class Companies extends React.Component {
                                                     </Link>
                                                     <Link to='#'
                                                         onClick={() => {
-                                                            this.handleClickOpen('openPop')
+                                                            this.handleClickOpen('delete')
                                                         }}
                                                         class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
@@ -324,7 +325,7 @@ class Companies extends React.Component {
                                                     </Link>
                                                     <Link to='#'
                                                         onClick={() => {
-                                                            this.handleClickOpen('openPop')
+                                                            this.handleClickOpen('delete')
                                                         }}
                                                         class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
@@ -353,7 +354,7 @@ class Companies extends React.Component {
                                                     </Link>
                                                     <Link to='#'
                                                         onClick={() => {
-                                                            this.handleClickOpen('openPop')
+                                                            this.handleClickOpen('delete')
                                                         }}
                                                         class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
                                                 </td>
@@ -521,8 +522,8 @@ class Companies extends React.Component {
                     </Dialog>
 
                     <Dialog onClose={() => {
-                        this.handleClose('openPop')
-                    }} open={this.state.openPop}
+                        this.handleClose('delete')
+                    }} open={this.state.delete}
                         style={{
                             margin: 0
                         }}
@@ -537,6 +538,9 @@ class Companies extends React.Component {
                                 float: 'right',
                                 marginTop: '-20',
                                 cursor: 'pointer'
+                            }}
+                            onClick={() => {
+                                this.handleClose('delete')
                             }}
                             >X</p>
                             <div
@@ -560,7 +564,11 @@ class Companies extends React.Component {
                                 >Are you sure you want to delete?</h4>
 
                                 <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
-                                <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"></i> No</button>
+                                <button type="submit" class="btn btn-default noBtn"
+                                   onClick={() => {
+                                    this.handleClose('delete')
+                                }}
+                                ><i class="fa fa-search"></i> No</button>
                             </div>
 
                         </MuiDialogContent>

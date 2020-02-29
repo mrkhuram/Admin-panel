@@ -26,6 +26,7 @@ class CouponAdmin extends React.Component {
         ],
         open: false,
         openPop: false,
+        delete: false,
         expense: [
             {
                 expenseName: 'Bike Maintance',
@@ -42,8 +43,8 @@ class CouponAdmin extends React.Component {
         ],
         arr: [
             {
-                eName: '',
-                eAmount: ''
+                groupName: '',
+                introExpense: ''
 
             },
         ]
@@ -177,9 +178,9 @@ class CouponAdmin extends React.Component {
                                                     > <i
                                                         class="fa fa-trash"></i> View</Link>
                                                     <a class="badge red" data-toggle="modal" data-target="#myModal"
-                                                    // onClick={() => {
-                                                    //     this.deleteItem(index, item._id)
-                                                    // }}
+                                                    onClick={() => {
+                                                        this.handleClickOpen('delete')
+                                                    }}
 
                                                     > <i class="fa fa-trash" ></i> Delete</a>
 
@@ -303,16 +304,16 @@ class CouponAdmin extends React.Component {
                                     <div className="col-xs-12 col-md-12"
                                         id='div'
                                     >
-                                        <form
+                                        {/* <form
                                             style={{
                                                 display: 'flex',
-                                                marginLeft: 20
+                                                // marginLeft: 20
                                             }}
                                         >
 
 
                                             <div className="form-group">
-                                                <label for="pwd">Expense Name:</label>
+                                                <label for="pwd" name="groupName">Group Name:</label>
                                                 <input type="text" className="form-control" />
                                             </div>
                                             <div className="form-group"
@@ -320,17 +321,17 @@ class CouponAdmin extends React.Component {
                                                     marginLeft: 20
                                                 }}
                                             >
-                                                <label for="pwd">Expense Amount:</label>
+                                                <label for="pwd" name="introExpense">Introduce Expense :</label>
                                                 <input type="text" className="form-control" />
                                             </div>
                                             <br />
 
-                                        </form>
+                                        </form> */}
 
                                         {
-
+                                            
                                             this.state.arr.map((item, ind) => {
-                                                let eName = `eName-${ind}`, amount = `age-${ind}`
+                                                let eName = `groupName-${ind+1}`, amount = `introExpense-${ind+1}`
                                                 return <>
                                                     <form
                                                         style={{
@@ -340,36 +341,38 @@ class CouponAdmin extends React.Component {
                                                         onChange={this.onChangeHandler}
                                                     >
                                                         <div className="form-group"
-                                                            style={{
-                                                                width: "87%"
-                                                            }}
+                                                           
                                                         >
-                                                            {/* <label for="pwd">{`Expense Name #${ind + 1}`}</label> */}
-                                                            <textarea type="text" className="form-control"
+                                                            <label for="pwd">
+                                                                
+                                                                {`Group Name #${ind + 1}`}
+                                                                
+                                                                </label>
+                                                            <input type="text" className="form-control"
                                                                 name={eName}
                                                                 data-id={ind}
                                                                 id={eName}
-                                                                style={{
-                                                                    width: "100%",
-                                                                    marginLeft: 20
-                                                                }}
-                                                            >
-                                                            </textarea>
+                                                                // style={{
+                                                                //     width: "100%",
+                                                                //     marginLeft: 20
+                                                                // }}
+                                                            />
+                                                           
                                                         </div>
-                                                        {/* <div className="form-group"
+                                                        <div className="form-group"
                                                             style={{
                                                                 marginLeft: 20
                                                             }}
                                                         >
-                                                            <label for="pwd">{`Expense Amount #${ind + 1}`}</label>
+                                                            <label for="pwd">
+                                                                {`Describe Expense #${ind + 1}`}
+                                                            </label>
                                                             <input type="text" className="form-control"
                                                                 name={amount}
                                                                 data-id={ind}
                                                                 id={amount}
-
-
                                                                  />
-                                                        </div> */}
+                                                        </div>
                                                     </form>
                                                 </>
                                             })}
@@ -389,6 +392,59 @@ class CouponAdmin extends React.Component {
                         </div>
                     </MuiDialogContent>
                 </Dialog>
+
+                <Dialog onClose={() => {
+                        this.handleClose('delete')
+                    }} open={this.state.delete}
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        <MuiDialogContent style={{
+
+                            margin: 0,
+                            overFlow: 'hidden'
+                        }}>
+                            <p
+                            style={{
+                                float: 'right',
+                                marginTop: '-20',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => {
+                                this.handleClose('delete')
+                            }}
+                            >X</p>
+                            <div
+                                style={{
+                                    padding: 30,
+                                    textAlign: 'center'
+                                }}
+                            >
+                                {/* <FontAwesomeIcon icon={faTimesCircle}
+                                    style={{
+                                        fontSize: 35,
+                                        color: 'red',
+
+                                    }}
+                                /> */}
+                                <h4
+                                    style={{
+                                        marginTop: 30,
+                                        marginBottom: 50
+                                    }}
+                                >Are you sure you want to delete?</h4>
+
+                                <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                                <button type="submit" class="btn btn-default noBtn"
+                                   onClick={() => {
+                                    this.handleClose('delete')
+                                }}
+                                ><i class="fa fa-search"></i> No</button>
+                            </div>
+
+                        </MuiDialogContent>
+                    </Dialog>
 
 
 

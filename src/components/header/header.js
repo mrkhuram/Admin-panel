@@ -113,12 +113,10 @@ export default function Header() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [admin, setAdmin] = React.useState(true);
+    const [admin, setAdmin] = React.useState(false);
 
 
-    // const handleDrawerOpen = () => {
-    //     setOpen(!open);
-    // };
+
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
@@ -127,10 +125,7 @@ export default function Header() {
         setAdmin(!admin)
     }
     
-    // const handleCompany = ()=>{
-        
-    //     setAdmin({admin: false})
-    // }
+  
  
     return (
         <div className={classes.root}>
@@ -317,6 +312,9 @@ export default function Header() {
                                 className='iconDrawer'
                             />
                             Setting</Link></li>
+                       
+                       
+                       
                         {/* <li><Link to='/admin/reader' class="">
                             <FontAwesomeIcon icon={faUser}
                                 className='iconDrawer'

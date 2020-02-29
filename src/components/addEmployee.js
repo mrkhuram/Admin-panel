@@ -69,7 +69,8 @@ class BlogsAndArticalsAdmin extends React.Component {
 		],
 		checked: true,
 		openPop: false,
-		open: true
+		open: false,
+		delete: false
 	}
 
 
@@ -193,7 +194,7 @@ class BlogsAndArticalsAdmin extends React.Component {
 											> <i class="fa fa-trash"></i> Delete</a> */}
 														<Link to='#'
 															onClick={() => {
-																this.handleClickOpen('openPop')
+																this.handleClickOpen('delete')
 															}}
 															class="badge red" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
 
@@ -521,6 +522,56 @@ class BlogsAndArticalsAdmin extends React.Component {
 
 					</MuiDialogContent>
 				</Dialog >
+
+
+				<Dialog onClose={() => {
+                        this.handleClose('delete')
+                    }} open={this.state.delete}
+                        style={{
+                            margin: 0
+                        }}
+                    >
+                        <MuiDialogContent style={{
+
+                            margin: 0,
+                            overFlow: 'hidden'
+                        }}>
+                            <p
+                            style={{
+                                float: 'right',
+                                marginTop: '-20',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => {
+                                this.handleClose('delete')
+                            }}
+                            >X</p>
+                            <div
+                                style={{
+                                    padding: 30,
+                                    textAlign: 'center'
+                                }}
+                            >
+                                {/* <FontAwesomeIcon icon={faTimesCircle}
+                                    style={{
+                                        fontSize: 35,
+                                        color: 'red',
+
+                                    }}
+                                /> */}
+                                <h4
+                                    style={{
+                                        marginTop: 30,
+                                        marginBottom: 50
+                                    }}
+                                >Are you sure you want to delete?</h4>
+
+                                <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                                <button type="submit" class="btn btn-default noBtn"><i class="fa fa-search"></i> No</button>
+                            </div>
+
+                        </MuiDialogContent>
+                    </Dialog>
 
 			</>
 		)
