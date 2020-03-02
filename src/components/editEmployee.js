@@ -12,7 +12,7 @@ import 'react-intl-tel-input/dist/main.css';
 
 
 
-const AddEmployeeForm
+const EditEmployeeForm
 
     = (props) => {
         const [activeTab, setActiveTab] = useState('1');
@@ -45,6 +45,16 @@ const AddEmployeeForm
                     }}
                 >
 
+                    {/* <div class="col-xs-12 col-md-6"
+                            style={{
+                                display:'flex'
+                            }}
+                            >
+                                <h4 class="section-title">Add Employee</h4>
+
+                               
+
+                            </div> */}
                     <NavItem>
                         <NavLink
                             className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
@@ -54,7 +64,8 @@ const AddEmployeeForm
                                 marginTop: 10,
                                 color: "#5a5a5a",
                                 fontWeight: "normal",
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+
                             }}
                         >
                             <span
@@ -86,15 +97,21 @@ const AddEmployeeForm
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Firt Name</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="companyName"
+                                            value="John Doe"
+                                            onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Position</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="workEmail"
+                                            value="Admin"
+                                            onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Work Email</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="demo@gmail.com"
+                                            name="phone" onChange={onChangeHandler} />
 
                                     </div>
 
@@ -107,29 +124,42 @@ const AddEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
+                                            value="09876678"
+
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Profile Picture</label>
-                                        <input type="file" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="file" class="form-control"
+
+                                            name="limit" onChange={onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Team</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="No"
+                                            name="limit" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Location</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="Pakistan"
+                                            name="limit" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Driving License</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="NH32423IM"
+                                            name="limit" onChange={onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">LinkedIn</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="/John_Doe"
+
+                                            name="limit" onChange={onChangeHandler} />
                                     </div>
 
 
@@ -140,11 +170,15 @@ const AddEmployeeForm
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Last Name</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="text"
+                                            value="Doe"
+                                            class="form-control" name="companyName" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Title</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="John"
+                                            name="workEmail" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Starting Date</label>
@@ -162,7 +196,7 @@ const AddEmployeeForm
                                         <select class="form-control" name='to_client' onChange={onChangeHandler}>
                                             <option value="client">Select Employee Status</option>
 
-                                            <option value="client">Full Time</option>
+                                            <option value="client" selected>Full Time</option>
                                             <option value="reader">Part Time</option>
                                             <option value="reader">Contract</option>
                                             <option value="reader">Intern</option>
@@ -172,19 +206,24 @@ const AddEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Direct Manager</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="limit"
+                                            value="no"
+                                            onChange={onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Public Holiday Group</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="limit"
+                                            value="3"
+
+                                            onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Access Level</label>
                                         <select class="form-control" name='to_client' onChange={onChangeHandler}>
                                             <option value="client">Select Access Level</option>
 
-                                            <option value="client">Employee</option>
+                                            <option value="client" selected>Employee</option>
                                             <option value="reader">Accountant</option>
                                             <option value="reader">Admirative</option>
                                             {/* <option value="reader">Intern</option> */}
@@ -194,18 +233,23 @@ const AddEmployeeForm
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="pwd">Employee No.</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <label for="pwd">Employee No</label>
+                                        <input type="text" class="form-control" name="limit"
+                                            value="23002"
+
+                                            onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Skype</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="limit"
+                                            value="/ksalex23"
+                                            onChange={onChangeHandler} />
                                     </div>
 
-                                    {/* <button type="submit" class="btn btn-default"
+                                    <button type="submit" class="btn btn-default"
                                         style={{ marginTop: 10, float: 'right' }}
                                         onClick={nextMove}
-                                    >Next</button> */}
+                                    >Next</button>
 
 
                                 </form>
@@ -219,26 +263,40 @@ const AddEmployeeForm
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Personal Email</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="text"
+                                            value="demo@gmail.com"
+
+                                            class="form-control" name="companyName" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Nationality</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="Demo"
+
+                                            name="workEmail" onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Street 1</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="Demo"
+
+                                            name="phone" onChange={onChangeHandler} />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">City</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="phone"
+                                            value="Faisalabad"
+                                            onChange={onChangeHandler} />
 
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Post Code</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="phone"
+                                            value="38000"
+
+                                            onChange={onChangeHandler} />
 
                                     </div>
 
@@ -251,6 +309,8 @@ const AddEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
+                                            value="4344434229"
+
                                         />
                                     </div>
                                     <div class="form-group">
@@ -258,7 +318,7 @@ const AddEmployeeForm
                                         <select class="form-control" name='to_client' onChange={onChangeHandler}>
                                             <option value="client">Select Gender</option>
 
-                                            <option value="male">Male</option>
+                                            <option value="male" selected>Male</option>
                                             <option value="female">Female</option>
 
 
@@ -282,6 +342,8 @@ const AddEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
+                                            value="4344434229"
+
                                         />
                                     </div>
                                     <div class="form-group">
@@ -293,21 +355,28 @@ const AddEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
+                                            value="4344434229"
+
                                         />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Street 2 </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="workEmail"
+                                            onChange={onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">State </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="workEmail"
+                                            value="Punjab"
+                                            onChange={onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Country </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            value="Pakistan"
+                                            name="workEmail" onChange={onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
@@ -327,7 +396,7 @@ const AddEmployeeForm
                                             <option value="client">Select Marital Status</option>
 
                                             <option value="male">Single</option>
-                                            <option value="female">Married</option>
+                                            <option value="female" selected>Married</option>
                                             <option value="female">Divorced</option>
                                             <option value="female">Widowed</option>
 
@@ -351,4 +420,4 @@ const AddEmployeeForm
         );
     }
 
-export default AddEmployeeForm
+export default EditEmployeeForm

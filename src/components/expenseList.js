@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 
 class Admins extends React.Component {
@@ -89,8 +91,7 @@ class Admins extends React.Component {
                                                     class="fa fa-trash"></i> Edit</a> */}
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
-                                                > <i
-                                                    class="fa fa-trash"></i> Delete</a>
+                                                > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
 
                                             </td>
                                         </tr>
@@ -112,8 +113,7 @@ class Admins extends React.Component {
                                                     class="fa fa-trash"></i> Edit</a> */}
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
-                                                > <i
-                                                    class="fa fa-trash"></i> Delete</a>
+                                                > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
 
                                             </td>
                                         </tr>
@@ -135,8 +135,7 @@ class Admins extends React.Component {
                                                     class="fa fa-trash"></i> Edit</a> */}
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
-                                                > <i
-                                                    class="fa fa-trash"></i> Delete</a>
+                                                > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
 
                                             </td>
                                         </tr>

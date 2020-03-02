@@ -6,8 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart, faBoxOpen, faCogs } from '@fortawesome/free-solid-svg-icons'
-import { faBell, faEnvelope, faUser, faGem, faCommentAlt, faComment, } from '@fortawesome/free-regular-svg-icons'
+import { faAnchor, faBars, faHome, faUsers, faBullhorn, faFileAlt, faInfoCircle, faDollarSign, faTag, faUserSecret, faShoppingCart, faBoxOpen, faCogs, faMoneyBillWaveAlt, faPlusCircle, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faEnvelope, faUser, faGem, faCommentAlt, faComment, faListAlt, } from '@fortawesome/free-regular-svg-icons'
 import { fa } from '@fortawesome/fontawesome-svg-core'
 import { withRouter, Route } from 'react-router-dom'
 import '../assets/css/style.css'
@@ -39,6 +39,16 @@ import NewCompany from '../addCompany';
 import $ from 'jquery'
 import CompanyDetail from '../companyDetail';
 import ConfirmPasswordToMoveSetting from '../pwSetting';
+import EditExpenseGroup from '../editExpenseGroup';
+import PaymentType from '../paymentType';
+import EditPaymentType from '../paymentTypeEdit';
+import CompanyDeshboard from './companyDeshboard';
+import AddEmployee from '../addEmployee';
+import AddEmployeeForm from '../tabsAddEmployee';
+import SettingCompany from '../settingCompany'
+import EditSettingCompany from '../editSettingCompany';
+import ExpenseStatus from '../expenseStatus';
+import ExpenseListHr from '../expenseStatusHr';
 
 
 
@@ -81,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth,
-     
+
     },
     drawerHeader: {
         display: 'flex',
@@ -114,6 +124,8 @@ export default function Header() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
     const [admin, setAdmin] = React.useState(false);
+    const [company, setCompany] = React.useState(true);
+    const [hr, setHr] = React.useState(false);
 
 
 
@@ -121,12 +133,29 @@ export default function Header() {
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
-    const handleAdmin = ()=>{
-        setAdmin(!admin)
+    const handleAdmin = () => {
+        console.log('working admin');
+
+        setAdmin(true)
+        setCompany(false)
+        setHr(false)
     }
-    
-  
- 
+    const handleCompany = () => {
+        console.log('working company');
+        
+        setCompany(true)
+        setAdmin(false) 
+        setHr(false)
+    }
+
+    const handleHr = () => {
+        console.log('working hr');
+
+        setHr(true)
+        setAdmin(false)
+        setCompany(false)
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -152,20 +181,7 @@ export default function Header() {
 
                             <div class="collapse navbar-collapse" id="myNavbar">
                                 <ul class="nav navbar-nav navbar-left">
-                                    {/* <li>
 
-                                        <a href="#" class="btnLeftBarToggle"
-                                            onClick={handleDrawerOpen}
-                                        >
-
-
-                                            <FontAwesomeIcon icon={faBars}
-                                                className='icon'
-                                            />
-
-
-                                        </a>
-                                    </li> */}
                                 </ul>
                                 <ul class="nav navbar-nav navbar-right">
 
@@ -191,28 +207,6 @@ export default function Header() {
                                             </li>
                                         </ul>
                                     </li>
-                                    {/* <li class="dropdown">
-                                        <a class="dropdown-toggle btnAlert" data-toggle="dropdown" href="#"
-
-                                        >
-
-
-                                            <FontAwesomeIcon icon={faEnvelope}
-                                                className='icon'
-                                            />
-                                            <span class="badge bedge2">2</span></a>
-                                        <ul class="dropdown-menu messages">
-                                            <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                                <p>Hi, Babar your order is in process kindly wait a while</p>
-                                            </li>
-                                            <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                                <p>Hi, Babar your order is in process kindly wait a while</p>
-                                            </li>
-                                            <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                                <p>Hi, Babar your order is in process kindly wait a while</p>
-                                            </li>
-                                        </ul>
-                                    </li> */}
 
                                     <li class="dropdown ">
 
@@ -227,13 +221,18 @@ export default function Header() {
                                             <span class="caret"></span></a>
                                         <ul class="dropdown-menu meu-liust signoutoptions">
                                             <li><a href="#"
-                                            onClick={handleAdmin}
+                                                onClick={handleAdmin}
                                             ><i class="fa fa-user-o"></i> Admin</a></li>
                                             <li><a href="#"
 
-                                            onClick={handleAdmin}
+                                                onClick={handleCompany}
 
                                             ><i class="fa fa-sign-out" ></i> Company</a></li>
+                                            <li><a href="#"
+
+                                                onClick={handleHr}
+
+                                            ><i class="fa fa-sign-out" ></i> HR</a></li>
                                         </ul>
                                     </li>
                                     {/* <li class="hide"><a href="#contactus" class="scroll"><i class="fa fa-user-o"></i>Hi, User</a></li>
@@ -286,35 +285,129 @@ export default function Header() {
                         </div>
                     </div>
                     <ul>
-                        <li className='drawerLi'>
-                            <Link to="/" class="">
-                                <FontAwesomeIcon icon={faHome}
-                                    className='iconDrawer'
-                                />
 
-                                Home</Link></li>
-                        <li>
-                            <Link to='/admin/client' class="">
-                                <FontAwesomeIcon icon={faUsers}
-                                    className='iconDrawer'
-                                />
 
-                                All Companies</Link></li>
+                        {admin ?
+                            <>
 
-                        <li><Link to='/expenseCategory' class="">
-                            <FontAwesomeIcon icon={faInfoCircle}
-                                className='iconDrawer'
-                            />
-                            Expense Group</Link></li>
+                                <li className='drawerLi'>
+                                    <Link to="/" class="">
+                                        <FontAwesomeIcon icon={faHome}
+                                            className='iconDrawer'
+                                        />
 
-                        <li><Link to="/confirmPassword-first" class="">
-                            <FontAwesomeIcon icon={faCogs}
-                                className='iconDrawer'
-                            />
-                            Setting</Link></li>
-                       
-                       
-                       
+                                        Home</Link></li>
+
+                                <li>
+                                    <Link to='/new_company' class="">
+                                        <FontAwesomeIcon icon={faUsers}
+                                            className='iconDrawer'
+                                        />
+
+                                        New Companies</Link></li>
+                                <li>
+                                    <Link to='/admin/client' class="">
+                                        <FontAwesomeIcon icon={faListAlt}
+                                            className='iconDrawer'
+                                        />
+
+                                        All Companies</Link></li>
+
+                                <li><Link to='/expenseCategory' class="">
+                                    <FontAwesomeIcon icon={faInfoCircle}
+                                        className='iconDrawer'
+                                    />
+                                    Expense Group</Link></li>
+
+                                <li>
+                                    <Link to='/payment-type' class="">
+                                        <FontAwesomeIcon icon={faMoneyBillWaveAlt}
+                                            className='iconDrawer'
+                                        />
+                                        Payment Type</Link>
+                                </li>
+                                <li>
+                                    <Link to="/confirmPassword-first" class="">
+                                        <FontAwesomeIcon icon={faCogs}
+                                            className='iconDrawer'
+                                        />
+                                        Setting</Link>
+                                </li>
+
+                            </>
+
+                            :
+
+                            <>{
+                                company ?
+                                    <>
+                                        <li className='drawerLi'>
+                                            <Link to="/" class="">
+                                                <FontAwesomeIcon icon={faHome}
+                                                    className='iconDrawer'
+                                                />
+
+                                                Home</Link></li>
+                                        <li>
+                                            <Link to="/add_employee" class="">
+                                                <FontAwesomeIcon icon={faPlusCircle}
+                                                    className='iconDrawer'
+                                                />
+                                                Employees</Link>
+                                        </li>
+
+                                        <li>
+                                            <Link to='/expense_status' class="">
+                                                <FontAwesomeIcon icon={faChartLine}
+                                                    className='iconDrawer'
+                                                />
+                                                Reports</Link>
+                                        </li>
+
+                                        <li>
+                                            <Link to='/company_setting' class="">
+                                                <FontAwesomeIcon icon={faCogs}
+                                                    className='iconDrawer'
+                                                />
+                                                Setting</Link>
+                                        </li>
+                                    </>
+                                    : <>
+
+                                        <li className='drawerLi'>
+                                            <Link to="/" class="">
+                                                <FontAwesomeIcon icon={faHome}
+                                                    className='iconDrawer'
+                                                />
+
+                                                Home</Link></li>
+
+
+                                        <li>
+                                            <Link to='/expense_status_hr' class="">
+                                                <FontAwesomeIcon icon={faChartLine}
+                                                    className='iconDrawer'
+                                                />
+                                                Reports</Link>
+                                        </li>
+
+                                        <li>
+                                            <Link to='/company_setting' class="">
+                                                <FontAwesomeIcon icon={faCogs}
+                                                    className='iconDrawer'
+                                                />
+                                                Setting</Link>
+                                        </li>
+                                    </>
+
+                            }
+                            </>
+
+                        }
+
+
+
+
                         {/* <li><Link to='/admin/reader' class="">
                             <FontAwesomeIcon icon={faUser}
                                 className='iconDrawer'
@@ -322,13 +415,6 @@ export default function Header() {
 
                             Readers</Link></li>
                       
-                        <li>
-                            <Link to='/admin/announcement' class="">
-                                <FontAwesomeIcon icon={faBullhorn}
-                                    className='iconDrawer'
-                                />
-                                Announcement</Link>
-                        </li>
                         <li><Link to="/admin/chat" class="">
                             <FontAwesomeIcon icon={faComment}
                                 className='iconDrawer'
@@ -397,8 +483,8 @@ export default function Header() {
             >
                 <div className={classes.drawerHeader} />
 
-                <Route exact path='/' component={()=>{
-                    return <HomePanel  admin={admin}/>
+                <Route exact path='/' component={() => {
+                    return <HomePanel admin={admin} hr={hr} company={company} />
                 }} />
                 <Route exact path='/admin/chat' component={ChatSection} />
                 <Route exact path='/admin/client' component={Companies} />
@@ -414,7 +500,7 @@ export default function Header() {
                 <Route exact path='/admin/pricingAdmin' component={PricingAdmin} />
                 <Route exact path='/expenseCategory' component={CouponAdmin} />
                 <Route exact path='/expenseList' component={Admins} />
-                <Route exact path='/addEmployee' component={BlogsAndArticalsAdmin} />
+                {/* <Route exact path='/addEmployee' component={BlogsAndArticalsAdmin} /> */}
                 <Route exact path='/admin/client-messages' component={ClientMessages} />
                 <Route exact path='/admin/reader-messages' component={ReaderMessages} />
                 <Route exact path='/new_coupon' component={NewCoupon} />
@@ -425,6 +511,25 @@ export default function Header() {
                 <Route exact path='/new_package' component={priceAddNew} />
                 <Route exact path='/new_admin' component={AdminSignup} />
                 <Route exact path='/editSettings' component={EditSetting} />
+                <Route exact path='/editexpenseGroup' component={EditExpenseGroup} />
+                <Route exact path='/payment-type' component={PaymentType} />
+                <Route exact path='/editPaymentType' component={EditPaymentType} />
+                <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
+                <Route exact path='/add_employee' component={AddEmployee} />
+                <Route exact path='/add_new_employee' component={AddEmployeeForm} />
+                <Route exact path='/company_setting' component={SettingCompany} />
+                <Route exact path='/edit_company_setting' component={EditSettingCompany} />
+                <Route exact path='/expense_status' component={ExpenseStatus} />
+                <Route exact path='/expense_status_hr' component={ExpenseListHr} />
+
+
+
+
+
+
+
+
+
 
 
 

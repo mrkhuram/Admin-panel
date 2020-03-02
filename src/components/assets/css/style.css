@@ -620,7 +620,7 @@
  .content-wrapper{
      width:100%;
      padding:20px 30px;
-     overflow-y:scroll;
+     overflow-y:auto;
      height:100%;
      border:0px;
      padding-bottom:100px;
@@ -657,9 +657,9 @@
      text-align:left;
 }
  .content-wrapper form .form-control ,.content-wrapper form textarea {
-     border-radius: 0px;
+     border-radius: 3px;
      height: 34px;
-     border: 1px solid #f0f0f0;
+     border: 1px solid #909090;
      box-shadow: none ;
      background: transparent ;
 }
@@ -1299,4 +1299,47 @@ label{
 }
 .noBtn{
     margin-left: 20px;
+}
+
+.btn:hover, .btn:active, .btn:focus{
+    background-color: #f9407e !important;
+    color: white !important;
+    /* padding: 10px 20px !important; */
+    border: none;
+    box-shadow: none;
+}
+
+input:focus, select:focus{
+    border-color: #f33676 !important;
+}
+
+.activeTab, .activeTab:hover{
+    border: 1px solid #f33676 !important;
+    color: #f33676 !important;
+    background-color: white !important;
+    padding: 10px !important;
+    border-top-right-radius: 20px !important;
+    margin-bottom: -5px;
+    /* border-top-left-radius: 20px !important; */
+    /* border-radius: 0 !important; */
+
+}
+/* .activeTab:hover{
+    border: none !important
+} */
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+    border-bottom: 1px solid #ddd;
+}
+
+.noneActiveTab, .noneActiveTab:hover{
+    border-top-right-radius: 20px !important;
+    /* border-top-left-radius: 20px !important; */
+    /* border: 1px solid #f33676 !important; */
+    background-color: white !important;
+    color: #151414 !important;
+    padding: 10px !important;
+    /* border-radius: 0 !important; */
+   
 }

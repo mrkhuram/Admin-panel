@@ -7,10 +7,11 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import EditPaymentType from './paymentTypeEdit';
 
 
 
-class CouponAdmin extends React.Component {
+class PaymentType extends React.Component {
     constructor(props) {
         super(props)
         // this.props.couponsList()
@@ -18,21 +19,22 @@ class CouponAdmin extends React.Component {
     state = {
         coupons: [
             {
-                group_name: 'Faisalabad',
+                group_name: 'Cheque',
                 expenseCategory: 'Maintanence'
             },
             {
-                group_name: 'Faisalabad',
+                group_name: 'Cash',
                 expenseCategory: 'Maintanence'
             },
             {
-                group_name: 'Faisalabad',
+                group_name: 'Cheque',
                 expenseCategory: 'Maintanence'
             },
         ],
         open: false,
         openPop: false,
         delete: false,
+        edit: false,
         expense: [
             {
                 expenseName: 'Bike Maintance',
@@ -86,19 +88,6 @@ class CouponAdmin extends React.Component {
 
 
     addNewField = () => {
-        // let count = 1
-        // count++
-        // let anotherName = 'name'+count
-        // let anotherExpense = 'expense'+count
-
-
-        // this.setState({
-        //     arr: [...this.state.arr, 
-        //             anotherName,
-        //             anotherExpense]
-        // })
-
-        // console.log(this.state.arr);
 
         this.setState({
             arr: [...this.state.arr, { eName: '', eAmount: '' }]
@@ -139,7 +128,7 @@ class CouponAdmin extends React.Component {
                         style={{ visibility: 'visible', animationName: "fadeInUp" }}>
                         <div class="row table-header">
                             <div class="col-xs-12 col-md-6">
-                                <h2 class="section-title">Expense Groups</h2>
+                                <h2 class="section-title">Payment Type</h2>
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <form class="form-inline form-searchbar">
@@ -155,7 +144,7 @@ class CouponAdmin extends React.Component {
                                             marginLeft: 20
                                         }}
                                     ><i class="fa fa-plus"></i>
-                                        Add Group</a>
+                                        Add Payment</a>
                                 </form>
                             </div>
                         </div>
@@ -165,7 +154,7 @@ class CouponAdmin extends React.Component {
                                     <tbody>
                                         <tr>
                                             <th class="active" width="50">No. </th>
-                                            <th class="active" width="250">Group Name</th>
+                                            <th class="active" width="250">Payment Type</th>
                                             {/* <th class="active">Expense Category</th> */}
                                             <th class="active" style={{ width: "200px" }}>Action</th>
                                         </tr>
@@ -184,7 +173,10 @@ class CouponAdmin extends React.Component {
                                                     > <FontAwesomeIcon icon={faEye} className='iconCompany' /></Link>
 
                                                     <Link
-                                                        to='/editexpenseGroup'
+                                                        // to='/editPaymentType'
+                                                        onClick={() => {
+                                                            this.handleClickOpen('edit')
+                                                        }}
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
@@ -238,7 +230,7 @@ class CouponAdmin extends React.Component {
                         >X</p>
                                 <div class="row table-header">
                                     <div class="col-xs-12 col-md-6">
-                                        <h2 class="section-title">Expense Details</h2>
+                                        <h2 class="section-title">Payment Type</h2>
                                     </div>
                                 </div>
                                     <hr style={{marginTop: 10,borderTop: "1px solid #909090", width: "94%", marginLeft: 15}}/>
@@ -249,15 +241,15 @@ class CouponAdmin extends React.Component {
                                                 <tr>
                                                     <th class="active" width="80">No.</th>
                                                     <th class="active" width="280">Name</th>
-                                                    <th class="active" width="130">Amount</th>
+                                                    {/* <th class="active" width="130">Amount</th> */}
 
                                                 </tr>
-                                                {this.state.expense ? this.state.expense.map((item, index) => {
+                                                {this.state.expense ? this.state.coupons.map((item, index) => {
 
                                                     return <tr>
                                                         <td>{index + 1}</td>
-                                                        <td>{item.expenseName}</td>
-                                                        <td>{item.expenseAmount}</td>
+                                                        <td>{item.group_name}</td>
+                                                        {/* <td>{item.expenseAmount}</td> */}
 
 
                                                     </tr>
@@ -317,7 +309,7 @@ class CouponAdmin extends React.Component {
                                                 // borderBottom: "1px solid grey",
                                                 color: '#060606'
                                             }}
-                                        > New Expense Group
+                                        > New Payment Type
     
 										</h2>
                                 <hr style={{marginTop: 10,borderTop: "1px solid #909090"}}/>
@@ -339,7 +331,7 @@ class CouponAdmin extends React.Component {
                                                         //     display: 'flex'
                                                         // }}
                                                         key={ind}
-                                                        onChange={this.onChangeHandler}
+                                                        // onChange={this.onChangeHandler}
                                                     >
                                                         <div className="form-group"
 
@@ -349,7 +341,7 @@ class CouponAdmin extends React.Component {
                                                                         <>
                                                             <label for="pwd">
 
-                                                                Group Name
+                                                                Payment Name
 
                                                             </label>
 
@@ -368,39 +360,34 @@ class CouponAdmin extends React.Component {
                                                                 }
 
                                                         </div>
-                                                        <div className="form-group"
-                                                        // style={{
-                                                        //     marginLeft: 20
-                                                        // }}
-                                                        >
-                                                        
-                                                             <label for="pwd">
+{/*                                                         
+                                                        <div class="form-group">
+                                                                <label for="pwd">Payment Type</label>
+                                                                <select class="form-control" name='to_client'
+                                                                onChange={onChangeHandler}
+                                                                >
+                                                                    <option value="client">Select Payment Type</option>
 
-                                                                Describe Expense
+                                                                    <option value="client">Cheque</option>
+                                                                    <option value="reader">Cash</option>
+                                                                    <option value="reader">Contract</option>
+                                                                        <option value="reader">Intern</option>
 
-                                                                </label>
-                                                           
-                                                            <textarea type="text" className="form-control"
-                                                                name={amount}
-                                                                data-id={ind}
-                                                                id={amount}
-                                                                // placeholder="Descripe Expense"
 
-                                                            >
-                                                            </textarea>
-                                                        </div>
+                                                                </select>
+                                                            </div> */} 
                                                     </form>
                                                 </>
                                             })}
                                             
-                                            <label for="pwd">Reciept</label>
+                                            {/* <label for="pwd">Reciept</label>
 
                                             <label class="switch"
                                                 style={{marginLeft: 10}}
                                                 > 
                                                 <input type="checkbox"/>
                                                 <span class="checkbox_slider round"></span>
-                                                </label>
+                                                </label> */}
                                         <div style={{
                                             // display: 'flex',
                                             marginTop: 20,
@@ -410,10 +397,10 @@ class CouponAdmin extends React.Component {
 
                                 {/* <hr style={{marginTop: 5,borderTop: "1px solid #909090"}}/> */}
 
-                                            <button type="submit" className="btn btn-default noBtn blue"
+                                            {/* <button type="submit" className="btn btn-default noBtn blue"
                                                 style={{ margin: 'auto',marginRight: 10 }}
                                                 onClick={this.addNewField}
-                                            >More Expense</button>
+                                            >More Expense</button> */}
 
                                             <button type="submit" className="btn btn-default noBtn"
                                                 style={{ margin: 'auto',padding: "10px 44px" }}
@@ -481,6 +468,33 @@ class CouponAdmin extends React.Component {
                 </Dialog>
 
 
+                <Dialog onClose={() => {
+                    this.handleClose('edit')
+                }} open={this.state.edit}
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    <MuiDialogContent style={{
+
+                        margin: 0,
+                        overFlow: 'hidden'
+                    }}>
+                        {/* <p
+                            style={{
+                                float: 'right',
+                                marginTop: '-20',
+                                cursor: 'pointer'
+                            }}
+                            // onClick={() => {
+                            //     this.handleClose('edit')
+                            // }}
+                        >X</p> */}
+                        <EditPaymentType  handleClose={this.handleClose}/>
+
+                    </MuiDialogContent>
+                </Dialog>
+
 
             </>
         )
@@ -502,4 +516,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 // export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CouponAdmin));
-export default CouponAdmin
+export default PaymentType
