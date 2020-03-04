@@ -155,7 +155,6 @@ class PaymentType extends React.Component {
                                         <tr>
                                             <th class="active" width="50">No. </th>
                                             <th class="active" width="250">Payment Type</th>
-                                            {/* <th class="active">Expense Category</th> */}
                                             <th class="active" style={{ width: "200px" }}>Action</th>
                                         </tr>
                                         {this.state.coupons ? this.state.coupons.map((item, index) => {
@@ -163,7 +162,6 @@ class PaymentType extends React.Component {
                                             return <tr>
                                                 <td>{index + 1}</td>
                                                 <td>{item.group_name}</td>
-                                                {/* <td>{item.expenseCategory}</td> */}
 
                                                 <td>
                                                     <Link to='#' class="badge blue"
@@ -241,7 +239,6 @@ class PaymentType extends React.Component {
                                                 <tr>
                                                     <th class="active" width="80">No.</th>
                                                     <th class="active" width="280">Name</th>
-                                                    {/* <th class="active" width="130">Amount</th> */}
 
                                                 </tr>
                                                 {this.state.expense ? this.state.coupons.map((item, index) => {
@@ -249,7 +246,6 @@ class PaymentType extends React.Component {
                                                     return <tr>
                                                         <td>{index + 1}</td>
                                                         <td>{item.group_name}</td>
-                                                        {/* <td>{item.expenseAmount}</td> */}
 
 
                                                     </tr>
@@ -262,6 +258,11 @@ class PaymentType extends React.Component {
                         </div>
                     </MuiDialogContent>
                 </Dialog>
+
+
+
+
+
 
                 <Dialog onClose={() => {
                                         this.handleClose('openPop')
@@ -282,9 +283,9 @@ class PaymentType extends React.Component {
                             }}
                         >
 
-                            <div id="order_preview" className="wow fadeInUp content_box"
+                            <div id="order_preview" className="wow fadeInUp content_box newCompanyDiv"
                                 style={{
-                                    visibility: "visible", animationName: "fadeInUp", width: '500px', padding: '25px'
+                                    visibility: "visible", animationName: "fadeInUp", padding: '25px'
 
                                 }}>
                                 <p
@@ -299,14 +300,11 @@ class PaymentType extends React.Component {
                                 >X</p>
                                 <div className="row table-header">
                                     <div className="col-xs-12 col-md-12"
-                                        style={{
-                                            // textAlign: 'center'
-                                        }}
+                                       
                                     >
                                         <h2 className="section-title"
                                             style={{
-                                                // marginTop: -30,
-                                                // borderBottom: "1px solid grey",
+                                               
                                                 color: '#060606'
                                             }}
                                         > New Payment Type
@@ -327,11 +325,8 @@ class PaymentType extends React.Component {
                                                 let eName = `groupName-${ind + 1}`, amount = `introExpense-${ind + 1}`
                                                 return <>
                                                     <form
-                                                        // style={{
-                                                        //     display: 'flex'
-                                                        // }}
+                                                        
                                                         key={ind}
-                                                        // onChange={this.onChangeHandler}
                                                     >
                                                         <div className="form-group"
 
@@ -351,56 +346,25 @@ class PaymentType extends React.Component {
                                                                 id={eName}
                                                                 style={{
                                                                     width: "100%",
-                                                                    // marginLeft: 20
                                                                 }}
-                                                                // placeholder="Group Name"
                                                                 />
                                                                 </>
                                                                 : ''
                                                                 }
 
                                                         </div>
-{/*                                                         
-                                                        <div class="form-group">
-                                                                <label for="pwd">Payment Type</label>
-                                                                <select class="form-control" name='to_client'
-                                                                onChange={onChangeHandler}
-                                                                >
-                                                                    <option value="client">Select Payment Type</option>
 
-                                                                    <option value="client">Cheque</option>
-                                                                    <option value="reader">Cash</option>
-                                                                    <option value="reader">Contract</option>
-                                                                        <option value="reader">Intern</option>
-
-
-                                                                </select>
-                                                            </div> */} 
                                                     </form>
                                                 </>
                                             })}
                                             
-                                            {/* <label for="pwd">Reciept</label>
-
-                                            <label class="switch"
-                                                style={{marginLeft: 10}}
-                                                > 
-                                                <input type="checkbox"/>
-                                                <span class="checkbox_slider round"></span>
-                                                </label> */}
+                                           
                                         <div style={{
-                                            // display: 'flex',
                                             marginTop: 20,
                                             float:'right',
-                                            // width: "100%"
                                         }}>
 
-                                {/* <hr style={{marginTop: 5,borderTop: "1px solid #909090"}}/> */}
-
-                                            {/* <button type="submit" className="btn btn-default noBtn blue"
-                                                style={{ margin: 'auto',marginRight: 10 }}
-                                                onClick={this.addNewField}
-                                            >More Expense</button> */}
+                            
 
                                             <button type="submit" className="btn btn-default noBtn"
                                                 style={{ margin: 'auto',padding: "10px 44px" }}
@@ -413,6 +377,10 @@ class PaymentType extends React.Component {
                         </div>
                     </MuiDialogContent>
                 </Dialog>
+
+
+
+
 
                 <Dialog onClose={() => {
                     this.handleClose('delete')
@@ -442,13 +410,7 @@ class PaymentType extends React.Component {
                                 textAlign: 'center'
                             }}
                         >
-                            {/* <FontAwesomeIcon icon={faTimesCircle}
-                                    style={{
-                                        fontSize: 35,
-                                        color: 'red',
-
-                                    }}
-                                /> */}
+                         
                             <h4
                                 style={{
                                     marginTop: 30,
@@ -468,6 +430,9 @@ class PaymentType extends React.Component {
                 </Dialog>
 
 
+
+
+
                 <Dialog onClose={() => {
                     this.handleClose('edit')
                 }} open={this.state.edit}
@@ -480,16 +445,7 @@ class PaymentType extends React.Component {
                         margin: 0,
                         overFlow: 'hidden'
                     }}>
-                        {/* <p
-                            style={{
-                                float: 'right',
-                                marginTop: '-20',
-                                cursor: 'pointer'
-                            }}
-                            // onClick={() => {
-                            //     this.handleClose('edit')
-                            // }}
-                        >X</p> */}
+                        
                         <EditPaymentType  handleClose={this.handleClose}/>
 
                     </MuiDialogContent>

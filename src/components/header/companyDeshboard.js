@@ -50,6 +50,7 @@ class CompanyDeshboard extends React.Component {
                         {this.props.admin
 
                             ?
+
                             <>
                                 <Link className='link'
                                     to='/new_company'
@@ -127,7 +128,6 @@ class CompanyDeshboard extends React.Component {
                                             <div class="col-xs-4 col">
                                                 <p class="icon color1">
 
-                                                    {/* <i class="fa fa-users"></i> */}
                                                     <FontAwesomeIcon icon={faMoneyBillWaveAlt}
                                                     />
 
@@ -171,6 +171,7 @@ class CompanyDeshboard extends React.Component {
 
 
                             <>
+
                             < div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
                                 <Link to='/admin/readerTestimony' class="link " >
                                     <div class="box">
@@ -254,7 +255,6 @@ class CompanyDeshboard extends React.Component {
                 >
                     <MuiDialogContent style={{
 
-                        // margin: 0,
                         overFlow: 'hidden'
                     }}>
                         <div
@@ -266,14 +266,12 @@ class CompanyDeshboard extends React.Component {
                             <div class="form-group">
                                 <label for="pwd">Expense Category</label>
                                 <select class="form-control" name='to_client'
-                                // onChange={onChangeHandler}
                                 >
                                     <option value="client">Select Expense Category</option>
 
                                     <option value="client">Manufacture</option>
                                     <option value="reader">Maintenance</option>
-                                    {/* <option value="reader">Contract</option>
-                                        <option value="reader">Intern</option> */}
+                                  
 
 
                                 </select>
@@ -282,7 +280,6 @@ class CompanyDeshboard extends React.Component {
                             <div class="form-group">
                                 <label for="pwd">Payment Type</label>
                                 <select class="form-control" name='to_client'
-                                // onChange={this.onTo}
                                 >
                                     <option value="client">Select Payment Type</option>
 
@@ -293,7 +290,6 @@ class CompanyDeshboard extends React.Component {
                             <div class="form-group">
                                 <label for="pwd">Deiscription</label>
                                 <textarea type="text" class="form-control" name="limit"
-                                // onChange={onChangeHandler} 
 
                                 ></textarea>
                             </div>
@@ -307,7 +303,6 @@ class CompanyDeshboard extends React.Component {
 
                                     style={{
                                         padding: "8px 30px",
-                                        // margin: 'auto'
                                     }}
                                 ><i class="fa fa-search"></i> Add</button>
                             </div>

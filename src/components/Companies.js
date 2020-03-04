@@ -7,15 +7,6 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 
 import AddEmployee from './tabsAddEmployee'
 import {
-    TabContent,
-    TabPane,
-    Nav,
-    NavItem,
-    NavLink,
-    Card,
-    Button,
-    CardTitle,
-    CardText,
     Row,
     Col
 } from 'reactstrap';
@@ -24,7 +15,6 @@ import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
-import ClientStatus from './clientStatus';
 
 
 
@@ -48,7 +38,6 @@ class Companies extends React.Component {
             [element]: false
         })
     };
-    // const[activeTab, setActiveTab] = useState('1');
 
     toggle = tab => {
         if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
@@ -59,13 +48,15 @@ class Companies extends React.Component {
                 <div class="content-wrapper">
 
                     <div id="order_preview" class="wow fadeInUp content_box" style={{ visibility: "visible", animationName: "fadeInUp" }}>
-                        {/* <div class="row table-header"> */}
+
+                        {/* Companies Header and Search Bar Start */}
+
                         <Row className='table-header'>
 
                             <Col xs='12' md='4'>
                                 <h2 class="section-title">Our Companies</h2>
                             </Col>
-                            <Col class="col-xs-12 col-md-8" xs='12' md='8'>
+                            <Col xs='12' md='8'>
                                 <form class="form-inline form-searchbar" action="http://test.hiddenlogics.com/action_page.php">
                                     <div class="form-group">
                                         <label for="email">Year</label>
@@ -219,16 +210,17 @@ class Companies extends React.Component {
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-                                    {/* <Link className='link' to='/' style={{
-                                        marginLeft: 10
-                                    }}>
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Back </button>
-                                    </Link> */}
 
                                 </form>
                             </Col>
                         </Row>
-                        {/* </div> */}
+
+                        {/* Companies Header and Search Bar End */}
+
+
+
+                        {/* Companies Table Sart */}
+
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
                                 <div class="table-responsive">
@@ -254,7 +246,6 @@ class Companies extends React.Component {
                                                 </td>
                                                 <td>
                                                     <Link
-                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
@@ -283,7 +274,6 @@ class Companies extends React.Component {
                                                 </td>
                                                 <td>
                                                     <Link
-                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
@@ -312,7 +302,6 @@ class Companies extends React.Component {
                                                 </td>
                                                 <td>
                                                     <Link
-                                                        //  to='/admin/clientDetail' 
                                                         onClick={() => {
                                                             this.handleClickOpen('open')
                                                         }}
@@ -361,18 +350,23 @@ class Companies extends React.Component {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    {/* 
-                                    <button type="submit" class="btn btn-default btnAdd"
-                                        style={{
-                                            float: 'right'
-                                        }}
-                                    ><i class="fa fa-search" ></i> Generate Report</button> */}
+
 
 
                                 </div>
                             </div>
                         </div>
+
+                        {/* Companies Table End */}
+
                     </div>
+
+
+
+
+
+                    {/* Popup of View Start */}
+
 
 
 
@@ -385,7 +379,6 @@ class Companies extends React.Component {
                     >
                         <MuiDialogContent style={{
 
-                            // margin: 0,
                             overFlow: 'hidden',
                             width: 600
                         }}>
@@ -408,26 +401,25 @@ class Companies extends React.Component {
                                         }}
                                     >X</p>
                                     <div class="col-xs-12 col-md-12"
-                                    style={{
-                                        textAlign:'center',
-                                        
-                                    }}
+                                        style={{
+                                            textAlign: 'center',
+
+                                        }}
                                     >
-                                            <h4 class="section-title"
+                                        <h4 class="section-title"
                                             style={{
                                                 marginBottom: 40,
-                                                // marginTop: -30,
                                                 float: 'left'
                                             }}
-                                            >Company Details</h4>
-                                             
-                                             <img src={require("./assets/images/logo.png")} alt=""
-                                                style={{
-                                                    width: 100,
-                                                    float: 'right'
-                                                }}
-                                             />
-                                        
+                                        >Company Details</h4>
+
+                                        <img src={require("./assets/images/logo.png")} alt=""
+                                            style={{
+                                                width: 100,
+                                                float: 'right'
+                                            }}
+                                        />
+
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
@@ -468,51 +460,32 @@ class Companies extends React.Component {
                                                 </tr>
 
 
-                                                {/* <tr>
-                                                    <th >Employee Detail</th>
-                                                    <td>
-                                                        <ul class="check">
-                                                            <li><a href="#">John</a></li>
-                                                            <li><a href="#">Doe</a></li>
-                                                            <li><a href="#">Demo</a></li>
-                                                            <li><a href="#">Test</a></li>
-                                                            <li><a href="#">Demo</a></li>
-                                                            <li><a href="#">Test</a></li>
-                                                        </ul>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                            <th class="active">Ban</th>
-                                            <td>
-                                                <p><strong>By Admin: </strong>Smith Jen </p>
-                                                <p><strong>Reason: </strong>Non professional behave</p>
-                                            </td>
-                                        </tr> */}
+
                                                 <tr>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <Link
-                                        to='/expenseList'
-                                        className='link'
+                                            to='/expenseList'
+                                            className='link'
                                         >
-                                        <button type="submit" class="btn btn-default noBtn"
-                                        style={{
-                                            marginLeft: 30
-                                        }}
-                                        
-                                        ><i class="fa fa-search"></i> Expense List</button>
+                                            <button type="submit" class="btn btn-default noBtn"
+                                                style={{
+                                                    marginLeft: 30
+                                                }}
+
+                                            ><i class="fa fa-search"></i> Expense List</button>
                                         </Link>
                                         <Link
-                                         to='/addEmployee'
-                                        className='link'
+                                            to='/addEmployee'
+                                            className='link'
                                         >
-                                        <button type="submit" class="btn btn-default noBtn"
-                                        style={{
-                                            marginLeft: 30
-                                        }}
-                                        
-                                        ><i class="fa fa-search"></i> Employee</button>
+                                            <button type="submit" class="btn btn-default noBtn"
+                                                style={{
+                                                    marginLeft: 30
+                                                }}
+
+                                            ><i class="fa fa-search"></i> Employee</button>
                                         </Link>
 
                                     </div>
@@ -520,6 +493,15 @@ class Companies extends React.Component {
                             </div>
                         </MuiDialogContent>
                     </Dialog>
+
+
+                    {/* Popup of View End */}
+
+
+
+
+                    {/* Popup of Delete Start */}
+
 
                     <Dialog onClose={() => {
                         this.handleClose('delete')
@@ -534,14 +516,14 @@ class Companies extends React.Component {
                             overFlow: 'hidden'
                         }}>
                             <p
-                            style={{
-                                float: 'right',
-                                marginTop: '-20',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => {
-                                this.handleClose('delete')
-                            }}
+                                style={{
+                                    float: 'right',
+                                    marginTop: '-20',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => {
+                                    this.handleClose('delete')
+                                }}
                             >X</p>
                             <div
                                 style={{
@@ -549,13 +531,7 @@ class Companies extends React.Component {
                                     textAlign: 'center'
                                 }}
                             >
-                                {/* <FontAwesomeIcon icon={faTimesCircle}
-                                    style={{
-                                        fontSize: 35,
-                                        color: 'red',
 
-                                    }}
-                                /> */}
                                 <h4
                                     style={{
                                         marginTop: 30,
@@ -565,14 +541,17 @@ class Companies extends React.Component {
 
                                 <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
                                 <button type="submit" class="btn btn-default noBtn"
-                                   onClick={() => {
-                                    this.handleClose('delete')
-                                }}
+                                    onClick={() => {
+                                        this.handleClose('delete')
+                                    }}
                                 ><i class="fa fa-search"></i> No</button>
                             </div>
 
                         </MuiDialogContent>
                     </Dialog>
+
+                    {/* Popup of Delete End */}
+
 
                 </div>
 

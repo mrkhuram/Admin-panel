@@ -59,18 +59,17 @@ class EditPaymentType extends React.Component {
     }
     onSubmit = (e) => {
         e.preventDefault()
-        // this.props.AddAnnouncement(this.state)
 
     }
     render() {
         return (
             <>
 
-                <div class="content-wrapper"
+                <div class="content-wrapper newCompanyDiv"
                     style={{
                         padddingBottom: 0,
                         padding: 0,
-                        width: 500
+                        
                     }}
 
                 >
@@ -85,7 +84,7 @@ class EditPaymentType extends React.Component {
                                 this.props.handleClose('edit')
                             }}
                         >X</p>
-                    <div id="order_preview" class="wow fadeInUp content_box"
+                    <div id="order_preview" class="wow content_box"
                         style={{
                             visibility: 'visible', animationName: "fadeInUp",
 
@@ -109,49 +108,7 @@ class EditPaymentType extends React.Component {
 
                                 <Col xs='12' md='10'>
                                     <form>
-                                        {/* <div class="form-group">
-                                            <label for="pwd">Payment Name</label>
-                                            <input type="text" class="form-control" name="companyName"
-                                                value='Faisalabad'
-                                                onChange={this.onChangeHandler}
-                                                style={{
-                                                    width: '60%'
-                                                }} />
-                                        </div> */}
-
-                                        {/* <div class="form-group">
-
-                                            <table class="table table-bordered">
-                                                <tbody>
-
-                                                    {this.state.coupons ? this.state.coupons.map((item, index) => {
-
-                                                        return <tr>
-
-                                                            <div className="form-group"
-
-                                                            >
-
-                                                                <label for="pwd">
-
-                                                                    Describe Expense
-
-                                                                </label>
-
-                                                                <textarea type="text" className="form-control"
-                                                                    value={item.group_name}
-                                                                    data-id={index}
-
-                                                                // placeholder="Descripe Expense"
-
-                                                                >
-                                                                </textarea>
-                                                            </div>
-                                                        </tr>
-                                                    }) : <></>}
-                                                </tbody>
-                                            </table>
-                                        </div> */}
+                                        
                                         <div class="form-group">
                                             <label for="pwd">Payment Type</label>
                                             <select class="form-control" name='to_client'
@@ -176,6 +133,9 @@ class EditPaymentType extends React.Component {
 
 
                             </Row>
+
+
+                            
                             <button type="submit" className="btn btn-default noBtn"
                                 style={{
                                     margin: 'auto', padding: "10px 44px", float: 'right',

@@ -1,19 +1,13 @@
 
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
 import { Link } from 'react-router-dom';
-import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import IntlTelInput from 'react-intl-tel-input';
-import 'react-intl-tel-input/dist/main.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faEye, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faUserEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { act } from 'react-dom/test-utils';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -81,6 +75,9 @@ const ExpenseList
 		return (
 			<div>
 
+
+				{/* Tab 1 Start*/}
+
 				<TabContent activeTab={activeTab}>
 					<TabPane tabId="1">
 						<Row>
@@ -102,30 +99,20 @@ const ExpenseList
 														<input type="text" class="form-control" placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
-													{/* <Link to="#" className="btn btn-default link"
-														onClick={() => {
-															this.handleClickOpen('addNew')
-														}}
-														style={{
-															marginLeft: 20
-														}}
-													><i class="fa fa-plus"></i>
-														Add Employee</Link> */}
+
 												</form>
 											</div>
 										</div>
 
 
-										{/* <Tabs toggle={toggle} active={activeTab}/> */}
 
+										{/* Tabs Section */}
 
 										<Row>
 											<>
 												<Nav tabs
 													style={{
-														// marginBottom: 20,
-														// backgroundColor: 'white',
-														// height: 70,
+
 														fontSize: 18,
 														border: 'none',
 														marginLeft: 15
@@ -133,7 +120,6 @@ const ExpenseList
 												>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('1'); }}
 															style={{
@@ -151,7 +137,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '2' })}
 															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('2'); }}
 															style={{
@@ -168,7 +153,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('3'); }}
 															style={{
@@ -187,7 +171,6 @@ const ExpenseList
 
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '3' })}
 															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('4'); }}
 															style={{
@@ -206,10 +189,11 @@ const ExpenseList
 											</>
 										</Row>
 
+										{/* Tabs End */}
 
 
 
-										{/* {this.props.admin.msg} */}
+
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
 												<table class="table table-bordered">
@@ -228,29 +212,19 @@ const ExpenseList
 																return <tr>
 																	<td>{index + 1}</td>
 																	<td>{item.name}</td>
-																	{/* <td>{item.description}</td> */}
-																	{/* <td>James Hod</td> */}
 																	<td>{item.addedBy}</td>
 
 																	<td>{item.addedOn}</td>
 																	<td>{item.status}</td>
 
 																	<td>
-																		{/* <a class="badge blue"> <i class="fa fa-external-link"></i> View Detail</a> */}
 																		<Link
-																			//  to='/admin/clientDetail' 
-																			// onClick={() => {
-																			// 	this.handleClickOpen('openPop')
-																			// }}
 																			to='#'
 																			title="Approve"
 																			class="badge blue" > <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
 
 
 																		<Link to='#'
-																			// onClick={() => {
-																			// 	this.handleClickOpen('delete')
-																			// }}
 																			title="Reject"
 
 																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
@@ -271,6 +245,13 @@ const ExpenseList
 
 						</Row>
 					</TabPane>
+
+				{/* Tab 1 End*/}
+
+
+
+				{/* Tab 2 Start*/}
+
 					<TabPane tabId="2">
 						<Row>
 							<Col sm="12" md='12'>
@@ -290,30 +271,18 @@ const ExpenseList
 														<input type="text" class="form-control" placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
-													{/* <Link to="#" className="btn btn-default link"
-														onClick={() => {
-															this.handleClickOpen('addNew')
-														}}
-														style={{
-															marginLeft: 20
-														}}
-													><i class="fa fa-plus"></i>
-														Add Expense</Link> */}
 												</form>
 											</div>
 										</div>
 
 
-										{/* <Tabs toggle={toggle} active={activeTab} /> */}
 
+										{/* Tabs Section */}
 
 										<Row>
 											<>
 												<Nav tabs
 													style={{
-														// marginBottom: 20,
-														// backgroundColor: 'white',
-														// height: 70,
 														fontSize: 18,
 														border: 'none',
 														marginLeft: 15
@@ -321,7 +290,6 @@ const ExpenseList
 												>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('1'); }}
 															style={{
@@ -339,7 +307,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '2' })}
 															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('2'); }}
 															style={{
@@ -356,7 +323,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('3'); }}
 															style={{
@@ -375,7 +341,6 @@ const ExpenseList
 
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '3' })}
 															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('4'); }}
 															style={{
@@ -394,9 +359,10 @@ const ExpenseList
 											</>
 										</Row>
 
+										{/* Tabs End */}
 
 
-										{/* {this.props.admin.msg} */}
+
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
 												<table class="table table-bordered">
@@ -406,7 +372,6 @@ const ExpenseList
 															<th class="active" width="200">Expense Name</th>
 															<th class="active" width="100">Approved By</th>
 															<th class="active" width="100">Approved on</th>
-															{/* <th class="active" width="100">Apprction</th> */}
 
 														</tr>
 														{articlesList ?
@@ -414,38 +379,12 @@ const ExpenseList
 																return <tr>
 																	<td>{index + 1}</td>
 																	<td>{item.name}</td>
-																	{/* <td>{item.description}</td> */}
-																	{/* <td>James Hod</td> */}
+
 																	<td>{item.addedBy}</td>
 
 																	<td>{item.addedOn}</td>
 
-																	{/* <td>
-																		<a class="badge blue"> <i class="fa fa-external-link"></i> View Detail</a>
-																		<Link
-																			//  to='/admin/clientDetail' 
-																			onClick={() => {
-																				this.handleClickOpen('openPop')
-																			}}
-																			to='#'
-																			class="badge blue" > <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
 
-																		<Link
-																			to='#'
-																			class="badge del link" data-toggle="modal" data-target="#myModal"
-																			onClick={() => {
-																				this.handleClickOpen('edit')
-																			}}
-																		>
-																			<FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-																		</Link>
-																		<Link to='#'
-																			onClick={() => {
-																				this.handleClickOpen('delete')
-																			}}
-																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
-
-																	</td> */}
 																</tr>
 															}) : <></>
 														}
@@ -460,6 +399,15 @@ const ExpenseList
 							</Col>
 						</Row>
 					</TabPane>
+
+				{/* Tab 2 End*/}
+
+
+
+
+				{/* Tab 3 Start*/}
+
+
 					<TabPane tabId="3">
 						<Row>
 							<Col sm="12" md='12'>
@@ -479,28 +427,18 @@ const ExpenseList
 														<input type="text" class="form-control" placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
-													{/* <Link to="#" className="btn btn-default link"
-														onClick={() => {
-															this.handleClickOpen('addNew')
-														}}
-														style={{
-															marginLeft: 20
-														}}
-													><i class="fa fa-plus"></i>
-														Add Expense</Link> */}
+
 												</form>
 											</div>
 										</div>
 
+										{/* Tabs Section */}
 
-										{/* <Tabs toggle={toggle} active={activeTab} /> */}
 										<Row>
 											<>
 												<Nav tabs
 													style={{
-														// marginBottom: 20,
-														// backgroundColor: 'white',
-														// height: 70,
+
 														fontSize: 18,
 														border: 'none',
 														marginLeft: 15
@@ -508,7 +446,6 @@ const ExpenseList
 												>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('1'); }}
 															style={{
@@ -526,7 +463,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '2' })}
 															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('2'); }}
 															style={{
@@ -543,7 +479,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('3'); }}
 															style={{
@@ -562,7 +497,6 @@ const ExpenseList
 
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '3' })}
 															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('4'); }}
 															style={{
@@ -581,10 +515,11 @@ const ExpenseList
 											</>
 										</Row>
 
+										{/* Tabs End */}
 
 
 
-										{/* {this.props.admin.msg} */}
+
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
 												<table class="table table-bordered">
@@ -594,7 +529,6 @@ const ExpenseList
 															<th class="active" width="200">Expense Name</th>
 															<th class="active" width="100">Rejected By</th>
 															<th class="active" width="100">Rejected on</th>
-															{/* <th class="active" width="100">Rejection</th> */}
 
 														</tr>
 														{articlesList ?
@@ -602,38 +536,12 @@ const ExpenseList
 																return <tr>
 																	<td>{index + 1}</td>
 																	<td>{item.name}</td>
-																	{/* <td>{item.description}</td> */}
-																	{/* <td>James Hod</td> */}
+
 																	<td>{item.addedBy}</td>
 
 																	<td>{item.addedOn}</td>
 
-																	{/* <td>
-																		<a class="badge blue"> <i class="fa fa-external-link"></i> View Detail</a>
-																		<Link
-																			//  to='/admin/clientDetail' 
-																			onClick={() => {
-																				this.handleClickOpen('openPop')
-																			}}
-																			to='#'
-																			class="badge blue" > <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
 
-																		<Link
-																			to='#'
-																			class="badge del link" data-toggle="modal" data-target="#myModal"
-																			onClick={() => {
-																				this.handleClickOpen('edit')
-																			}}
-																		>
-																			<FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-																		</Link>
-																		<Link to='#'
-																			onClick={() => {
-																				this.handleClickOpen('delete')
-																			}}
-																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
-
-																	</td> */}
 																</tr>
 															}) : <></>
 														}
@@ -648,7 +556,11 @@ const ExpenseList
 							</Col>
 						</Row>
 					</TabPane>
+				{/* Tab 3 End*/}
 
+				
+				
+				{/* Tab 4 Start*/}
 
 
 
@@ -671,28 +583,17 @@ const ExpenseList
 														<input type="text" class="form-control" placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
-													{/* <Link to="#" className="btn btn-default link"
-														onClick={() => {
-															this.handleClickOpen('addNew')
-														}}
-														style={{
-															marginLeft: 20
-														}}
-													><i class="fa fa-plus"></i>
-														Add Expense</Link> */}
+
 												</form>
 											</div>
 										</div>
 
+										{/* Tabs Section */}
 
-										{/* <Tabs toggle={toggle} active={activeTab} /> */}
 										<Row>
 											<>
 												<Nav tabs
 													style={{
-														// marginBottom: 20,
-														// backgroundColor: 'white',
-														// height: 70,
 														fontSize: 18,
 														border: 'none',
 														marginLeft: 15
@@ -700,7 +601,6 @@ const ExpenseList
 												>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('1'); }}
 															style={{
@@ -718,7 +618,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '2' })}
 															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('2'); }}
 															style={{
@@ -735,7 +634,6 @@ const ExpenseList
 													</NavItem>
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '1' })}
 															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('3'); }}
 															style={{
@@ -754,7 +652,6 @@ const ExpenseList
 
 													<NavItem>
 														<NavLink
-															// className={classnames({ active: activeTab === '3' })}
 															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
 															onClick={() => { toggle('4'); }}
 															style={{
@@ -773,10 +670,11 @@ const ExpenseList
 											</>
 										</Row>
 
+										{/* Tabs End */}
 
 
 
-										{/* {this.props.admin.msg} */}
+
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
 												<table class="table table-bordered">
@@ -795,8 +693,6 @@ const ExpenseList
 																return <tr>
 																	<td>{index + 1}</td>
 																	<td>{item.name}</td>
-																	{/* <td>{item.description}</td> */}
-																	{/* <td>James Hod</td> */}
 																	<td>{item.addedBy}</td>
 
 
@@ -804,21 +700,13 @@ const ExpenseList
 																	<td>{item.fStatus}</td>
 
 																	<td>
-																		{/* <a class="badge blue"> <i class="fa fa-external-link"></i> View Detail</a> */}
 																		<Link
-																			//  to='/admin/clientDetail' 
-																			// onClick={() => {
-																			// 	this.handleClickOpen('openPop')
-																			// }}
 																			to='#'
 																			title="Approve"
 																			class="badge blue" > <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
 
 
 																		<Link to='#'
-																			// onClick={() => {
-																			// 	this.handleClickOpen('delete')
-																			// }}
 																			title="Reject"
 
 																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
@@ -838,6 +726,9 @@ const ExpenseList
 							</Col>
 						</Row>
 					</TabPane>
+
+				{/* Tab 4 End*/}
+
 				</TabContent>
 			</div>
 		);

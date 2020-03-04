@@ -59,7 +59,6 @@ class EditExpenseGroup extends React.Component {
     }
     onSubmit = (e) => {
         e.preventDefault()
-        // this.props.AddAnnouncement(this.state)
 
     }
     render() {
@@ -74,8 +73,7 @@ class EditExpenseGroup extends React.Component {
 
                             <Col xs='12' md='8'>
                                 <h2 class="section-title">Edit Expense Group 
-                  {/* <Link to='/'
-                    class="btn btn-default pull-right"><i class="fa fa-chevron-left"></i> Back</Link> */}
+                  
                                 </h2>
                             </Col>
                         </Row>
@@ -97,41 +95,18 @@ class EditExpenseGroup extends React.Component {
                                                     width: '60%'
                                                 }} />
                                         </div>
-                                        {/* <div class="form-group">
-                                            <label for="pwd">Expense Category</label>
-                                            <input type="text" class="form-control" 
-                                            
-                                            style={{
-
-                                                width:'60%'
-                                            }}
-                                            // value='work@gmail.com' 
-                                            name="workEmail" onChange={this.onChangeHandler} />
-                                        </div> */}
+                                        
                                         <div class="form-group">
-                                            {/* <label for="pwd">Expense List</label> */}
 
-                                            {/* <div class="row">
-                                                <div class="col-xs-12 col-md-12"> */}
                                             <table class="table table-bordered">
                                                 <tbody>
-                                                    {/* <tr>
-                                                        <th class="active" width="50">S#</th>
-                                                        <th class="active" width="250">Expense Name</th>
-                                                        <th class="active">Expense Description</th>
-                                                        <th class="active" style={{ width: "200px" }}>Expense Amount</th>
-                                                    </tr> */}
+                                                  
                                                     {this.state.coupons ? this.state.coupons.map((item, index) => {
 
                                                         return <tr>
-                                                            {/* <td>{index + 1}</td>
-                                                            <td>{item.group_name}</td>
-                                                            <td>{item.group_name}</td>
-                                                            <td>2300</td> */}
+                                                       
                                                             <div className="form-group"
-                                                            // style={{
-                                                            //     marginLeft: 20
-                                                            // }}
+                                                           
                                                             >
 
                                                                 <label for="pwd">
@@ -144,7 +119,6 @@ class EditExpenseGroup extends React.Component {
                                                                     value={item.group_name}
                                                                     data-id={index}
                                                                  
-                                                                // placeholder="Descripe Expense"
 
                                                                 >
                                                                 </textarea>
@@ -154,17 +128,18 @@ class EditExpenseGroup extends React.Component {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        {/* </div>
-                                        </div> */}
-
-
-
+                               
                                     </form>
+
+
                                 </Col>
 
 
 
                             </Row>
+
+
+                            
                             <button type="submit" className="btn btn-default noBtn"
                                 style={{
                                     margin: 'auto', padding: "10px 44px", float: 'right',

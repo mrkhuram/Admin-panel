@@ -45,16 +45,7 @@ const EditEmployeeForm
                     }}
                 >
 
-                    {/* <div class="col-xs-12 col-md-6"
-                            style={{
-                                display:'flex'
-                            }}
-                            >
-                                <h4 class="section-title">Add Employee</h4>
-
-                               
-
-                            </div> */}
+                    
                     <NavItem>
                         <NavLink
                             className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
@@ -226,7 +217,6 @@ const EditEmployeeForm
                                             <option value="client" selected>Employee</option>
                                             <option value="reader">Accountant</option>
                                             <option value="reader">Admirative</option>
-                                            {/* <option value="reader">Intern</option> */}
 
 
                                         </select>
@@ -302,7 +292,6 @@ const EditEmployeeForm
 
                                     <div class="form-group">
                                         <label for="pwd">Work Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -335,7 +324,6 @@ const EditEmployeeForm
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Home Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -348,7 +336,6 @@ const EditEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Mobile Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -406,7 +393,6 @@ const EditEmployeeForm
 
                                     <button type="submit" class="btn btn-default"
                                         style={{ marginTop: 10, float: 'right' }}
-                                    // onClick={nextMove}   
                                     >Save</button>
 
 

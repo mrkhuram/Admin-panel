@@ -100,7 +100,7 @@ const AddEmployeeForm
 
                                     <div class="form-group">
                                         <label for="pwd">Work Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
+
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -187,7 +187,7 @@ const AddEmployeeForm
                                             <option value="client">Employee</option>
                                             <option value="reader">Accountant</option>
                                             <option value="reader">Admirative</option>
-                                            {/* <option value="reader">Intern</option> */}
+
 
 
                                         </select>
@@ -201,11 +201,6 @@ const AddEmployeeForm
                                         <label for="pwd">Skype</label>
                                         <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
                                     </div>
-
-                                    {/* <button type="submit" class="btn btn-default"
-                                        style={{ marginTop: 10, float: 'right' }}
-                                        onClick={nextMove}
-                                    >Next</button> */}
 
 
                                 </form>
@@ -244,7 +239,7 @@ const AddEmployeeForm
 
                                     <div class="form-group">
                                         <label for="pwd">Work Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
+                                        
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -275,7 +270,7 @@ const AddEmployeeForm
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Home Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
+
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -286,7 +281,7 @@ const AddEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Mobile Phone</label>
-                                        {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
+
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -336,8 +331,7 @@ const AddEmployeeForm
 
 
                                     <button type="submit" class="btn btn-default"
-                                        style={{ marginTop: 10, float: 'right' }}
-                                    // onClick={nextMove}   
+                                        style={{ marginTop: 10, float: 'right' }}   
                                     >Save</button>
 
 

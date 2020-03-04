@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-// import { allCoupons, deleteACoupon } from '../../redux/action/adminAction'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +12,6 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 class CouponAdmin extends React.Component {
     constructor(props) {
         super(props)
-        // this.props.couponsList()
     }
     state = {
         coupons: [
@@ -63,7 +61,6 @@ class CouponAdmin extends React.Component {
 
 
     deleteItem = (index, id) => {
-        // console.log(id);
         this.state.coupons.splice(index, 1)
         this.setState({
             coupons: this.state.coupons
@@ -86,20 +83,7 @@ class CouponAdmin extends React.Component {
 
 
     addNewField = () => {
-        // let count = 1
-        // count++
-        // let anotherName = 'name'+count
-        // let anotherExpense = 'expense'+count
-
-
-        // this.setState({
-        //     arr: [...this.state.arr, 
-        //             anotherName,
-        //             anotherExpense]
-        // })
-
-        // console.log(this.state.arr);
-
+        
         this.setState({
             arr: [...this.state.arr, { eName: '', eAmount: '' }]
         })
@@ -135,8 +119,11 @@ class CouponAdmin extends React.Component {
         return (
             <>
                 <div class="content-wrapper">
-                    <div id="order_preview" class="wow fadeInUp content_box"
-                        style={{ visibility: 'visible', animationName: "fadeInUp" }}>
+                    <div 
+                    id="order_preview"
+                    class="wow fadeInUp content_box" 
+                    style={{ visibility: 'visible', animationName: "fadeInUp" }}
+                    >
                         <div class="row table-header">
                             <div class="col-xs-12 col-md-6">
                                 <h2 class="section-title">Expense Groups</h2>
@@ -159,6 +146,7 @@ class CouponAdmin extends React.Component {
                                 </form>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
                                 <table class="table table-bordered">
@@ -166,15 +154,17 @@ class CouponAdmin extends React.Component {
                                         <tr>
                                             <th class="active" width="50">No. </th>
                                             <th class="active" width="250">Group Name</th>
-                                            {/* <th class="active">Expense Category</th> */}
                                             <th class="active" style={{ width: "200px" }}>Action</th>
                                         </tr>
-                                        {this.state.coupons ? this.state.coupons.map((item, index) => {
+                                        
+                                        {
+                                        this.state.coupons 
+                                                    ? 
+                                            this.state.coupons.map((item, index) => {
 
                                             return <tr>
                                                 <td>{index + 1}</td>
                                                 <td>{item.group_name}</td>
-                                                {/* <td>{item.expenseCategory}</td> */}
 
                                                 <td>
                                                     <Link to='#' class="badge blue"
@@ -198,7 +188,10 @@ class CouponAdmin extends React.Component {
 
                                                 </td>
                                             </tr>
-                                        }) : <></>}
+                                        }) : 
+                                        <>
+                                        </>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -207,6 +200,18 @@ class CouponAdmin extends React.Component {
                 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+                {/* PopUp of View Start  */}
 
                 <Dialog onClose={() => { this.handleClose('open') }} open={this.state.open}
                     style={{
@@ -227,53 +232,63 @@ class CouponAdmin extends React.Component {
                             <div id="order_preview" class="wow fadeInUp content_box"
                                 style={{ visibility: 'visible', animationName: "fadeInUp",padding: "35px 50px" }}>
                                     <p
-                            style={{
-                                float: 'right',
-                                marginTop: '-20',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => {
-                                this.handleClose('open')
-                            }}
-                        >X</p>
-                                <div class="row table-header">
-                                    <div class="col-xs-12 col-md-6">
-                                        <h2 class="section-title">Expense Details</h2>
+                                        style={{
+                                            float: 'right',
+                                            marginTop: '-20',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() => {
+                                            this.handleClose('open')
+                                        }}
+                                    >X</p>
+                                    <div class="row table-header">
+                                        <div class="col-xs-12 col-md-6">
+                                            <h2 class="section-title">Expense Details</h2>
+                                        </div>
                                     </div>
-                                </div>
                                     <hr style={{marginTop: 10,borderTop: "1px solid #909090", width: "94%", marginLeft: 15}}/>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12">
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <th class="active" width="80">No.</th>
-                                                    <th class="active" width="280">Name</th>
-                                                    <th class="active" width="130">Amount</th>
-
-                                                </tr>
-                                                {this.state.expense ? this.state.expense.map((item, index) => {
-
-                                                    return <tr>
-                                                        <td>{index + 1}</td>
-                                                        <td>{item.expenseName}</td>
-                                                        <td>{item.expenseAmount}</td>
-
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="active" width="80">No.</th>
+                                                        <th class="active" width="280">Name</th>
+                                                        <th class="active" width="130">Amount</th>
 
                                                     </tr>
-                                                }) : <></>}
-                                            </tbody>
-                                        </table>
+                                                    {this.state.expense ? this.state.expense.map((item, index) => {
+
+                                                        return <tr>
+                                                            <td>{index + 1}</td>
+                                                            <td>{item.expenseName}</td>
+                                                            <td>{item.expenseAmount}</td>
+
+
+                                                        </tr>
+                                                    }) : <></>}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </MuiDialogContent>
                 </Dialog>
 
-                <Dialog onClose={() => {
-                                        this.handleClose('openPop')
-                                    }} open={this.state.openPop}
+
+                {/* PopUp of View End  */}
+
+                {/* PopUp of Add Group Start  */}
+
+
+                <Dialog 
+                onClose={() => {
+                   this.handleClose('openPop')
+                }} 
+                open={this.state.openPop}
                     style={{
                         margin: 0
                     }}
@@ -290,9 +305,9 @@ class CouponAdmin extends React.Component {
                             }}
                         >
 
-                            <div id="order_preview" className="wow fadeInUp content_box"
+                            <div id="order_preview" className="wow fadeInUp content_box newCompanyDiv"
                                 style={{
-                                    visibility: "visible", animationName: "fadeInUp", width: '500px', padding: '25px'
+                                    visibility: "visible", animationName: "fadeInUp",  padding: '25px'
 
                                 }}>
                                 <p
@@ -308,19 +323,16 @@ class CouponAdmin extends React.Component {
                                 <div className="row table-header">
                                     <div className="col-xs-12 col-md-12"
                                         style={{
-                                            // textAlign: 'center'
                                         }}
                                     >
                                         <h2 className="section-title"
                                             style={{
-                                                // marginTop: -30,
-                                                // borderBottom: "1px solid grey",
                                                 color: '#060606'
                                             }}
                                         > New Expense Group
     
 										</h2>
-                                <hr style={{marginTop: 10,borderTop: "1px solid #909090"}}/>
+                                        <hr style={{marginTop: 10,borderTop: "1px solid #909090"}}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -335,9 +347,6 @@ class CouponAdmin extends React.Component {
                                                 let eName = `groupName-${ind + 1}`, amount = `introExpense-${ind + 1}`
                                                 return <>
                                                     <form
-                                                        // style={{
-                                                        //     display: 'flex'
-                                                        // }}
                                                         key={ind}
                                                         onChange={this.onChangeHandler}
                                                     >
@@ -359,9 +368,7 @@ class CouponAdmin extends React.Component {
                                                                 id={eName}
                                                                 style={{
                                                                     width: "100%",
-                                                                    // marginLeft: 20
                                                                 }}
-                                                                // placeholder="Group Name"
                                                                 />
                                                                 </>
                                                                 : ''
@@ -369,9 +376,7 @@ class CouponAdmin extends React.Component {
 
                                                         </div>
                                                         <div className="form-group"
-                                                        // style={{
-                                                        //     marginLeft: 20
-                                                        // }}
+                                                      
                                                         >
                                                         
                                                              <label for="pwd">
@@ -384,7 +389,6 @@ class CouponAdmin extends React.Component {
                                                                 name={amount}
                                                                 data-id={ind}
                                                                 id={amount}
-                                                                // placeholder="Descripe Expense"
 
                                                             >
                                                             </textarea>
@@ -402,13 +406,10 @@ class CouponAdmin extends React.Component {
                                                 <span class="checkbox_slider round"></span>
                                                 </label>
                                         <div style={{
-                                            // display: 'flex',
                                             marginTop: 20,
                                             float:'right',
-                                            // width: "100%"
                                         }}>
 
-                                {/* <hr style={{marginTop: 5,borderTop: "1px solid #909090"}}/> */}
 
                                             <button type="submit" className="btn btn-default noBtn blue"
                                                 style={{ margin: 'auto',marginRight: 10 }}
@@ -426,6 +427,14 @@ class CouponAdmin extends React.Component {
                         </div>
                     </MuiDialogContent>
                 </Dialog>
+
+
+
+                {/* PopUp of Add Group End  */}
+
+
+
+                {/* PopUp of Delete Start  */}
 
                 <Dialog onClose={() => {
                     this.handleClose('delete')
@@ -455,13 +464,7 @@ class CouponAdmin extends React.Component {
                                 textAlign: 'center'
                             }}
                         >
-                            {/* <FontAwesomeIcon icon={faTimesCircle}
-                                    style={{
-                                        fontSize: 35,
-                                        color: 'red',
-
-                                    }}
-                                /> */}
+                            
                             <h4
                                 style={{
                                     marginTop: 30,
@@ -479,6 +482,8 @@ class CouponAdmin extends React.Component {
 
                     </MuiDialogContent>
                 </Dialog>
+
+                {/* PopUp of Delete Start  */}
 
 
 

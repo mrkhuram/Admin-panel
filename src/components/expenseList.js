@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 
-class Admins extends React.Component {
+class ExpenseList extends React.Component {
 
     state = {
         open: false
@@ -51,12 +51,7 @@ class Admins extends React.Component {
 										<input type="text" class="form-control" placeholder="Search Expense.." />
 									</div>
 									<button type="submit" class="btn btn-default">Search</button>
-									{/* <a href="#" class="btn btn-default"
-								onClick={() => {
-									this.handleClickOpen('openPop')
-								}}
-								><i class="fa fa-plus"></i>
-									Add Employee</a> */}
+								
 								</form>
 							</div>
                         </div>
@@ -80,15 +75,11 @@ class Admins extends React.Component {
                                             <td>none</td>
                                             <td>24/5/2019</td>
                                             <td>
-                                                {/* <label class="switch">
-                                                    <input type="checkbox" checked="checked" />
-                                                    <span class="checkbox_slider round"></span>
-                                                </label> */}
+                                               
                                                 Paid
                                             </td>
                                             <td>
-                                                {/* <a href="indexe565.html?p=admin_new" class="badge blue"> <i
-                                                    class="fa fa-trash"></i> Edit</a> */}
+                                                
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
                                                 > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
@@ -102,15 +93,11 @@ class Admins extends React.Component {
                                             <td>none</td>
                                             <td>24/5/2019</td>
                                             <td>
-                                                {/* <label class="switch">
-                                                    <input type="checkbox" checked="checked" />
-                                                    <span class="checkbox_slider round"></span>
-                                                </label> */}
+                                            
                                                 Paid
                                             </td>
                                             <td>
-                                                {/* <a href="indexe565.html?p=admin_new" class="badge blue"> <i
-                                                    class="fa fa-trash"></i> Edit</a> */}
+                                         
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
                                                 > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
@@ -124,15 +111,11 @@ class Admins extends React.Component {
                                             <td>none</td>
                                             <td>24/5/2019</td>
                                             <td>
-                                                {/* <label class="switch">
-                                                    <input type="checkbox" checked="checked" />
-                                                    <span class="checkbox_slider round"></span>
-                                                </label> */}
+                                            
                                                 Paid
                                             </td>
                                             <td>
-                                                {/* <a href="indexe565.html?p=admin_new" class="badge blue"> <i
-                                                    class="fa fa-trash"></i> Edit</a> */}
+                                               
                                                 <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                     onClick={this.handleClickOpen}
                                                 > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
@@ -144,21 +127,13 @@ class Admins extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div id="myModal" class="modal fade delPopup" role="dialog">
-                        <div class="modal-dialog modal-sm">
-                            {/* <!-- Modal content--> */}
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <p><i class="fa fa-trash"></i><br />Are you sure you want to delete</p>
-                                    <p>
-                                        <button type="button" class="btn btn-default yes" data-dismiss="modal">Yes</button>
-                                        <button type="button" class="btn btn-default no" data-dismiss="modal">No</button>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
+
+
+
+
+
                 <Dialog onClose={this.handleClose} open={this.state.open}
                         style={{
                             margin: 0
@@ -183,13 +158,7 @@ class Admins extends React.Component {
                                     textAlign: 'center'
                                 }}
                             >
-                                {/* <FontAwesomeIcon icon={faTimesCircle}
-                                    style={{
-                                        fontSize: 35,
-                                        color: 'red',
-
-                                    }}
-                                /> */}
+                                
                                 <h4
                                     style={{
                                         marginTop: 30,
@@ -204,10 +173,10 @@ class Admins extends React.Component {
                             </div>
 
                         </MuiDialogContent>
-                    </Dialog>
+                </Dialog>
 
             </>
         )
     }
 }
-export default Admins;
+export default ExpenseList;

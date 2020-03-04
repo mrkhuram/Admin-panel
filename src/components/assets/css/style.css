@@ -581,6 +581,7 @@
      margin-top:20px;
      border:0px;
      top: 51%;
+     right: 0px;
 }
  .header li.dropdown.open .dropdown-menu{
      min-height:50px;
@@ -865,7 +866,13 @@
      margin-top:10px;
      margin-right:10px;
 }
+
+
 /*our advisor*/
+
+
+
+
  .advisor{
      position:relative;
      overflow:hidden;
@@ -1198,9 +1205,28 @@
      .navbar-nav>li>.dropdown-menu li{
          border:0px;
     }
+
+
+    .settingDiv{
+        width: 400px !important;
+    }
+    .fadeInUp{
+        width: 440px;
+    }
+    .newCompanyDiv{
+        width: 370px !important;
+    }
+    .tableStatusHr{
+        overflow-x: scroll !important;
+    }
 }
 
-
+.newCompanyDiv{
+    width: 500px;
+}
+.settingDiv{
+    width: 600px ;
+}
 
 
 .icon{
@@ -1304,7 +1330,6 @@ label{
 .btn:hover, .btn:active, .btn:focus{
     background-color: #f9407e !important;
     color: white !important;
-    /* padding: 10px 20px !important; */
     border: none;
     box-shadow: none;
 }
@@ -1320,13 +1345,10 @@ input:focus, select:focus{
     padding: 10px !important;
     border-top-right-radius: 20px !important;
     margin-bottom: -5px;
-    /* border-top-left-radius: 20px !important; */
-    /* border-radius: 0 !important; */
+
 
 }
-/* .activeTab:hover{
-    border: none !important
-} */
+
 .nav-tabs>li {
     float: left;
     margin-bottom: -1px;
@@ -1335,11 +1357,9 @@ input:focus, select:focus{
 
 .noneActiveTab, .noneActiveTab:hover{
     border-top-right-radius: 20px !important;
-    /* border-top-left-radius: 20px !important; */
-    /* border: 1px solid #f33676 !important; */
+
     background-color: white !important;
     color: #151414 !important;
     padding: 10px !important;
-    /* border-radius: 0 !important; */
    
 }
