@@ -12,31 +12,39 @@ import 'react-intl-tel-input/dist/main.css';
 
 
 
-const AddEmployeeForm
-
-    = (props) => {
-        const [activeTab, setActiveTab] = useState('1');
-
-        const toggle = tab => {
-            if (activeTab !== tab) setActiveTab(tab);
-        }
-
-        const onChangeHandler = () => {
-
-        }
-
-        const [startDate, setStartDate] = useState(new Date())
+class AddEmployeeForm extends React.Component {
 
 
-        const handleChange = date => {
-            setStartDate(date)
-        };
+    state = {
+        activeTab: '1',
+        start_date:new Date()
+    }
 
-        const nextMove = e => {
-            e.preventDefault()
-            toggle('2')
+    toggle = tab => {
+        if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
+    }
 
-        }
+
+    onChangeHandler = e => {
+        console.log(e.target.value);
+
+        this.setState({
+
+            [e.target.name]: e.target.value
+        })
+    }
+
+    onChangeDate = date =>{ 
+        console.log(date);
+        
+        this.setState({
+            start_date: date
+        })
+    }
+    render() {
+
+
+
         return (
             <div>
                 <Nav tabs
@@ -47,8 +55,8 @@ const AddEmployeeForm
 
                     <NavItem>
                         <NavLink
-                            className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-                            onClick={() => { toggle('1'); }}
+                            className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+                            onClick={() => { this.toggle('1'); }}
                             style={{
                                 margin: 0,
                                 marginTop: 10,
@@ -64,8 +72,8 @@ const AddEmployeeForm
                     </NavItem>
                     <NavItem>
                         <NavLink
-                            className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-                            onClick={() => { toggle('2'); }}
+                            className={this.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+                            onClick={() => { this.toggle('2'); }}
                             style={{
                                 margin: 0,
                                 marginTop: 10,
@@ -79,22 +87,22 @@ const AddEmployeeForm
                         </NavLink>
                     </NavItem>
                 </Nav>
-                <TabContent activeTab={activeTab}>
-                    <TabPane tabId="1">
-                        <Row>
-                            <Col sm="12" md='6'>
-                                <form>
+                <TabContent activeTab={this.state.activeTab}>
+                    <form encType="multipart/form-data">
+                        <TabPane tabId="1">
+                            <Row>
+                                <Col sm="12" md='6'>
                                     <div class="form-group">
                                         <label for="pwd">Firt Name</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="first_name" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Position</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="position" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Work Email</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="email" class="form-control" name="email" onChange={this.onChangeHandler} />
 
                                     </div>
 
@@ -105,88 +113,111 @@ const AddEmployeeForm
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
                                             style={{
-                                                width: "100%"
+                                                width: "100%",
+
+                                            }}
+                                            ref='phone'
+                                            onSelectFlag={(num, country) => {
+                                                console.log('onSelectFlag', country);
+                                            }}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ ph_no: newPhn })
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
+                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+
+
+
                                             }}
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Profile Picture</label>
-                                        <input type="file" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="file" class="form-control" name="dp_active_file"
+                                        // onChange={this.onChangeHandler}
+                                        />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Team</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="team" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Location</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="location" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Driving License</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="driving_license" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">LinkedIn</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="linkedIn" onChange={this.onChangeHandler} />
                                     </div>
 
 
-                                </form>
+                                    {/* </form> */}
 
-                            </Col>
-                            <Col sm="12" md='6'>
-                                <form>
+                                </Col>
+                                <Col sm="12" md='6'>
+                                    {/* <form> */}
                                     <div class="form-group">
                                         <label for="pwd">Last Name</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="last_name" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Title</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="title" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Starting Date</label>
 
                                         <DatePicker
-                                            selected={startDate}
-                                            onChange={handleChange}
+                                            selected={this.state.start_date}
+                                            onChange={this.onChangeDate}
                                             style={{
                                                 width: '100%'
                                             }}
+                                            name="start_date"
                                         />
+
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Employee Status</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
-                                            <option value="client">Select Employee Status</option>
+                                        <select class="form-control" name='employee_status' onChange={this.onChangeHandler}>
+                                            <option value="">Select Employee Status</option>
 
-                                            <option value="client">Full Time</option>
-                                            <option value="reader">Part Time</option>
-                                            <option value="reader">Contract</option>
-                                            <option value="reader">Intern</option>
+                                            <option value="full_time">Full Time</option>
+                                            <option value="part_time">Part Time</option>
+                                            <option value="contract">Contract</option>
+                                            <option value="intern">Intern</option>
 
 
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Direct Manager</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="direct_manager" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Public Holiday Group</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="public_holiday_group" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Access Level</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
-                                            <option value="client">Select Access Level</option>
+                                        <select class="form-control" name='access_level' onChange={this.onChangeHandler}>
+                                            <option value="">Select Access Level</option>
 
-                                            <option value="client">Employee</option>
-                                            <option value="reader">Accountant</option>
-                                            <option value="reader">Admirative</option>
+                                            <option value="employee">Employee</option>
+                                            <option value="accountatn">Accountant</option>
+                                            <option value="admirative">Admirative</option>
 
 
 
@@ -195,63 +226,82 @@ const AddEmployeeForm
 
                                     <div class="form-group">
                                         <label for="pwd">Employee No.</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="employee_number" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Skype</label>
-                                        <input type="text" class="form-control" name="limit" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="skype" onChange={this.onChangeHandler} />
                                     </div>
 
 
-                                </form>
 
-                            </Col>
-                        </Row>
-                    </TabPane>
+                                </Col>
+                            </Row>
+                        </TabPane>
+                    </form>
                     <TabPane tabId="2">
                         <Row>
                             <Col sm="12" md='6'>
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Personal Email</label>
-                                        <input type="text" class="form-control" name="companyName" onChange={onChangeHandler} />
+                                        <input type="email" class="form-control" name="personal_email" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Nationality</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="workEmail" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Street 1</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="street1" onChange={this.onChangeHandler} />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">City</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} />
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="pwd">Post Code</label>
-                                        <input type="text" class="form-control" name="phone" onChange={onChangeHandler} />
+                                        <label for="pwd">Postal Code</label>
+                                        <input type="text" class="form-control" name="postal_code" onChange={this.onChangeHandler} />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Work Phone</label>
-                                        
+
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
                                             style={{
-                                                width: "100%"
+                                                width: "100%",
+                                                //  marginBottom: 10, marginLeft: 15, zIndex: 5 
+                                            }}
+                                            ref='phone'
+                                            onSelectFlag={(num, country) => {
+                                                console.log('onSelectFlag', country);
+                                            }}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ ph_no: newPhn })
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
+                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+
+
+
                                             }}
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Gender</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
-                                            <option value="client">Select Gender</option>
+                                        <select class="form-control" name='gender' onChange={this.onChangeHandler}>
+                                            <option value="">Select Gender</option>
 
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
@@ -275,7 +325,26 @@ const AddEmployeeForm
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
                                             style={{
-                                                width: "100%"
+                                                width: "100%",
+                                                //  marginBottom: 10, marginLeft: 15, zIndex: 5 
+                                            }}
+                                            ref='phone'
+                                            onSelectFlag={(num, country) => {
+                                                console.log('onSelectFlag', country);
+                                            }}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ home_phone: newPhn })
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
+                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+
+
+
                                             }}
                                         />
                                     </div>
@@ -286,52 +355,72 @@ const AddEmployeeForm
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
                                             style={{
-                                                width: "100%"
+                                                width: "100%",
+                                                //  marginBottom: 10, marginLeft: 15, zIndex: 5 
+                                            }}
+                                            ref='phone'
+                                            onSelectFlag={(num, country) => {
+                                                console.log('onSelectFlag', country);
+                                            }}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ mobile_phone: newPhn })
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
+                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+
+
+
                                             }}
                                         />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Street 2 </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="street2" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">State </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="state" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Country </label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="country" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Starting Date</label>
 
                                         <DatePicker
-                                            selected={startDate}
-                                            onChange={handleChange}
+                                            selected={this.state.start_date}
+                                            onChange={this.onChangeDate}
                                             style={{
                                                 width: '100%'
                                             }}
+                                            name="start_date"
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Marital Status</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
-                                            <option value="client">Select Marital Status</option>
+                                        <select class="form-control" name='meterial_status' onChange={this.onChangeHandler}>
+                                            <option value="">Select Marital Status</option>
 
-                                            <option value="male">Single</option>
-                                            <option value="female">Married</option>
-                                            <option value="female">Divorced</option>
-                                            <option value="female">Widowed</option>
+                                            <option value="signle">Single</option>
+                                            <option value="married">Married</option>
+                                            <option value="divorced">Divorced</option>
+                                            <option value="widowed">Widowed</option>
 
                                         </select>
                                     </div>
 
 
                                     <button type="submit" class="btn btn-default"
-                                        style={{ marginTop: 10, float: 'right' }}   
+                                        style={{ marginTop: 10, float: 'right' }}
                                     >Save</button>
 
 
@@ -344,5 +433,6 @@ const AddEmployeeForm
             </div>
         );
     }
+}
 
 export default AddEmployeeForm

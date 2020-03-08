@@ -7,27 +7,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { toast } from 'react-toastify';
+import axios from 'axios'
 
 
-class CouponAdmin extends React.Component {
+import {addExpenseGroup, deleteExpenseGroup} from '../redux/actions/paymentTypeAction'
+
+
+
+
+class ExpenseGroup extends React.Component {
     constructor(props) {
         super(props)
+        
+         getExpenseGroup = ()=>{
+
+            let header = { 
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-sh-auth" : localStorage.getItem('token')
+                }
+            }
+            axios.get('https://mr-expense-backend.herokuapp.com/admin/list_expense',header)
+            .then(res =>{
+                console.log(res.data);
+                
+                this.setState({
+                    allPayment: res.data.expense_group
+                })
+            })
+        }
+
+
+        addExpenseGroupSuccess = ()=>{
+            this.notifySuccess()
+            this.handleClose('openPop')
+
+        }
+        expenseGroupErr =()=>{
+            this.notifyErr()
+            this.handleClose('openPop')
+
+        }
+        expenseGroupErr()
+        addExpenseGroupSuccess()
+        getExpenseGroup()
     }
     state = {
-        coupons: [
-            {
-                group_name: 'Faisalabad',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'Faisalabad',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'Faisalabad',
-                expenseCategory: 'Maintanence'
-            },
-        ],
         open: false,
         openPop: false,
         delete: false,
@@ -90,9 +118,13 @@ class CouponAdmin extends React.Component {
 
     }
 
+    notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+    notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
+
+
 
     onChangeHandler = (e, ind) => {
-        console.log('working');
+        // console.log('working');
 
         if (["eName", "eAmount"].includes(e.target.className)) {
             let arr = [...this.state.arr]
@@ -113,12 +145,16 @@ class CouponAdmin extends React.Component {
     onSubmit = (eve) => {
         eve.preventDefault()
         console.log(this.state);
+        this.props.addNewExpenseGroup(this.state)
+
     }
 
     render() {
         return (
             <>
                 <div class="content-wrapper">
+                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+
                     <div 
                     id="order_preview"
                     class="wow fadeInUp content_box" 
@@ -158,13 +194,13 @@ class CouponAdmin extends React.Component {
                                         </tr>
                                         
                                         {
-                                        this.state.coupons 
+                                        this.state.allPayment 
                                                     ? 
-                                            this.state.coupons.map((item, index) => {
+                                            this.state.allPayment.map((item, index) => {
 
                                             return <tr>
                                                 <td>{index + 1}</td>
-                                                <td>{item.group_name}</td>
+                                                <td>{item.expense_name}</td>
 
                                                 <td>
                                                     <Link to='#' class="badge blue"
@@ -181,7 +217,11 @@ class CouponAdmin extends React.Component {
 
                                                     <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                         onClick={() => {
+                                                            this.setState({
+                                                                groupId: item._id
+                                                            })
                                                             this.handleClickOpen('delete')
+
                                                         }}
 
                                                     > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></a>
@@ -189,8 +229,7 @@ class CouponAdmin extends React.Component {
                                                 </td>
                                             </tr>
                                         }) : 
-                                        <>
-                                        </>
+                                        null
                                         }
                                     </tbody>
                                 </table>
@@ -344,7 +383,7 @@ class CouponAdmin extends React.Component {
                                         {
 
                                             this.state.arr.map((item, ind) => {
-                                                let eName = `groupName-${ind + 1}`, amount = `introExpense-${ind + 1}`
+                                                let eName = `groupName-${ind + 1}`, amount = `expens-${ind + 1}`
                                                 return <>
                                                     <form
                                                         key={ind}
@@ -363,7 +402,7 @@ class CouponAdmin extends React.Component {
                                                             </label>
 
                                                             <input type="text" className="form-control"
-                                                                name={eName}
+                                                                name="expense_name"
                                                                 data-id={ind}
                                                                 id={eName}
                                                                 style={{
@@ -472,7 +511,12 @@ class CouponAdmin extends React.Component {
                                 }}
                             >Are you sure ?</h4>
 
-                            <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                            <button type="submit" class="btn btn-default yesBtn"
+                                onClick={()=>{
+                                    this.props.deleteGroup(this.state.groupId)
+                                    this.handleClose('delete')
+                                }}
+                            ><i class="fa fa-search"></i> Yes</button>
                             <button type="submit" class="btn btn-default noBtn"
                                 onClick={() => {
                                     this.handleClose('delete')
@@ -502,9 +546,14 @@ let mapStateToProps = (store) => {
 let mapDispatchToProps = (dispatch) => {
 
     return ({
-
+        addNewExpenseGroup: body =>{
+            dispatch(addExpenseGroup(body))
+        },
+        deleteGroup: body =>{
+            dispatch(deleteExpenseGroup(body))
+        }
     })
 }
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CouponAdmin));
-export default CouponAdmin
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExpenseGroup));
+export let expenseGroupErr, addExpenseGroupSuccess, getExpenseGroup

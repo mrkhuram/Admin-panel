@@ -5,6 +5,9 @@ import { faFileAlt, faListAlt } from '@fortawesome/free-regular-svg-icons';
 import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
+import { logoutuser } from '../redux/actions/authAction'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 
 class HomePanel extends React.Component {
@@ -47,15 +50,16 @@ class HomePanel extends React.Component {
 
 
 
-                        {
-                            this.props.admin
 
-                                ?
+                        {
+                            this.props.authState.auth.userDetail.admin_access ?
+
+
                                 <>
 
                                     {/* Admin Home Start */}
                                     <Link className='link'
-                                        to='/new_company'
+                                        to='/admin/create_new_company'
                                     >
                                         <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
                                             <div class="box">
@@ -77,7 +81,7 @@ class HomePanel extends React.Component {
                                     </Link>
 
                                     <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                        <Link to='/admin/client' class="link ">
+                                        <Link to='/admin/companies' class="link ">
                                             <div class="box">
 
 
@@ -100,7 +104,7 @@ class HomePanel extends React.Component {
                                     </div>
 
                                     <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                        <Link to='/expenseCategory' class="link " 
+                                        <Link to='/expenseCategory' class="link "
                                         >
                                             <div class="box">
 
@@ -182,7 +186,7 @@ class HomePanel extends React.Component {
 
                                 <>
                                     {
-                                        this.props.company ?
+                                         this.props.authState.auth.userDetail.mentor ?
                                             <>
 
                                                 {/* Company Home Start */}
@@ -268,55 +272,61 @@ class HomePanel extends React.Component {
 
                                                 {/* HR Home Start */}
 
+                                                {this.props.authState.auth.userDetail.companyhr1 ?
+                                                    <>
 
-                                                <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                                    <Link to='/expense_status_hr' class="link ">
-                                                        <div class="box">
+                                                        <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
+                                                            <Link to='/expense_status_hr' class="link ">
+                                                                <div class="box">
 
 
-                                                            <div class="col-xs-4 col">
-                                                                <p class="icon color1">
+                                                                    <div class="col-xs-4 col">
+                                                                        <p class="icon color1">
 
-                                                                    <i class="fa fa-users"></i>
-                                                                    <FontAwesomeIcon icon={faChartLine}
-                                                                    />
+                                                                            <i class="fa fa-users"></i>
+                                                                            <FontAwesomeIcon icon={faChartLine}
+                                                                            />
 
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-xs-8 col">
-                                                                <h2 class="section-title" >Reports</h2>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-xs-8 col">
+                                                                        <h2 class="section-title" >Reports</h2>
 
-                                                            </div>
+                                                                    </div>
 
+                                                                </div>
+                                                            </Link>
                                                         </div>
-                                                    </Link>
-                                                </div>
 
-                                                <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                                    <Link to="/confirmPassword-first" class="link ">
-                                                        <div class="box">
+                                                        <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
+                                                            <Link to="/confirmPassword-first" class="link ">
+                                                                <div class="box">
 
 
-                                                            <div class="col-xs-4 col">
-                                                                <p class="icon color1">
+                                                                    <div class="col-xs-4 col">
+                                                                        <p class="icon color1">
 
-                                                                    <i class="fa fa-users"></i>
-                                                                    <FontAwesomeIcon icon={faCogs}
-                                                                    />
+                                                                            <i class="fa fa-users"></i>
+                                                                            <FontAwesomeIcon icon={faCogs}
+                                                                            />
 
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-xs-8 col">
-                                                                <h2 class="section-title" >Setting</h2>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-xs-8 col">
+                                                                        <h2 class="section-title" >Setting</h2>
 
-                                                            </div>
+                                                                    </div>
 
+                                                                </div>
+                                                            </Link>
                                                         </div>
-                                                    </Link>
-                                                </div>
 
 
-                                                {/* HR Home End */}
+                                                        {/* HR Home End */}
+                                                    </>
+                                                    :
+                                                    ""
+                                                }
 
                                             </>
 
@@ -332,7 +342,7 @@ class HomePanel extends React.Component {
 
 
 
-                    
+
                 </div>
 
 
@@ -342,5 +352,21 @@ class HomePanel extends React.Component {
     }
 }
 
-export default HomePanel;
+
+let mapStateToProps = (store) => {
+    console.log(store);
+
+    return {
+        authState: store
+    }
+}
+let mapDispatchToProps = (disptch) => {
+    return {
+        logOut: () => {
+            disptch(logoutuser())
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePanel))
 export let roleChanger

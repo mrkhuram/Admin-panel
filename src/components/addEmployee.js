@@ -44,12 +44,13 @@ class AddEmployee extends React.Component {
 
 
 		],
-		checked: true,
+		// checked: true,
 		openPop: false,
 		open: false,
 		delete: false,
 		addNew: false,
-		edit: false
+		edit: false,
+
 	}
 
 
@@ -69,7 +70,7 @@ class AddEmployee extends React.Component {
 	
 	onChangeHandler = (e) => {
 		this.setState({
-			checked: !this.state.checked
+			[e.target.name]: e.target.value
 		})
 
 	}
@@ -81,9 +82,7 @@ class AddEmployee extends React.Component {
 
 		this.props.delete(id)
 	}
-	 toggle = tab => {
-		// if (activeTab !== tab) setActiveTab(tab);
-	}
+
 
 
 	render() {

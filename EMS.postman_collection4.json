@@ -1,0 +1,826 @@
+{
+	"info": {
+		"_postman_id": "42272830-5b1c-4cb6-a61a-97c06722524b",
+		"name": "EMS",
+		"description": "EMS management System ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SignUp as CompanyHr",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d44ff5f-bf4e-48c6-aaab-e724e44ca5bc",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"advisor9@gmail.com\",\n    \"first_name\": \"me\",\n    \"last_name\": \"this\",\n    \"display_name\": \"its me\",\n    \"about\": \"its about me\",\n    \"address\": \"my address here\",\n    \"subject\": \"motivational Mentoring\",\n    \"date_of_birth\": \"01 january, 2019\",\n    \"ph_no\": \"123456\",\n    \"gender\": \"male\",\n    \"password\": \"1234asdfg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/register?user_type=companyhr",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					],
+					"query": [
+						{
+							"key": "user_type",
+							"value": "companyhr"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignUp as Comapny_Administrator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "913f1593-817b-4570-8613-6511eface33c",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\":\"user46@gmail.com\",\n\"first_name\": \"me\",\n\"last_name\": \"this\",\n\"display_name\" : \"its me\",\n\"about\" : \"its about me\",\n\"address\" : \"my address here\",\n\"subject\" : \"motivational Mentoring\",\n\"date_of_birth\" : \"01 january, 2019\",\n\"ph_no\" : \"123456\",\n\"gender\" : \"male\",\n\"password\":\"1234asdfg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/register?user_type=company_adminitrator",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					],
+					"query": [
+						{
+							"key": "user_type",
+							"value": "company_adminitrator"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignUp as Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "326a8273-caac-439a-a390-2099b4b03473",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\":\"advisor7@gmail.com\",\n\"first_name\": \"me\",\n\"last_name\": \"this\",\n\"display_name\" : \"its me\",\n\"about\" : \"its about me\",\n\"address\" : \"my address here\",\n\"subject\" : \"motivational Mentoring\",\n\"date_of_birth\" : \"01 january, 2019\",\n\"ph_no\" : \"123456\",\n\"gender\" : \"male\",\n\"password\":\"1234asdfg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/register?user_type=employee",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					],
+					"query": [
+						{
+							"key": "user_type",
+							"value": "employee"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignUp as Super Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb8c0092-ede2-4a48-9bb9-a9455e494367",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"bilal78@gmail.com\",\n    \"first_name\": \"me\",\n    \"last_name\": \"this\",\n    \"display_name\" : \"its me\",\n    \"gender\" : \"male\",\n    \"password\":\"1234asdfg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/register?user_type=super_admin",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"register"
+					],
+					"query": [
+						{
+							"key": "user_type",
+							"value": "super_admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "981258cc-7b66-43f7-b846-add7fe3dfbe3",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\":\"user46@gmail.com\",\n\"password\":\"1234asdfg\",\n\"device_token\":\"2345678\",\n\"time_zone\": \"23456\",\n\"platform\":\"werty\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/login",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAzNjY1OTZkNDAwMTYxNGVhMDgiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MTEwfQ.c77wohozHyUY5GeYPLSDRqI3RHelZkPT_RNCTuKoo6Y",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/logout",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout all Devices",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAzNjY1OTZkNDAwMTYxNGVhMDgiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MTEwfQ.c77wohozHyUY5GeYPLSDRqI3RHelZkPT_RNCTuKoo6Y",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/logout_all_devices",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"logout_all_devices"
+					],
+					"query": [
+						{
+							"key": "x-sh-auth",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAyNDY1OTZkNDAwMTYxNGVhMDUiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MDkyfQ.8MO_EOjqERa3En0VaVufYjjbvkpqu2KG6Dhf3NdBYLQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/profile",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAyNDY1OTZkNDAwMTYxNGVhMDUiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MDkyfQ.8MO_EOjqERa3En0VaVufYjjbvkpqu2KG6Dhf3NdBYLQ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/delete_account",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"delete_account"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile Update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRiZTJhNmJhZTMzODAwMTYyM2Y2N2UiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgyMDkwMTk2fQ.q9iUjJ7cIiR_ok_ynoLFGZSs10iZvyPYkQZJrOPOn5g",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\"display_name\":\"its me\",\n\"first_name\":\"user1\",\n\"last_name\":\"user2\",\n\"date_of_birth\" : \"01 january, 2019\",\n\"gender\" : \"male\",\n\"subject\" : \"motivational Mentoring\",\n\"about\" : \"its about me\",\n\"address\" : \"my address here\",\n\"ph_no\" : \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/user/update/profile?_id=5e4be2a6bae338001623f67e",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"user",
+						"update",
+						"profile"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e4be2a6bae338001623f67e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Company",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1368ba42-a397-416e-84d8-f1b7cfe48b69",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAzNjY1OTZkNDAwMTYxNGVhMDgiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MzE3fQ.gc-6gjMqu24XWy7La--IAyDnjCW5NQQxaUd3kxp823o",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"company_name\":\"Awais\",\n\t\"work_email\":\"awais7@gmail.com\",\n\t\"employee_limit\":\"10\",\n\t\"ph_no\" : \"123456\",\n\t\"services\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/add_company",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"add_company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Company",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAzNjY1OTZkNDAwMTYxNGVhMDgiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MzE3fQ.gc-6gjMqu24XWy7La--IAyDnjCW5NQQxaUd3kxp823o",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/get_company?_id=5e5cf1126596d4001614ea0d",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"get_company"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e5cf1126596d4001614ea0d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Company",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRiOGUxNTA0MDQ4YzMxYzAwZjFhZWMiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgyMDEwMTUxfQ.pL3r17nm33Q7oB-REQ1gp3c7pQTeGEOjWD_g8EuwIWw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/delete_company?_id=5e4b9012a3378f0016b4ff63",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"delete_company"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e4b9012a3378f0016b4ff63"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Company",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4711aaca-750d-41d2-8bf1-8f376fff99ab",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-sh-autha",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRiOGUxNTA0MDQ4YzMxYzAwZjFhZWMiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgyMDEwOTk5fQ.pekr_wq5IlHnveg4_XRvJozKEBUEghLte2pW1dVlPPY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"company_name\":\"Awais\",\n\t\"work_email\":\"awais9@gmail.com\",\n\t\"employee_limit\":\"11\",\n\t\"ph_no\" : \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/edit_company?_id=5e4b943ba3378f0016b4ff66",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"edit_company"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e4b943ba3378f0016b4ff66"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Expense Category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9e15dc6-830a-41b6-b332-1dabcfa0eca8",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjZjAzNjY1OTZkNDAwMTYxNGVhMDgiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5MzE3fQ.gc-6gjMqu24XWy7La--IAyDnjCW5NQQxaUd3kxp823o",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"company_name\":\"Bilal8\",\n\t\"expense_name\":\"manufacturing\",\n\t\"expense_type\":\"10\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/add_expense?_id=5e5cf1126596d4001614ea0d",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"add_expense"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e5cf1126596d4001614ea0d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve an Expense",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTRiOGY1NDA0MDQ4YzMxYzAwZjFhZjIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTUxMDExfQ.3VvXUdQ6Kp5cV3K57w3KKSdPCgLB3u5V5elRu3xxGFc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/admin/approve_expense?expense_id=5e5cf1a26596d4001614ea10",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"approve_expense"
+					],
+					"query": [
+						{
+							"key": "expense_id",
+							"value": "5e5cf1a26596d4001614ea10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Expense_by_Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4b83a606-91e8-4ee7-9c42-d49b46cf6774",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjMGUyODQ2NTU4ODc4MzVhYTU0M2MiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5NDU2fQ.jD9fmCmXub7K6bvlMmb19YYHvIEbUkd2dvyjzsteHkw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Construction\",\n\t\"description\":\"This is for construction\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/expenses/submit_an_Expense",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"expenses",
+						"submit_an_Expense"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Expense_by_Emloyee",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-sh-auth",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTVjMGUyODQ2NTU4ODc4MzVhYTU0M2MiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTgzMTQ5NDU2fQ.jD9fmCmXub7K6bvlMmb19YYHvIEbUkd2dvyjzsteHkw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://mr-expense-backend.herokuapp.com/expenses/get_an_Expense?_id=5e5cf1a26596d4001614ea10",
+					"protocol": "https",
+					"host": [
+						"mr-expense-backend",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"expenses",
+						"get_an_Expense"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5e5cf1a26596d4001614ea10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

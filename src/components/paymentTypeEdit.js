@@ -69,21 +69,21 @@ class EditPaymentType extends React.Component {
                     style={{
                         padddingBottom: 0,
                         padding: 0,
-                        
+
                     }}
 
                 >
-                        <p
-                            style={{
-                                float: 'right',
-                                marginTop: 10,
-                                cursor: 'pointer',
-                                marginRight: 20
-                            }}
-                            onClick={() => {
-                                this.props.handleClose('edit')
-                            }}
-                        >X</p>
+                    <p
+                        style={{
+                            float: 'right',
+                            marginTop: 10,
+                            cursor: 'pointer',
+                            marginRight: 20
+                        }}
+                        onClick={() => {
+                            this.props.handleClose('edit')
+                        }}
+                    >X</p>
                     <div id="order_preview" class="wow content_box"
                         style={{
                             visibility: 'visible', animationName: "fadeInUp",
@@ -108,10 +108,18 @@ class EditPaymentType extends React.Component {
 
                                 <Col xs='12' md='10'>
                                     <form>
-                                        
+
                                         <div class="form-group">
                                             <label for="pwd">Payment Type</label>
-                                            <select class="form-control" name='to_client'
+                                            <input type="text" className="form-control"
+                                                name="payment_type"
+
+                                                style={{
+                                                    width: "100%",
+                                                }}
+                                                onChange={this.onChangeHandler}
+                                            />
+                                            {/* <select class="form-control" name='to_client'
                                                 onChange={this.onChangeHandler}
                                             >
                                                 <option value="client">Select Payment Type</option>
@@ -122,7 +130,7 @@ class EditPaymentType extends React.Component {
                                                 <option value="reader">Intern</option>
 
 
-                                            </select>
+                                            </select> */}
                                         </div>
 
 
@@ -135,7 +143,7 @@ class EditPaymentType extends React.Component {
                             </Row>
 
 
-                            
+
                             <button type="submit" className="btn btn-default noBtn"
                                 style={{
                                     margin: 'auto', padding: "10px 44px", float: 'right',

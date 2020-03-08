@@ -1,47 +1,66 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import history from './history/history'
+
+import { confirmPassword } from '../redux/actions/authAction'
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { toast } from 'react-toastify';
+
 
 class SettingCompany extends React.Component {
 
+    constructor(props){
+        super(props)
+        // this.notiErr()
+        notify = ()=>{
+            this.notifyErr()
+        }
+        notify()
+    }
 
     state = {
+        email: this.props.authDetail.userDetail.email,
         password: ''
     }
 
+
+    componentDidUpdate() {
+        return true
+    }
 
     onChangeHandler = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    confirmSetting = (e) => {
-        if (this.state.password == '') {
-            e.preventDefault()
 
-            this.setState({
-                msg: "Password doesn't match"
-            })
-            return true
 
-        }
-        if (this.state.password !== '') {
-            this.setState({
-                msg: ""
-            })
-            history.push('/edit_company_setting')
-        }
+    submitHandler = (e) => {
+        e.preventDefault()
+        this.props.confirmPasswordFirst(this.state)
     }
 
+
+    
+    
+
+    notifyErr = () => toast.error("Sorry your request didn't complete", { autoClose: 2000 })
+    
 
     render() {
         return (
             <>
+
                 <div className="content-wrapper"
                     style={{ marginTop: 60 }}
                 >
+                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+
                     <div id="order_preview" className="wow fadeInUp content_box settingDiv"
-                        style={{ visibility: "visible", animationName: "fadeInUp", margin: 'auto'}}>
+                        style={{ visibility: "visible", animationName: "fadeInUp", margin: 'auto' }}>
                         <div className="row table-header">
                             <div className="col-xs-12 col-md-12">
                                 <h2 className="section-title">Confirm Password to Access</h2>
@@ -56,7 +75,7 @@ class SettingCompany extends React.Component {
                                 <form onSubmit={this.confirmSetting}>
                                     <div className="form-group">
                                         <label for="pwd">User Name:</label>
-                                        <input type="text" className="form-control" value="company@gmail.com" />
+                                        <input type="email" className="form-control" value={this.props.authDetail.userDetail.email} />
                                     </div>
                                     <div className="form-group">
                                         <label for="pwd">Password:</label>
@@ -68,12 +87,13 @@ class SettingCompany extends React.Component {
                                             color: 'red'
                                         }}
                                     >
-                                        <label for="pwd">{this.state.msg}</label>
+                                        {/* <label for="pwd">working {this.props.authDetail.message ? this.props.authDetail.message : null}</label> */}
                                     </div>
 
                                     <button type="submit" className="btn btn-default"
                                         style={{ float: 'right' }}
-
+                                        onClick={this.submitHandler}
+                                        // onClick={this.noti}
                                     >Confirm</button>
                                 </form>
                             </div>
@@ -84,4 +104,24 @@ class SettingCompany extends React.Component {
         )
     }
 }
-export default SettingCompany;
+
+
+let mapStateToProps = (store) => {
+    console.log(store);
+
+    return {
+        authDetail: store.auth
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+    return ({
+        confirmPasswordFirst: (data) => {
+            dispatch(confirmPassword(data))
+        },
+    })
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingCompany));
+export let notify

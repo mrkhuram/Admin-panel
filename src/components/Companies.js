@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import './assets/css/animate.css'
 import './assets/css/style.css'
 import Dialog from '@material-ui/core/Dialog';
@@ -17,14 +16,52 @@ import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
 
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import axios from 'axios';
+import { deleteCompany } from '../redux/actions/companyAction'
 
 class Companies extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        let token = localStorage.getItem('token')
+
+        let header = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'x-sh-auth': token
+            }
+        }
+        getCompanieslist = () => {
+            axios.get("https://mr-expense-backend.herokuapp.com/admin/list_all_company", header)
+                .then(res => {
+                    console.log(res);
+                    this.setState({
+                        companies: res.data.companies
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+
+
+        getCompanieslist()
+
+    }
+
+
+
+
+
 
     state = {
         open: false,
         activeTab: 1,
         openPop: false,
-        delete: false
+        delete: false,
+        companies: "",
+        index: 1
     }
 
     handleClickOpen = (element) => {
@@ -42,7 +79,20 @@ class Companies extends React.Component {
     toggle = tab => {
         if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
     }
+
+    delete = (index) => {
+        this.props.delete_company(index)
+    }
+
+    // editCompany =(id)=>{
+
+    //     // this.props.editInd(id)
+    // }
+
+
+
     render() {
+        let company = this.state.companies
         return (
             <>
                 <div class="content-wrapper">
@@ -235,119 +285,65 @@ class Companies extends React.Component {
                                                 <th class="active" width="120px">Account Status</th>
                                                 <th class="active" style={{ width: "300px" }}>Action</th>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>John</td>
-                                                <td>john@gmail.com</td>
-                                                <td>12</td>
-                                                <td>+9212432344</td>
-                                                <td>
-                                                    <span class="badge">Active</span>
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        onClick={() => {
-                                                            this.handleClickOpen('open')
-                                                        }}
-                                                        to='#'
-                                                        class="badge blue" > <FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
-                                                    <Link
-                                                        to='/admin/clientDetail'
-                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
-                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-                                                    </Link>
-                                                    <Link to='#'
-                                                        onClick={() => {
-                                                            this.handleClickOpen('delete')
-                                                        }}
-                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>John</td>
-                                                <td>john@gmail.com</td>
-                                                <td>15</td>
-                                                <td>+9212432344</td>
-                                                <td>
-                                                    <span class="badge">Active</span>
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        onClick={() => {
-                                                            this.handleClickOpen('open')
-                                                        }}
-                                                        to='#'
-                                                        class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
-                                                    <Link
-                                                        to='/admin/clientDetail'
-                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
-                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-                                                    </Link>
-                                                    <Link to='#'
-                                                        onClick={() => {
-                                                            this.handleClickOpen('delete')
-                                                        }}
-                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>John</td>
-                                                <td>john@gmail.com</td>
-                                                <td>11</td>
-                                                <td>+9212432344</td>
-                                                <td>
-                                                    <span class="badge">Active</span>
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        onClick={() => {
-                                                            this.handleClickOpen('open')
-                                                        }}
-                                                        to='#'
-                                                        class="badge blue" > <FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
-                                                    <Link
-                                                        to='/admin/clientDetail'
-                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
-                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-                                                    </Link>
-                                                    <Link to='#'
-                                                        onClick={() => {
-                                                            this.handleClickOpen('delete')
-                                                        }}
-                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>John</td>
-                                                <td>john@gmail.com</td>
-                                                <td>23</td>
-                                                <td>+9212432344</td>
-                                                <td>
-                                                    <span class="badge">Close</span>
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        to='/admin/clientDetail'
-                                                        onClick={() => {
-                                                            this.handleClickOpen('open')
-                                                        }}
-                                                        to='#'
-                                                        class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
-                                                    <Link
-                                                        to='/admin/clientDetail'
-                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
-                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
-                                                    </Link>
-                                                    <Link to='#'
-                                                        onClick={() => {
-                                                            this.handleClickOpen('delete')
-                                                        }}
-                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
-                                                </td>
-                                            </tr>
+                                            {company ?
+
+
+
+                                                company.map((item, ind) => {
+                                                    return <tr>
+                                                        <td>{ind + 1}</td>
+                                                        <td>{item.company_name}</td>
+                                                        <td>{item.work_email}</td>
+                                                        <td>{item.employee_limit}</td>
+                                                        <td>{item.ph_no}</td>
+                                                        <td>
+                                                            <span class="badge">{item.status}</span>
+                                                        </td>
+                                                        <td>
+                                                            <Link
+                                                                onClick={() => {
+                                                                    this.setState({
+                                                                        index: ind,
+                                                                        id: item._id
+                                                                    })
+                                                                    this.handleClickOpen('open')
+                                                                }}
+                                                                to='#'
+                                                                class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                            <Link
+                                                                onClick={() => {
+                                                                    this.setState({
+                                                                        index: ind,
+                                                                        id: item._id
+                                                                    })
+                                                                }}
+                                                                to={{
+                                                                    pathname: '/admin/edit_company',
+                                                                    companyInd: { company: item }
+                                                                }}
+                                                                class="badge del link" data-toggle="modal" data-target="#myModal"
+
+                                                            >
+                                                                <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+
+                                                            </Link>
+                                                            <Link to='#'
+                                                                onClick={() => {
+                                                                    this.setState({
+                                                                        index: ind,
+                                                                        id: item._id
+                                                                    })
+                                                                    this.handleClickOpen('delete')
+                                                                }}
+                                                                class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                        </td>
+                                                    </tr>
+                                                })
+
+                                                :
+                                                null
+                                            }
+
                                         </tbody>
                                     </table>
 
@@ -406,88 +402,101 @@ class Companies extends React.Component {
 
                                         }}
                                     >
+
                                         <h4 class="section-title"
                                             style={{
                                                 marginBottom: 40,
                                                 float: 'left'
                                             }}
                                         >Company Details</h4>
+                                        {/* {
+                                        company ?
 
-                                        <img src={require("./assets/images/logo.png")} alt=""
-                                            style={{
-                                                width: 100,
-                                                float: 'right'
-                                            }}
-                                        />
+                                        company.map((item) => {
+                                            return <> */}
+                                        {company ?
+                                            <>
+                                                <img src={require("./assets/images/logo.png")} alt=""
+                                                    style={{
+                                                        width: 100,
+                                                        float: 'right'
+                                                    }}
+                                                />
 
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <th  >Company Name</th>
-                                                    <td >John</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Work Email</th>
-                                                    <td>john@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Phone</th>
-                                                    <td>09876543213</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Employee Limit</th>
-                                                    <td>13</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Payment Type</th>
-                                                    <td>Cheque</td>
-                                                </tr>
-                                                <tr>
-                                                    <th  >Expense Group</th>
-                                                    <td>B</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Expense Image</th>
-                                                    <td>No</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Email Templates</th>
-                                                    <td>Yes</td>
-                                                </tr>
-                                                <tr>
-                                                    <th >Logo</th>
-                                                    <td>Yes</td>
-                                                </tr>
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th >Company Name</th>
+                                                            <td>{company[this.state.index].company_name}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Work Email</th>
+                                                            <td>{company[this.state.index].work_email}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Phone</th>
+                                                            <td>{company[this.state.index].ph_no}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Employee Limit</th>
+                                                            <td>{company[this.state.index].employee_limit}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Payment Type</th>
+                                                            <td>{company[this.state.index].payment_type}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th  >Expense Group</th>
+                                                            <td>{company[this.state.index].company_name}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Expense Image</th>
+                                                            <td>{company[this.state.index].expense_image}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Email Templates</th>
+                                                            <td>{company[this.state.index].email_template}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th >Logo</th>
+                                                            <td>{company[this.state.index].image_file}</td>
+                                                        </tr>
 
 
 
-                                                <tr>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <Link
-                                            to='/expenseList'
-                                            className='link'
-                                        >
-                                            <button type="submit" class="btn btn-default noBtn"
-                                                style={{
-                                                    marginLeft: 30
-                                                }}
+                                                        <tr>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <Link
+                                                    to='/expenseList'
+                                                    className='link'
+                                                >
+                                                    <button type="submit" class="btn btn-default noBtn"
+                                                        style={{
+                                                            marginLeft: 30
+                                                        }}
 
-                                            ><i class="fa fa-search"></i> Expense List</button>
-                                        </Link>
-                                        <Link
-                                            to='/addEmployee'
-                                            className='link'
-                                        >
-                                            <button type="submit" class="btn btn-default noBtn"
-                                                style={{
-                                                    marginLeft: 30
-                                                }}
+                                                    ><i class="fa fa-search"></i> Expense List</button>
+                                                </Link>
+                                                <Link
+                                                    to='/addEmployee'
+                                                    className='link'
+                                                >
+                                                    <button type="submit" class="btn btn-default noBtn"
+                                                        style={{
+                                                            marginLeft: 30
+                                                        }}
 
-                                            ><i class="fa fa-search"></i> Employee</button>
-                                        </Link>
-
+                                                    ><i class="fa fa-search"></i> Employee</button>
+                                                </Link>
+                                            </> : ''
+                                        }
+                                        {/* </>
+                                                
+                                        })
+                                    : ''
+                                    } */}
                                     </div>
                                 </div>
                             </div>
@@ -539,7 +548,17 @@ class Companies extends React.Component {
                                     }}
                                 >Are you sure you want to delete?</h4>
 
-                                <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                                <button type="submit" class="btn btn-default yesBtn"
+                                    onClick={() => {
+                                        if (company) {
+                                            this.delete(company[this.state.index]._id)
+                                        }
+                                        this.handleClose('delete')
+                                    }
+
+                                    }
+
+                                ><i class="fa fa-search"></i> Yes</button>
                                 <button type="submit" class="btn btn-default noBtn"
                                     onClick={() => {
                                         this.handleClose('delete')
@@ -559,4 +578,25 @@ class Companies extends React.Component {
         )
     }
 }
-export default Companies;
+
+
+let mapStateToProps = (store) => {
+    return {
+        companies: store.companyReducer
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+    return ({
+        delete_company: (data) => {
+            dispatch(deleteCompany(data))
+        },
+        // editInd : (id)=>{
+        //     dispatch(indexOfEdit())
+        // }
+    })
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Companies));
+export let getCompanieslist

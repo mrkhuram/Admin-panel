@@ -1,11 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import history from './history/history'
+
+import {confirmPassword} from '../redux/actions/authAction'
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+
 
 class ConfirmPasswordToMoveSetting extends React.Component {
 
 
     state = {
+        email:this.props.authDetail.userDetail.email,
         password: ''
     }
 
@@ -29,7 +36,7 @@ class ConfirmPasswordToMoveSetting extends React.Component {
             this.setState({
                 msg: ""
             })
-            history.push('/editSettings')
+            // history.push('/editSettings')
         }
     }
 
@@ -56,7 +63,7 @@ class ConfirmPasswordToMoveSetting extends React.Component {
                                 <form onSubmit={this.confirmSetting}>
                                     <div className="form-group">
                                         <label for="pwd">User Name:</label>
-                                        <input type="text" className="form-control" value="admin@gmail.com" />
+                                        <input type="text" className="form-control" value={this.props.authDetail.userDetail.email} />
                                     </div>
                                     <div className="form-group">
                                         <label for="pwd">Password:</label>
@@ -84,4 +91,21 @@ class ConfirmPasswordToMoveSetting extends React.Component {
         )
     }
 }
-export default ConfirmPasswordToMoveSetting;
+
+
+let mapStateToProps = (store) => {
+    return {
+      authDetail: store.auth
+    }
+  }
+  
+  let mapDispatchToProps = (dispatch) => {
+  
+    return ({
+      create_company: (data) => {
+          dispatch(confirmPassword(data))
+      },
+    })
+  }
+  
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmPasswordToMoveSetting));

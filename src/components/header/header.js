@@ -8,9 +8,12 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUsers, faInfoCircle, faCogs, faMoneyBillWaveAlt, faPlusCircle, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faBell, faListAlt, } from '@fortawesome/free-regular-svg-icons'
-import { withRouter, Route } from 'react-router-dom'
 import '../assets/css/style.css'
 import $ from 'jquery'
+import { withRouter, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+
 
 
 
@@ -32,7 +35,7 @@ import Typography from '@material-ui/core/Typography'
 
 // Components
 import CompanyDeshboard from './companyDeshboard';
-import NewCompany from '../addCompany';
+import NewCompany from '../editCompany';
 import AddEmployee from '../addEmployee';
 import Companies from '../Companies';
 import EditExpenseGroup from '../editExpenseGroup';
@@ -42,7 +45,7 @@ import Admins from '../expenseList';
 import ExpenseStatus from '../expenseStatus';
 import ExpenseListHr from '../expenseStatusHr';
 import HomePanel from '../home'
-import CompanyDetail from '../newCompany';
+import CreateNewCompany from '../createNewCompany';
 import PaymentType from '../paymentType';
 import EditPaymentType from '../paymentTypeEdit';
 import ConfirmPasswordToMoveSetting from '../pwSetting';
@@ -52,6 +55,10 @@ import AddEmployeeForm from '../tabsAddEmployee';
 
 
 
+// Redux
+
+import { logoutuser } from '../../redux/actions/authAction'
+
 
 
 const drawerWidth = 241;
@@ -60,7 +67,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
     },
-    
+
     changeColor: {
         backgroundColor: 'white',
         height: 61
@@ -74,7 +81,7 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
-    
+
     hide: {
         display: 'none',
     },
@@ -132,7 +139,25 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function Header(props) {
+
+let mapStateToProps = (store) => {
+    console.log(store);
+
+    return {
+        authState: store
+    }
+}
+let mapDispatchToProps = (disptch) => {
+    return {
+        logOut: () => {
+            disptch(logoutuser())
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function Header(props) {
+
+
     const classes = useStyles();
     const theme = useTheme();
     const { container } = props;
@@ -144,7 +169,7 @@ export default function Header(props) {
 
     const [open, setOpen] = React.useState(true);
     const [admin, setAdmin] = React.useState(false);
-    const [company, setCompany] = React.useState(true);
+    const [company, setCompany] = React.useState(false);
     const [hr, setHr] = React.useState(false);
 
 
@@ -176,16 +201,19 @@ export default function Header(props) {
         setCompany(false)
     }
 
-
+    const logout = () => {
+        props.logOut()
+        // localStorage.removeItem('token')
+    }
 
     return (
         <div className={classes.root}>
             <CssBaseline />
             <AppBar position="fixed"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-            }, classes.changeColor
-            )}
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                }, classes.changeColor
+                )}
             >
 
 
@@ -213,9 +241,9 @@ export default function Header(props) {
                                         onClick={handleDrawerToggle}
                                         className={classes.menuButton}
                                     >
-                                        <MenuIcon 
+                                        <MenuIcon
                                         // style={{
-                                           
+
                                         // }}
                                         />
                                     </IconButton>
@@ -252,22 +280,17 @@ export default function Header(props) {
                                             onClick={() => {
                                                 $(".meu-liust").slideToggle(400);
                                             }}
-                                        >Hi,
-                        <span class="caret"></span></a>
+                                        >Hi, {props.authState.auth.userDetail.display_name}
+                                            <span class="caret"></span></a>
                                         <ul class="dropdown-menu meu-liust signoutoptions">
+                                            <li><Link href="#" to='/confirmPassword-first'
+                                            // onClick={handleAdmin}
+
+                                            ><i class="fa fa-user-o"></i> Settings</Link></li>
                                             <li><a href="#"
-                                                onClick={handleAdmin}
-                                            ><i class="fa fa-user-o"></i> Admin</a></li>
-                                            <li><a href="#"
+                                                onClick={logout}
+                                            ><i class="fa fa-sign-out" ></i> Log Out</a></li>
 
-                                                onClick={handleCompany}
-
-                                            ><i class="fa fa-sign-out" ></i> Company</a></li>
-                                            <li><a href="#"
-
-                                                onClick={handleHr}
-
-                                            ><i class="fa fa-sign-out" ></i> HR</a></li>
                                         </ul>
                                     </li>
 
@@ -319,14 +342,14 @@ export default function Header(props) {
 
                                 <div class="media-body">
                                     <p>Admin</p>
-                                    <h4 class="media-heading">John Doe</h4>
+                                    <h4 class="media-heading">{props.authState.auth.userDetail.display_name}</h4>
                                 </div>
                             </div>
                             <ul>
 
 
                                 {
-                                    admin ?
+                                    props.authState.auth.userDetail.admin_access ?
 
                                         <>
                                             <li className='drawerLi'>
@@ -338,14 +361,14 @@ export default function Header(props) {
                                                     Home</Link></li>
 
                                             <li>
-                                                <Link to='/new_company' class="">
+                                                <Link to='/admin/create_new_company' class="">
                                                     <FontAwesomeIcon icon={faUsers}
                                                         className='iconDrawer'
                                                     />
 
                                                     New Companies</Link></li>
                                             <li>
-                                                <Link to='/admin/client' class="">
+                                                <Link to='/admin/companies' class="">
                                                     <FontAwesomeIcon icon={faListAlt}
                                                         className='iconDrawer'
                                                     />
@@ -379,7 +402,7 @@ export default function Header(props) {
 
                                         <>
                                             {
-                                                company ?
+                                                 props.authState.auth.userDetail.mentor ?
                                                     <>
                                                         <li className='drawerLi'>
                                                             <Link to="/" class="">
@@ -415,31 +438,45 @@ export default function Header(props) {
                                                     :
 
                                                     <>
-
-                                                        <li className='drawerLi'>
-                                                            <Link to="/" class="">
-                                                                <FontAwesomeIcon icon={faHome}
-                                                                    className='iconDrawer'
-                                                                />
-
-                                                                Home</Link></li>
+                                                        {
+                                                            props.authState.auth.userDetail.companyhr1 ?
+                                                                <>
 
 
-                                                        <li>
-                                                            <Link to='/expense_status_hr' class="">
-                                                                <FontAwesomeIcon icon={faChartLine}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Reports</Link>
-                                                        </li>
 
-                                                        <li>
-                                                            <Link to='/company_setting' class="">
-                                                                <FontAwesomeIcon icon={faCogs}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Setting</Link>
-                                                        </li>
+
+
+
+
+                                                                    <li className='drawerLi'>
+                                                                        <Link to="/" class="">
+                                                                            <FontAwesomeIcon icon={faHome}
+                                                                                className='iconDrawer'
+                                                                            />
+
+                                                                            Home</Link></li>
+
+
+                                                                    <li>
+                                                                        <Link to='/expense_status_hr' class="">
+                                                                            <FontAwesomeIcon icon={faChartLine}
+                                                                                className='iconDrawer'
+                                                                            />
+                                                                            Reports</Link>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <Link to='/company_setting' class="">
+                                                                            <FontAwesomeIcon icon={faCogs}
+                                                                                className='iconDrawer'
+                                                                            />
+                                                                            Setting</Link>
+                                                                    </li>
+                                                                </>
+                                                                :
+
+                                                                ""
+                                                        }
                                                     </>
 
                                             }
@@ -497,9 +534,8 @@ export default function Header(props) {
                             </div>
                             <ul>
 
-
                                 {
-                                    admin ?
+                                    props.authState.auth.userDetail.admin_access ?
 
                                         <>
                                             <li className='drawerLi'>
@@ -511,14 +547,14 @@ export default function Header(props) {
                                                     Home</Link></li>
 
                                             <li>
-                                                <Link to='/new_company' class="">
+                                                <Link to='/admin/create_new_company' class="">
                                                     <FontAwesomeIcon icon={faUsers}
                                                         className='iconDrawer'
                                                     />
 
                                                     New Companies</Link></li>
                                             <li>
-                                                <Link to='/admin/client' class="">
+                                                <Link to='/admin/companies' class="">
                                                     <FontAwesomeIcon icon={faListAlt}
                                                         className='iconDrawer'
                                                     />
@@ -552,7 +588,7 @@ export default function Header(props) {
 
                                         <>
                                             {
-                                                company ?
+                                                props.authState.auth.userDetail.mentor ?
                                                     <>
                                                         <li className='drawerLi'>
                                                             <Link to="/" class="">
@@ -588,31 +624,45 @@ export default function Header(props) {
                                                     :
 
                                                     <>
-
-                                                        <li className='drawerLi'>
-                                                            <Link to="/" class="">
-                                                                <FontAwesomeIcon icon={faHome}
-                                                                    className='iconDrawer'
-                                                                />
-
-                                                                Home</Link></li>
+                                                        {
+                                                            props.authState.auth.userDetail.companyhr1 ?
+                                                                <>
 
 
-                                                        <li>
-                                                            <Link to='/expense_status_hr' class="">
-                                                                <FontAwesomeIcon icon={faChartLine}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Reports</Link>
-                                                        </li>
 
-                                                        <li>
-                                                            <Link to='/company_setting' class="">
-                                                                <FontAwesomeIcon icon={faCogs}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Setting</Link>
-                                                        </li>
+
+
+
+
+                                                                    <li className='drawerLi'>
+                                                                        <Link to="/" class="">
+                                                                            <FontAwesomeIcon icon={faHome}
+                                                                                className='iconDrawer'
+                                                                            />
+
+                                                                            Home</Link></li>
+
+
+                                                                    <li>
+                                                                        <Link to='/expense_status_hr' class="">
+                                                                            <FontAwesomeIcon icon={faChartLine}
+                                                                                className='iconDrawer'
+                                                                            />
+                                                                            Reports</Link>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <Link to='/company_setting' class="">
+                                                                            <FontAwesomeIcon icon={faCogs}
+                                                                                className='iconDrawer'
+                                                                            />
+                                                                            Setting</Link>
+                                                                    </li>
+                                                                </>
+                                                                :
+
+                                                                ""
+                                                        }
                                                     </>
 
                                             }
@@ -632,98 +682,7 @@ export default function Header(props) {
                 </Hidden>
             </nav>
 
-            {/* <div class="header">
-
-                <div class="">
-                    <nav class="navbar custom_nav">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-
-                        <div class="collapse navbar-collapse" id="myNavbar">
-                            <ul class="nav navbar-nav navbar-left">
-
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right">
-
-                                <li class="hide"><a href="index8d2f.html?p=messages"><i class="fa fa-comments-o"></i><span class="hidden-xs">Live</span> Chat</a></li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle btnAlert" data-toggle="dropdown" href="#"
-
-                                    >
-
-                                        <FontAwesomeIcon icon={faBell}
-                                            className='icon'
-                                        />
-                                        <span class="badge bedge1">4</span></a>
-                                    <ul class="dropdown-menu bell">
-                                        <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                            <p>Hi, Babar your order is in process kindly wait a while</p>
-                                        </li>
-                                        <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                            <p>Hi, Babar your order is in process kindly wait a while</p>
-                                        </li>
-                                        <li><span class="title">Software development</span> <span class='date'>09/12/2018</span>
-                                            <p>Hi, Babar your order is in process kindly wait a while</p>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown ">
-
-
-                                    <a class="dropdown-toggle btnAlert " data-toggle="dropdown" href="#"
-                                        onClick={() => {
-                                            $(".meu-liust").slideToggle(400);
-                                        }}
-                                    >Hi,
-                                        <span class="caret"></span></a>
-                                    <ul class="dropdown-menu meu-liust signoutoptions">
-                                        <li><a href="#"
-                                            onClick={handleAdmin}
-                                        ><i class="fa fa-user-o"></i> Admin</a></li>
-                                        <li><a href="#"
-
-                                            onClick={handleCompany}
-
-                                        ><i class="fa fa-sign-out" ></i> Company</a></li>
-                                        <li><a href="#"
-
-                                            onClick={handleHr}
-
-                                        ><i class="fa fa-sign-out" ></i> HR</a></li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div> */}
-
-
-
-            {/* </AppBar> */}
-
-            {/* <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-
-
-                
-
-            </Drawer> */}
-
+           
 
 
 
@@ -740,8 +699,8 @@ export default function Header(props) {
                 <Route exact path='/' component={() => {
                     return <HomePanel admin={admin} hr={hr} company={company} />
                 }} />
-                <Route exact path='/admin/client' component={Companies} />
-                <Route exact path='/admin/clientDetail' component={CompanyDetail} />
+                <Route exact path='/admin/companies' component={Companies} />
+                <Route exact path='/admin/create_new_company' component={CreateNewCompany} />
                 <Route exact path='/expenseCategory' component={ExpenseCategory} />
                 <Route exact path='/expenseList' component={Admins} />
                 <Route exact path='/new_company' component={NewCompany} />
@@ -769,4 +728,4 @@ export default function Header(props) {
 
 
     );
-}
+}))

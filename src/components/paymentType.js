@@ -10,11 +10,50 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import EditPaymentType from './paymentTypeEdit';
 
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { toast } from 'react-toastify';
+
+import {addNewPayment , deletePaymentType} from '../redux/actions/paymentTypeAction'
+import axios from 'axios'
+
 
 class PaymentType extends React.Component {
     constructor(props) {
         super(props)
-        // this.props.couponsList()
+        
+        getPaymentType = ()=>{
+
+            let header = { 
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-sh-auth" : localStorage.getItem('token')
+                }
+            }
+            axios.get('https://mr-expense-backend.herokuapp.com/admin/get_all_payment_type',header)
+            .then(res =>{
+                console.log(res.data);
+                
+                this.setState({
+                    allPayment: res.data.expense_group
+                })
+            })
+        }
+
+
+        addNewPaymentType = ()=>{
+            this.notifySuccess()
+            this.handleClose('openPop')
+
+        }
+        paymentTypeErr =()=>{
+            this.notifyErr()
+            this.handleClose('openPop')
+
+        }
+        paymentTypeErr()
+        addNewPaymentType()
+        getPaymentType()
     }
     state = {
         coupons: [
@@ -87,6 +126,7 @@ class PaymentType extends React.Component {
 
 
 
+
     addNewField = () => {
 
         this.setState({
@@ -96,34 +136,35 @@ class PaymentType extends React.Component {
     }
 
 
-    onChangeHandler = (e, ind) => {
+    onChangeHandler = (e) => {
         console.log('working');
-
-        if (["eName", "eAmount"].includes(e.target.className)) {
-            let arr = [...this.state.arr]
-            arr[e.target.dataset.id][e.target.className] = e.target.value
-            this.setState({ arr }, () => {
-                console.log((this.state.arr));
-            })
-        }
-        else {
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-        }
+        this.setState({[e.target.name]: e.target.value})
 
     }
 
 
-    onSubmit = (eve) => {
+    onSubmitPayment = (eve) => {
         eve.preventDefault()
-        console.log(this.state);
+
+        this.props.addNewType(this.state.payment_type)
     }
+
+
+    notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+    notifySuccess = () => toast.success("Request Successfully Completed", { autoClose: 2000 })
+
+
+    // deletePType = ()=>{
+
+    // }
+    
 
     render() {
         return (
             <>
                 <div class="content-wrapper">
+                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+
                     <div id="order_preview" class="wow fadeInUp content_box"
                         style={{ visibility: 'visible', animationName: "fadeInUp" }}>
                         <div class="row table-header">
@@ -157,15 +198,19 @@ class PaymentType extends React.Component {
                                             <th class="active" width="250">Payment Type</th>
                                             <th class="active" style={{ width: "200px" }}>Action</th>
                                         </tr>
-                                        {this.state.coupons ? this.state.coupons.map((item, index) => {
+                                        {this.state.allPayment ? this.state.allPayment.map((item, index) => {
 
                                             return <tr>
                                                 <td>{index + 1}</td>
-                                                <td>{item.group_name}</td>
+                                                <td>{item.payment_type}</td>
 
                                                 <td>
                                                     <Link to='#' class="badge blue"
                                                         onClick={() => {
+                                                            this.setState({
+                                                                id: item._id,
+                                                                ind: index
+                                                            })
                                                             this.handleClickOpen('open')
                                                         }}
                                                     > <FontAwesomeIcon icon={faEye} className='iconCompany' /></Link>
@@ -173,6 +218,10 @@ class PaymentType extends React.Component {
                                                     <Link
                                                         // to='/editPaymentType'
                                                         onClick={() => {
+                                                            this.setState({
+                                                                id: item._id,
+                                                                ind: index
+                                                            })
                                                             this.handleClickOpen('edit')
                                                         }}
                                                         class="badge del link" data-toggle="modal" data-target="#myModal">
@@ -181,6 +230,9 @@ class PaymentType extends React.Component {
 
                                                     <a class="badge red" data-toggle="modal" data-target="#myModal"
                                                         onClick={() => {
+                                                            this.setState({
+                                                                id: item._id
+                                                            })
                                                             this.handleClickOpen('delete')
                                                         }}
 
@@ -239,17 +291,23 @@ class PaymentType extends React.Component {
                                                 <tr>
                                                     <th class="active" width="80">No.</th>
                                                     <th class="active" width="280">Name</th>
+                                                    {/* <th class="active" width="280">Added On</th> */}
+
 
                                                 </tr>
-                                                {this.state.expense ? this.state.coupons.map((item, index) => {
+                                                {
+                                                this.state.allPayment ? this.state.allPayment.map((item, index) => {
 
                                                     return <tr>
                                                         <td>{index + 1}</td>
-                                                        <td>{item.group_name}</td>
+                                                        <td>{item.payment_type}</td>
+                                                        {/* <td>{item.date}</td> */}
+
 
 
                                                     </tr>
                                                 }) : <></>}
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -319,44 +377,29 @@ class PaymentType extends React.Component {
                                     >
                                        
 
-                                        {
-
-                                            this.state.arr.map((item, ind) => {
-                                                let eName = `groupName-${ind + 1}`, amount = `introExpense-${ind + 1}`
-                                                return <>
-                                                    <form
-                                                        
-                                                        key={ind}
-                                                    >
-                                                        <div className="form-group"
-
->
-                                                                    {
-                                                                        ind == 0 ?
-                                                                        <>
-                                                            <label for="pwd">
+                                       
+                                                    <form>
+                                                        <div className="form-group">
+                                                             <label for="pwd">
 
                                                                 Payment Name
 
                                                             </label>
 
                                                             <input type="text" className="form-control"
-                                                                name={eName}
-                                                                data-id={ind}
-                                                                id={eName}
+                                                                name="name"
+                                                               
                                                                 style={{
                                                                     width: "100%",
                                                                 }}
+                                                                onChange={this.onChangeHandler}
                                                                 />
-                                                                </>
-                                                                : ''
-                                                                }
+                                                               
 
                                                         </div>
 
                                                     </form>
-                                                </>
-                                            })}
+                                               
                                             
                                            
                                         <div style={{
@@ -368,7 +411,7 @@ class PaymentType extends React.Component {
 
                                             <button type="submit" className="btn btn-default noBtn"
                                                 style={{ margin: 'auto',padding: "10px 44px" }}
-                                                onClick={this.onSubmit}
+                                                onClick={this.onSubmitPayment}
                                             >Save</button>
                                         </div>
                                     </div>
@@ -418,7 +461,14 @@ class PaymentType extends React.Component {
                                 }}
                             >Are you sure ?</h4>
 
-                            <button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+                            <button type="submit" class="btn btn-default yesBtn"
+                                onClick={()=>{
+                                    this.props.delete_p_type(this.state.id)
+                                    this.handleClose('delete')
+
+                                }}
+                            
+                            ><i class="fa fa-search"></i> Yes</button>
                             <button type="submit" class="btn btn-default noBtn"
                                 onClick={() => {
                                     this.handleClose('delete')
@@ -467,9 +517,14 @@ let mapStateToProps = (store) => {
 let mapDispatchToProps = (dispatch) => {
 
     return ({
-
+        addNewType: body =>{
+            dispatch(addNewPayment(body))
+        },
+        delete_p_type: body =>{
+            dispatch(deletePaymentType(body))
+        }
     })
 }
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CouponAdmin));
-export default PaymentType
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PaymentType));
+export let paymentTypeErr, addNewPaymentType,getPaymentType
