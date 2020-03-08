@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
-
+import { addNewEmployee} from '../redux/actions/employeeAction'
 
 
 
@@ -17,7 +18,7 @@ class AddEmployeeForm extends React.Component {
 
     state = {
         activeTab: '1',
-        start_date:new Date()
+        start_date: new Date()
     }
 
     toggle = tab => {
@@ -34,13 +35,21 @@ class AddEmployeeForm extends React.Component {
         })
     }
 
-    onChangeDate = date =>{ 
+    onChangeDate = date => {
         console.log(date);
-        
+
         this.setState({
             start_date: date
         })
     }
+
+    onSubmit = (e)=>{
+        e.preventDefault()
+
+        this.props.addNewEmp(this.state)
+        this.props.close()
+    }
+
     render() {
 
 
@@ -88,10 +97,10 @@ class AddEmployeeForm extends React.Component {
                     </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
-                    <form encType="multipart/form-data">
-                        <TabPane tabId="1">
-                            <Row>
-                                <Col sm="12" md='6'>
+                    <TabPane tabId="1">
+                        <Row>
+                            <Col sm="12" md='6'>
+                                <form encType="multipart/form-data">
                                     <div class="form-group">
                                         <label for="pwd">Firt Name</label>
                                         <input type="text" class="form-control" name="first_name" onChange={this.onChangeHandler} />
@@ -162,11 +171,11 @@ class AddEmployeeForm extends React.Component {
                                     </div>
 
 
-                                    {/* </form> */}
+                                </form>
 
-                                </Col>
-                                <Col sm="12" md='6'>
-                                    {/* <form> */}
+                            </Col>
+                            <Col sm="12" md='6'>
+                                <form>
                                     <div class="form-group">
                                         <label for="pwd">Last Name</label>
                                         <input type="text" class="form-control" name="last_name" onChange={this.onChangeHandler} />
@@ -235,10 +244,10 @@ class AddEmployeeForm extends React.Component {
 
 
 
-                                </Col>
-                            </Row>
-                        </TabPane>
-                    </form>
+                                </form>
+                            </Col>
+                        </Row>
+                    </TabPane>
                     <TabPane tabId="2">
                         <Row>
                             <Col sm="12" md='6'>
@@ -269,8 +278,14 @@ class AddEmployeeForm extends React.Component {
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="pwd">Work Phone</label>
+                                        <label for="pwd">Set a Password</label>
+                                        <input type="password" class="form-control" name="password" onChange={this.onChangeHandler} />
 
+
+
+
+
+{/* 
                                         <IntlTelInput
                                             containerClassName="intl-tel-input"
                                             inputClassName="form-control"
@@ -296,7 +311,7 @@ class AddEmployeeForm extends React.Component {
 
 
                                             }}
-                                        />
+                                        /> */}
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Gender</label>
@@ -410,7 +425,7 @@ class AddEmployeeForm extends React.Component {
                                         <select class="form-control" name='meterial_status' onChange={this.onChangeHandler}>
                                             <option value="">Select Marital Status</option>
 
-                                            <option value="signle">Single</option>
+                                            <option value="single">Single</option>
                                             <option value="married">Married</option>
                                             <option value="divorced">Divorced</option>
                                             <option value="widowed">Widowed</option>
@@ -421,6 +436,7 @@ class AddEmployeeForm extends React.Component {
 
                                     <button type="submit" class="btn btn-default"
                                         style={{ marginTop: 10, float: 'right' }}
+                                        onClick={this.onSubmit}
                                     >Save</button>
 
 
@@ -435,4 +451,24 @@ class AddEmployeeForm extends React.Component {
     }
 }
 
-export default AddEmployeeForm
+let mapStateToProps = (store) => {
+
+    return {
+        admin: store.AdminReducer
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+    return ({
+        addNewEmp: body =>{
+            dispatch(addNewEmployee(body))
+        },
+        // deleteGroup: body =>{
+        //     dispatch(deleteExpenseGroup(body))
+        // }
+    })
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddEmployeeForm));
+// export let expenseGroupErr, addExpenseGroupSuccess, getExpenseGroup

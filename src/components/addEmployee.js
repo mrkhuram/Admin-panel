@@ -11,39 +11,45 @@ import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 import AddEmployeeForm from './tabsAddEmployee';
 import EditEmployeeForm from './editEmployee';
-
-
-
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import {deleteEmployee} from '../redux/actions/employeeAction'
 
 class AddEmployee extends React.Component {
 	constructor(props) {
 		super(props)
+
+		let token = localStorage.getItem('token')
+
+		let header = {
+			headers: {
+				'Content-Type': 'application/json;charset=UTF-8',
+				'x-sh-auth': token
+			}
+		}
+		let companyId = localStorage.getItem('company_id')
+		console.log(companyId);
+
+		employeeList = () => {
+			axios.get(`https://mr-expense-backend.herokuapp.com/user/get_company_employee?_id=${companyId}`, header)
+				.then(res => {
+					console.log(res);
+					this.setState({
+						employees: res.data.employees
+					})
+				})
+				.catch(err => console.log(err))
+		}
+
+
+		employeeList()
+
 	}
+
+
+
 	state = {
-		articlesList: [
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019'
-			},
-
-
-		],
+		employees: null,
 		// checked: true,
 		openPop: false,
 		open: false,
@@ -55,7 +61,7 @@ class AddEmployee extends React.Component {
 
 
 
-	
+
 	handleClickOpen = (element) => {
 
 		this.setState({
@@ -67,7 +73,7 @@ class AddEmployee extends React.Component {
 			[element]: false
 		})
 	};
-	
+
 	onChangeHandler = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value
@@ -82,14 +88,29 @@ class AddEmployee extends React.Component {
 
 		this.props.delete(id)
 	}
+	closeTab = () => {
+		this.handleClose('addNew')
+	}
+
+	id = 2
 
 
+	// testing = ()=>{
+	// 	if(this.state.employees.length !== 0){
+	// 		console.log(this.state.employees[this.id].email);
 
+	// 	}
+
+	// }
 	render() {
+		// console.log(this.state.ind);
+		// console.log(this.state.employees[this.id].email);
+		// this.testing()
+		let { employees } = this.state
 		return (
 			<>
 
-				
+
 				<div class="content-wrapper">
 					<div id="order_preview" class="wow fadeInUp content_box"
 						style={{ visibility: 'visible', animationName: "fadeInUp" }}>
@@ -133,12 +154,12 @@ class AddEmployee extends React.Component {
 
 											<th class="active" width="200">Action</th>
 										</tr>
-										{this.state.articlesList ?
-											this.state.articlesList.map((item, index) => {
+										{this.state.employees ?
+											this.state.employees.map((item, index) => {
 												return <tr>
 													<td>{index + 1}</td>
-													<td>{item.name}</td>
-												
+													<td>{item.first_name + " " + item.last_name}</td>
+
 													<td>{item.addedBy}</td>
 
 													<td>{item.addedOn}</td>
@@ -146,7 +167,11 @@ class AddEmployee extends React.Component {
 													<td>
 														<Link
 															onClick={() => {
+																// this.setState({ ind: index })
+																this.id = index
 																this.handleClickOpen('openPop')
+
+
 															}}
 															to='#'
 															class="badge blue" > <FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
@@ -155,6 +180,7 @@ class AddEmployee extends React.Component {
 															to='#'
 															class="badge del link" data-toggle="modal" data-target="#myModal"
 															onClick={() => {
+																this.id = index
 																this.handleClickOpen('edit')
 															}}
 														>
@@ -162,6 +188,7 @@ class AddEmployee extends React.Component {
 														</Link>
 														<Link to='#'
 															onClick={() => {
+																this.id = index
 																this.handleClickOpen('delete')
 															}}
 															class="badge red" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
@@ -228,68 +255,81 @@ class AddEmployee extends React.Component {
 								<table class="table table-bordered">
 									<tbody>
 										<tr>
-											<th  >Title</th>
-											<td >John Doe</td>
+											<th>Title</th>
+											<td >{employees ? employees[this.id].title : null}
+											</td>
 										</tr>
 										<tr>
 											<th  >Employee Name</th>
-											<td >John Doe</td>
+											<td >{employees ? employees[this.id].first_name + ' ' + employees[this.id].last_name: null}
+											</td>
 										</tr>
 										<tr>
 											<th >Work Email</th>
-											<td>john@gmail.com</td>
-										</tr>
+											<td >{employees ? employees[this.id].email : null}
+											</td>									</tr>
 										<tr>
 											<th >Phone</th>
-											<td>09876543213</td>
+											<td >{employees ? employees[this.id].ph_no : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Position</th>
-											<td>X</td>
+											<td >{employees ? employees[this.id].position : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Starting Date</th>
-											<td>20/02/2018</td>
+											<td >{employees ? employees[this.id].starting_date : null}
+											</td>
 										</tr>
 										<tr>
 											<th  >Employee Status</th>
-											<td>Contract</td>
+											<td >{employees ? employees[this.id].status : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Direct Manager</th>
-											<td>No</td>
+											<td >{employees ? employees[this.id].direct_manager : null}
+											</td>
 										</tr>
 										<tr>
-											<th >Team</th>
-											<td>Yes</td>
+											<th >Team</th><td >{employees ? employees[this.id].team : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Location</th>
-											<td>Faisalad, Pakistan</td>
+											<td >{employees ? employees[this.id].location : null}
+											</td>
 										</tr>
 										<tr>
-											<th >Public Holiday Group</th>
-											<td>Yes</td>
+											<th >Public Holiday Group</th><td >{employees ? employees[this.id].public_holiday : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Access Level</th>
-											<td>Employee</td>
+											<td >{employees ? employees[this.id].access_level : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Driving License #</th>
-											<td>NHL12341018</td>
+											<td >{employees ? employees[this.id].driving_license : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Employee No.</th>
-											<td>007635</td>
+											<td >{employees ? employees[this.id].employee_number : null}
+											</td>
 										</tr>
 										<tr>
 											<th >LinkedIn</th>
-											<td>/ksalex23</td>
+											<td >{employees ? employees[this.id].linkedIn : null}
+											</td>
 										</tr>
 										<tr>
 											<th >Skype</th>
-											<td>/ksalex23</td>
+											<td >{employees ? employees[this.id].skype : null}
+											</td>
 										</tr>
 
 
@@ -315,10 +355,10 @@ class AddEmployee extends React.Component {
 								</Link>
 
 							</div>
-						</div>
+						</div >
 
 
-					</MuiDialogContent>
+					</MuiDialogContent >
 				</Dialog >
 
 
@@ -376,55 +416,55 @@ class AddEmployee extends React.Component {
 									<tbody>
 										<tr>
 											<th  >Street 1</th>
-											<td >St#4, NY</td>
+											<td >{employees ? employees[this.id].street_1 : null}</td>
 										</tr>
 										<tr>
 											<th  >Street 2</th>
-											<td ></td>
+											<td >{employees ? employees[this.id].street_2 : null}</td>
 										</tr>
 										<tr>
 											<th >City</th>
-											<td>New York</td>
+											<td>{employees ? employees[this.id].city : null}</td>
 										</tr>
 										<tr>
 											<th >State</th>
-											<td>Punjab</td>
+											<td>{employees ? employees[this.id].state : null}</td>
 										</tr>
 										<tr>
 											<th >PostCode</th>
-											<td>38000</td>
+											<td>{employees ? employees[this.id].postal_code : null}</td>
 										</tr>
 										<tr>
 											<th >Country</th>
-											<td>Pakistan</td>
+											<td>{employees ? employees[this.id].country : null}</td>
 										</tr>
 										<tr>
 											<th  >Nationality</th>
-											<td>Pakistan</td>
+											<td>{employees ? employees[this.id].nationality : null}</td>
 										</tr>
 										<tr>
 											<th >Home Phone</th>
-											<td>098787867</td>
+											<td>{employees ? employees[this.id].home_no : null}</td>
 										</tr>
 										<tr>
 											<th >Mobile Phone</th>
-											<td>098767877</td>
+											<td>{employees ? employees[this.id].mobile_no : null}</td>
 										</tr>
 										<tr>
 											<th >Location</th>
-											<td>Faisalad, Pakistan</td>
+											<td>{employees ? employees[this.id].location : null}</td>
 										</tr>
 										<tr>
 											<th >Personal Email</th>
-											<td>john@gmail.com</td>
+											<td>{employees ? employees[this.id].personal_email : null}</td>
 										</tr>
 										<tr>
 											<th >Gender</th>
-											<td>Male</td>
+											<td>{employees ? employees[this.id].gender : null}</td>
 										</tr>
 										<tr>
 											<th >Marital Status</th>
-											<td>Married</td>
+											<td>{employees ? employees[this.id].marital_status : null}</td>
 										</tr>
 
 
@@ -433,7 +473,7 @@ class AddEmployee extends React.Component {
 										</tr>
 									</tbody>
 								</table>
-								
+
 
 							</div>
 						</div>
@@ -471,7 +511,7 @@ class AddEmployee extends React.Component {
 								textAlign: 'center'
 							}}
 						>
-							
+
 							<h4
 								style={{
 									marginTop: 30,
@@ -479,7 +519,13 @@ class AddEmployee extends React.Component {
 								}}
 							>Are you sure ?</h4>
 
-							<button type="submit" class="btn btn-default yesBtn"><i class="fa fa-search"></i> Yes</button>
+							<button type="submit" class="btn btn-default yesBtn"
+								onClick={()=>{
+									this.props.deleteEmp(employees[this.id]._id)
+									this.handleClose('delete')
+								}}
+							
+							><i class="fa fa-search"></i> Yes</button>
 							<button type="submit" class="btn btn-default noBtn"
 								onClick={() => {
 									this.handleClose('delete')
@@ -517,7 +563,7 @@ class AddEmployee extends React.Component {
 								this.handleClose('addNew')
 							}}
 						>X</p>
-						<AddEmployeeForm />
+						<AddEmployeeForm close={this.closeTab} />
 
 					</MuiDialogContent>
 				</Dialog>
@@ -570,10 +616,11 @@ let mapStateToProps = (store) => {
 let mapDispatchToProps = (dispatch) => {
 
 	return ({
-
+		deleteEmp: (id)=>{
+			dispatch(deleteEmployee(id))
+		}
 	})
 }
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddEmployee));
-
-export default AddEmployee
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddEmployee));
+export let employeeList

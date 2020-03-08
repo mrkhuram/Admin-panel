@@ -28,7 +28,9 @@ export function createCompany(body) {
 
         axios.post("https://mr-expense-backend.herokuapp.com/admin/add_company", body, header)
             .then(resp => {
-                getCompanieslist()
+                // getCompanieslist()
+                localStorage.setItem("company_id", resp.data.company._id)
+                
                 dispatch({
                     type: CREATE_COMPANY,
                     payload: resp.data
