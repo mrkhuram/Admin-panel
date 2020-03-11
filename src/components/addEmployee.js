@@ -431,7 +431,7 @@ class AddEmployee extends React.Component {
 								this.handleClose('addNew')
 							}}
 						>X</p> 
-						<AddEmployeeForm close={this.closeTab} />
+						<AddEmployeeForm close={this.closeTab} />   
 
 					</MuiDialogContent>
 				</Dialog>

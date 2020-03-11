@@ -232,7 +232,7 @@ class ExpenseHr extends React.Component {
 														<input type="text" class="form-control" onChange={this.pendingSearch} placeholder="Search Pending.." />
 													</div>
 													<button type="submit" class="btn btn-default"
-													onClick={this.notification}
+													
 													>Search</button>
 
 												</form>

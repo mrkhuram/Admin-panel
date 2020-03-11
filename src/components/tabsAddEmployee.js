@@ -108,7 +108,7 @@ class AddEmployeeForm extends React.Component {
                     </NavItem>
                     <NavItem>
                         <NavLink
-                            className={this.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+                            className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
                             onClick={() => { this.toggle('2'); }}
                             style={{
                                 margin: 0,
