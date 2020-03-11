@@ -1366,3 +1366,10 @@ input:focus, select:focus{
 .testing{
     border-left: 2px solid #f9407e !important;
 }
+.iti-mobile .intl-tel-input .country-list{
+    height: 200px !important;
+}
+.react-datepicker-wrapper{
+    border: 'none' !important;
+    padding: 0px  !important;
+}

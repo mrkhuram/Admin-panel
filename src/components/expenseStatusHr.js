@@ -46,23 +46,25 @@ class ExpenseHr extends React.Component {
 					let expesnes = res.data.expenses
 					expesnes.forEach((item) => {
 						if (item.approved) {
-							this.setState({ approved: [...this.state.approved, item] })
+							this.setState({ approved: [...this.state.approved, item],
+								approvedAll: [...this.state.approved, item] })
 							return true
 						}
 						if (item.rejected) {
-							this.setState({ rejected: [...this.state.rejected, item] })
+							this.setState({ rejected: [...this.state.rejected, item],
+								rejectedAll: [...this.state.rejected, item] })
 
 							return true
 
 						}
 						if (!item.approved) {
-							this.setState({ pending: [...this.state.pending, item] })
+							this.setState({ pending: [...this.state.pending, item],
+								pendingAll: [...this.state.pending, item] })
 
 							return true
 
 						}
 						console.log(item);
-
 
 					})
 
@@ -139,6 +141,65 @@ class ExpenseHr extends React.Component {
 	}
 
 
+	
+	pendingSearch = (e)=>{
+		let searchVal = e.target.value
+		if (searchVal !== '') {
+			this.searchedItems = this.state.pending.filter((item) => {
+				return item.title.toLowerCase().includes(searchVal.toLowerCase())
+
+			})
+			console.log(this.searchedItems);
+
+			this.setState({
+				pending: this.searchedItems
+			})
+		} else {
+			this.setState({
+				pending: this.state.pendingAll
+			})
+		}
+	}
+
+	approvedSearch = (e)=>{
+		let searchVal = e.target.value
+		if (searchVal !== '') {
+			this.searchedItems = this.state.approved.filter((item) => {
+				return item.title.toLowerCase().includes(searchVal.toLowerCase())
+
+			})
+			console.log(this.searchedItems);
+
+			this.setState({
+				approved: this.searchedItems
+			})
+		} else {
+			this.setState({
+				approved: this.state.approvedAll
+			})
+		}
+	}
+
+	rejectedSearch = (e)=>{
+		let searchVal = e.target.value
+		if (searchVal !== '') {
+			this.searchedItems = this.state.rejected.filter((item) => {
+				return item.title.toLowerCase().includes(searchVal.toLowerCase())
+
+			})
+			console.log(this.searchedItems);
+
+			this.setState({
+				rejected: this.searchedItems
+			})
+		} else {
+			this.setState({
+				rejected: this.state.rejectedAll
+			})
+		}
+	}
+
+
 
 	  
 	render() {
@@ -164,9 +225,11 @@ class ExpenseHr extends React.Component {
 											</div>
 
 											<div class="col-xs-12 col-md-6">
-												<form class="form-inline form-searchbar">
+												<form class="form-inline form-searchbar" onSubmit={(e)=>{
+													e.preventDefault()
+												}}>
 													<div class="form-group">
-														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Pending.." />
+														<input type="text" class="form-control" onChange={this.pendingSearch} placeholder="Search Pending.." />
 													</div>
 													<button type="submit" class="btn btn-default"
 													onClick={this.notification}
@@ -351,9 +414,11 @@ class ExpenseHr extends React.Component {
 
 											</div>
 											<div class="col-xs-12 col-md-6">
-												<form class="form-inline form-searchbar">
+												<form class="form-inline form-searchbar" onSubmit={(e)=>{
+													e.preventDefault()
+												}}>
 													<div class="form-group">
-														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Approved.." />
+														<input type="text" class="form-control" onChange={this.approvedSearch} placeholder="Search Approved.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -536,9 +601,11 @@ class ExpenseHr extends React.Component {
 
 											</div>
 											<div class="col-xs-12 col-md-6">
-												<form class="form-inline form-searchbar">
+												<form class="form-inline form-searchbar" onSubmit={(e)=>{
+													e.preventDefault()
+												}}>
 													<div class="form-group">
-														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Expense.." />
+														<input type="text" class="form-control" onChange={this.rejectedSearch} placeholder="Search Rejected.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -722,7 +789,9 @@ class ExpenseHr extends React.Component {
 
 											</div>
 											<div class="col-xs-12 col-md-6">
-												<form class="form-inline form-searchbar">
+												<form class="form-inline form-searchbar" onSubmit={(e)=>{
+													e.preventDefault()
+												}}>
 													<div class="form-group">
 														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Expense.." />
 													</div>
