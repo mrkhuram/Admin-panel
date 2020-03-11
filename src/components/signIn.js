@@ -39,7 +39,7 @@ class SignIn extends React.Component {
         super()
         errFunction = () => {
             this.setState({
-                msg: "Username Password Didn't Match.",
+                msg: "Invalid Email or Password.",
                 loader: false
             })
         }
@@ -79,9 +79,7 @@ class SignIn extends React.Component {
             }}>
                 <CssBaseline />
                 <div className={this.props.paper}>
-                    {/* <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar> */}
+                    
                     <Typography component="h1" variant="h2" >
                         Sign in
                 </Typography>
@@ -90,7 +88,7 @@ class SignIn extends React.Component {
                         marginTop: 30
                     }}>
                         <div class="form-group">
-                            <label for="pwd">User Name or Email</label>
+                            <label for="pwd">Email</label>
                             <input
                                 type="text"
                                 class="form-control"

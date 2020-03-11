@@ -577,7 +577,6 @@
  .header .navbar-nav>li>.dropdown-menu{
      border-radius:0px !important;
      padding:0px;
-     min-width:345px;
      margin-top:20px;
      border:0px;
      top: 51%;
@@ -1362,4 +1361,8 @@ input:focus, select:focus{
     color: #151414 !important;
     padding: 10px !important;
    
+}
+
+.testing{
+    border-left: 2px solid #f9407e !important;
 }

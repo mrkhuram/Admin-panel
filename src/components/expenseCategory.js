@@ -230,10 +230,13 @@ class ExpenseGroup extends React.Component {
                                 <h2 class="section-title">Expense Groups</h2>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <form class="form-inline form-searchbar">
+                                <form class="form-inline form-searchbar" onSubmit={(e)=>{
+                                    e.preventDefault()
+                                }} >
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Search Group.."
                                         onChange={this.searchItem}
+
                                         />
                                     </div>
                                     <button type="submit" class="btn btn-default"
@@ -241,6 +244,14 @@ class ExpenseGroup extends React.Component {
                                     >Search</button>
                                     <a href="#" class="btn btn-default"
                                         onClick={() => {
+                                            this.setState({
+                                               arr: [ {
+                                                    groupName: '',
+                                                    introExpense: ''
+                                    
+                                                },]
+                                            })
+
                                             this.handleClickOpen('openPop')
                                         }}
                                         style={{
@@ -429,6 +440,9 @@ class ExpenseGroup extends React.Component {
                                                     <form
                                                         key={ind}
                                                         onChange={this.onChangeHandler}
+                                                        onSubmit={(e)=>{
+                                                            e.preventDefault()
+                                                        }}
                                                     >
                                                         <div className="form-group"
 

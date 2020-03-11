@@ -20,7 +20,7 @@ class AddEmployeeForm extends React.Component {
 
     state = {
         activeTab: '1',
-        start_date: new Date(),
+        starting_date: new Date(),
         personal_information: []
     }
 
@@ -39,10 +39,12 @@ class AddEmployeeForm extends React.Component {
     }
 
     onChangeDate = date => {
-        // console.log(date);
-
+        
+        let newDate = JSON.stringify(date).slice(1,11)
+        
         this.setState({
-            start_date: date
+            start_date: date,
+            starting_date: newDate
         })
     }
 
@@ -214,6 +216,7 @@ class AddEmployeeForm extends React.Component {
                                             style={{
                                                 width: '100%'
                                             }}
+                                            
                                             name="starting_date"
                                         />
 

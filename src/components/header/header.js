@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUsers, faInfoCircle, faCogs, faMoneyBillWaveAlt, faPlusCircle, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faUsers, faInfoCircle, faCogs, faMoneyBillWaveAlt, faPlusCircle, faChartLine, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faBell, faListAlt, } from '@fortawesome/free-regular-svg-icons'
 import '../assets/css/style.css'
 import $ from 'jquery'
@@ -61,6 +61,24 @@ import { logoutuser } from '../../redux/actions/authAction'
 import companyExpenses from '../companyExpenses';
 import adminEmployeesList from '../adminEmployeesList';
 
+
+
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Dropdown,
+    NavbarText
+} from 'reactstrap';
+import { NavLink as RRNavLink } from "react-router-dom";
 
 
 const drawerWidth = 241;
@@ -208,6 +226,21 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
         // localStorage.removeItem('token')
     }
 
+
+
+    // const toggle = ()=> {
+    //     this.setState(prevState => ({
+    //       isOpen: !prevState.isOpen
+    //     }));
+    //   }
+
+    const onMouseEnter = () => {
+        setDropdownOpen(true);
+    }
+
+    const onMouseLeave = () => {
+        setDropdownOpen(false);
+    }
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -275,26 +308,58 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                         </ul>
                                     </li>
 
-                                    <li class="dropdown ">
 
 
-                                        <a class="dropdown-toggle btnAlert " data-toggle="dropdown" href="#"
-                                            onClick={() => {
-                                                $(".meu-liust").slideToggle(400);
-                                            }}
-                                        >Hi, {props.authState.auth.userDetail.display_name}
-                                            <span class="caret"></span></a>
-                                        <ul class="dropdown-menu meu-liust signoutoptions">
-                                            <li><Link href="#" to='/authentication_required'
-                                            // onClick={handleAdmin}
+                                    <UncontrolledDropdown nav
+                                        isOpen={dropdownOpen}
+                                        toggle={toggle}
 
-                                            ><i class="fa fa-user-o"></i> Settings</Link></li>
-                                            <li><a href="#"
-                                                onClick={logout}
-                                            ><i class="fa fa-sign-out" ></i> Log Out</a></li>
+                                    >
+                                        <DropdownToggle nav className="homeBtn navBtn">
+                                            Hi, {props.authState.auth.userDetail.display_name}
+                                            <FontAwesomeIcon icon={faChevronDown}
+                                                style={{
+                                                    fontSize: 12,
+                                                    marginLeft: 5,
+                                                    color: 'grey'
 
-                                        </ul>
-                                    </li>
+                                                }}
+                                            />
+                                        </DropdownToggle>
+                                        <DropdownMenu center style={{ width: "100px" }}>
+                                            <DropdownItem
+                                                style={{
+                                                    fontSize: 14,
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    color: 'black',
+                                                    width: '100%',
+                                                    padding: 10
+                                                }}
+                                            >
+                                                <Link to='/authentication_required'
+                                                    class="link"
+
+                                                > Settings</Link>
+                                            </DropdownItem>
+                                            <DropdownItem divider />
+                                            <DropdownItem onClick={logout}
+                                                style={{
+                                                    fontSize: 14,
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    color: 'black',
+                                                    width: '100%',
+                                                    paddingBottom: 10
+                                                }}
+                                            >
+                                                Log Out
+
+                                            </DropdownItem>
+
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
+
 
                                 </ul>
                             </div>
@@ -349,192 +414,6 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                             </div>
                             <ul>
 
-
-                                {
-                                    props.authState.auth.userDetail.admin_access ?
-
-                                        <>
-                                            <li className='drawerLi'>
-                                                <Link to="/" class="">
-                                                    <FontAwesomeIcon icon={faHome}
-                                                        className='iconDrawer'
-                                                    />
-
-                                                    Home</Link></li>
-
-                                            <li>
-                                                <Link to='/admin/create_new_company' class="">
-                                                    <FontAwesomeIcon icon={faUsers}
-                                                        className='iconDrawer'
-                                                    />
-
-                                                    New Companies</Link></li>
-                                            <li>
-                                                <Link to='/admin/companies' class="">
-                                                    <FontAwesomeIcon icon={faListAlt}
-                                                        className='iconDrawer'
-                                                    />
-
-                                                    All Companies</Link></li>
-
-                                            <li><Link to='/expenseCategory' class="">
-                                                <FontAwesomeIcon icon={faInfoCircle}
-                                                    className='iconDrawer'
-                                                />
-                                                Expense Group</Link></li>
-
-                                            <li>
-                                                <Link to='/payment-type' class="">
-                                                    <FontAwesomeIcon icon={faMoneyBillWaveAlt}
-                                                        className='iconDrawer'
-                                                    />
-                                                    Payment Type</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/company_setting" class="">
-                                                    <FontAwesomeIcon icon={faCogs}
-                                                        className='iconDrawer'
-                                                    />
-                                                    Setting</Link>
-                                            </li>
-
-                                        </>
-
-                                        :
-
-                                        <>
-                                            {
-                                                 props.authState.auth.userDetail.mentor ?
-                                                    <>
-                                                        <li className='drawerLi'>
-                                                            <Link to="/" class="">
-                                                                <FontAwesomeIcon icon={faHome}
-                                                                    className='iconDrawer'
-                                                                />
-
-                                                                Home</Link></li>
-                                                        <li>
-                                                            <Link to="/add_employee" class="">
-                                                                <FontAwesomeIcon icon={faPlusCircle}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Employees</Link>
-                                                        </li>
-
-                                                        <li>
-                                                            <Link to='/expense_status' class="">
-                                                                <FontAwesomeIcon icon={faChartLine}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Reports</Link>
-                                                        </li>
-
-                                                        <li>
-                                                            <Link to='/authentication_required' class="">
-                                                                <FontAwesomeIcon icon={faCogs}
-                                                                    className='iconDrawer'
-                                                                />
-                                                                Setting</Link>
-                                                        </li>
-                                                    </>
-                                                    :
-
-                                                    <>
-                                                        {
-                                                            props.authState.auth.userDetail.companyhr1 ?
-                                                                <>
-
-
-
-
-
-
-
-                                                                    <li className='drawerLi'>
-                                                                        <Link to="/" class="">
-                                                                            <FontAwesomeIcon icon={faHome}
-                                                                                className='iconDrawer'
-                                                                            />
-
-                                                                            Home</Link></li>
-
-
-                                                                    <li>
-                                                                        <Link to='/expense_status_hr' class="">
-                                                                            <FontAwesomeIcon icon={faChartLine}
-                                                                                className='iconDrawer'
-                                                                            />
-                                                                            Reports</Link>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <Link to='/authentication_required' class="">
-                                                                            <FontAwesomeIcon icon={faCogs}
-                                                                                className='iconDrawer'
-                                                                            />
-                                                                            Setting</Link>
-                                                                    </li>
-                                                                </>
-                                                                :
-
-                                                                ""
-                                                        }
-                                                    </>
-
-                                            }
-                                        </>
-
-                                }
-
-
-
-
-
-                            </ul>
-
-                        </div>
-
-
-
-
-
-                    </Drawer>
-                </Hidden>
-                <Hidden xsDown implementation="css">
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        variant="permanent"
-                        open
-                    >
-                        <div class="leftbar"
-                            style={{
-                                width: '100%'
-                            }}
-                        >
-                            <div class="logo_header"
-                                style={{
-                                    width: 240,
-                                    borderBottom: '1px solid #f0f0f0'
-                                }}
-                            >
-                                <Link to="/">
-                                    <img src={require("../assets/images/logo.png")} class="logo" />
-                                </Link>
-                            </div>
-
-
-
-                            <span class="heading"></span>
-                            <div class="media hide">
-
-                                <div class="media-body">
-                                    <p>Admin</p>
-                                    <h4 class="media-heading">John Doe</h4>
-                                </div>
-                            </div>
-                            <ul>
 
                                 {
                                     props.authState.auth.userDetail.admin_access ?
@@ -680,51 +559,274 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
 
                         </div>
 
+
+
+
+
+                    </Drawer>
+                </Hidden>
+                <Hidden xsDown implementation="css">
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open
+                    >
+                        <div class="leftbar"
+                            style={{
+                                width: '100%'
+                            }}
+                        >
+                            <div class="logo_header"
+                                style={{
+                                    width: 240,
+                                    borderBottom: '1px solid #f0f0f0'
+                                }}
+                            >
+                                <Link to="/">
+                                    <img src={require("../assets/images/logo.png")} class="logo" />
+                                </Link>
+                            </div>
+
+
+
+                            <span class="heading"></span>
+                            <div class="media hide">
+
+                                <div class="media-body">
+                                    <p>Admin</p>
+                                    <h4 class="media-heading">John Doe</h4>
+                                </div>
+                            </div>
+                            <ul>
+
+                                {
+                                    props.authState.auth.userDetail.admin_access ?
+
+                                        <>
+
+
+
+
+
+
+                                            <NavItem>
+                                                <NavLink to="/" activeClassName="active" exact tag={RRNavLink}>
+                                                    <FontAwesomeIcon icon={faHome}
+                                                        className='iconDrawer'
+                                                    />
+
+                                                    Home
+                                            </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink to='/admin/create_new_company' activeClassName="active" tag={RRNavLink}>
+                                                    <FontAwesomeIcon icon={faUsers}
+                                                        className='iconDrawer'
+                                                    />
+
+                                                    New Companies
+                                                </NavLink>
+                                            </NavItem>
+
+
+
+                                            <NavItem>
+                                                <NavLink to='/admin/companies' activeClassName="active" tag={RRNavLink}>
+                                                    <FontAwesomeIcon icon={faListAlt}
+                                                        className='iconDrawer'
+                                                    />
+
+                                                    All Companies
+                                                </NavLink>
+                                            </NavItem><NavItem>
+                                                <NavLink to='/expenseCategory' activeClassName="active" tag={RRNavLink}>
+
+
+                                                    <FontAwesomeIcon icon={faInfoCircle}
+                                                        className='iconDrawer'
+                                                    />
+                                                Expense Group
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink to='/payment-type' activeClassName="active" tag={RRNavLink}>
+                                                    <FontAwesomeIcon icon={faMoneyBillWaveAlt}
+                                                        className='iconDrawer'
+                                                    />
+                                                    Payment Type
+                                                </NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink to="/authentication_required" activeClassName="active" tag={RRNavLink}>
+                                                    <FontAwesomeIcon icon={faCogs}
+                                                        className='iconDrawer'
+                                                    />
+                                                    Setting
+                                                </NavLink>
+                                            </NavItem>
+
+
+
+
+
+
+
+
+
+
+                                        </>
+
+                                        :
+
+                                        <>
+                                            {
+                                                props.authState.auth.userDetail.mentor ?
+                                                    <>
+                                                        <NavItem>
+                                                            <NavLink to="/" activeClassName="active" exact tag={RRNavLink}>
+                                                                <FontAwesomeIcon icon={faHome}
+                                                                    className='iconDrawer'
+                                                                />
+
+                                                    Home
+                                            </NavLink>
+                                                        </NavItem>
+
+                                                        <NavItem>
+                                                            <NavLink to="/add_employee" activeClassName="active" exact tag={RRNavLink}>
+                                                                <FontAwesomeIcon icon={faPlusCircle}
+                                                                    className='iconDrawer'
+                                                                />
+                                                                Employees
+                                                    </NavLink>
+                                                        </NavItem>
+
+
+                                                        <NavItem>
+                                                            <NavLink to='/expense_status' activeClassName="active" exact tag={RRNavLink}>
+                                                            <FontAwesomeIcon icon={faChartLine}
+                                                                            className='iconDrawer'/>
+                                                                 Reports
+                                                    </NavLink>
+                                                        </NavItem>
+
+                                                        <NavItem>
+                                                            <NavLink to="/authentication_required" activeClassName="active" tag={RRNavLink}>
+                                                                <FontAwesomeIcon icon={faCogs}
+                                                                    className='iconDrawer'
+                                                                />
+                                                    Setting
+                                                </NavLink>
+                                                        </NavItem>
+                                                    </>
+                                                    :
+
+                                                    <>
+                                                        {
+                                                            props.authState.auth.userDetail.companyhr1 ?
+                                                                <>
+
+
+
+
+
+
+
+                                                                    <NavItem>
+                                                                        <NavLink to="/" activeClassName="active" exact tag={RRNavLink}>
+                                                                            <FontAwesomeIcon icon={faHome}
+                                                                                className='iconDrawer'
+                                                                            />
+
+                                                                            Home
+                                                                    </NavLink>
+                                                                    </NavItem>
+
+                                                                    <NavItem>
+                                                                        <NavLink to='/expense_status_hr' activeClassName="active" exact tag={RRNavLink}>
+                                                                        <FontAwesomeIcon icon={faChartLine}
+                                                                           className='iconDrawer' />
+                                                                                Reports
+                                                                    </NavLink>
+                                                                    </NavItem>
+
+                                                                  
+
+                                                                        <NavItem>
+                                                                            <NavLink to="/authentication_required" activeClassName="active" tag={RRNavLink}>
+                                                                                <FontAwesomeIcon icon={faCogs}
+                                                                                    className='iconDrawer'
+                                                                                />
+                                                                            Setting
+                                                                        </NavLink>
+                                                                        </NavItem>
+                                                                </>
+                                                                :
+
+                                                                ""
+                                                        }
+                                                    </>
+
+                                            }
+                                                    </>
+
+                                            }
+
+
+
+
+
+                                        </ul>
+
+                        </div>
+
                     </Drawer>
                 </Hidden>
             </nav>
 
-           
 
 
 
 
-            <main
-                className={clsx(classes.content, {
-                    [classes.contentShift]: open,
-                })}
-            >
-                <div className={classes.drawerHeader} />
+
+                <main
+                    className={clsx(classes.content, {
+                        [classes.contentShift]: open,
+                    })}
+                >
+                    <div className={classes.drawerHeader} />
 
 
 
-                <Route exact path='/' component={() => {
-                    return <HomePanel admin={admin} hr={hr} company={company} />
-                }} />
-                <Route exact path='/admin/companies' component={Companies} />
-                <Route exact path='/admin/create_new_company' component={CreateNewCompany} />
-                <Route exact path='/expenseCategory' component={ExpenseCategory} />
-                <Route exact path='/expenseList' component={Admins} />
-                <Route exact path='/edit_company' component={NewCompany} />
-                {/* <Route exact path='/confirmPassword-first' component={ConfirmPasswordToMoveSetting} /> */}
-                <Route exact path='/editSettings' component={EditSetting} />
-                <Route exact path='/editexpenseGroup' component={EditExpenseGroup} />
-                <Route exact path='/payment-type' component={PaymentType} />
-                <Route exact path='/editPaymentType' component={EditPaymentType} />
-                <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
-                <Route exact path='/add_employee' component={AddEmployee} />
-                <Route exact path='/add_new_employee' component={AddEmployeeForm} />
-                <Route exact path='/authentication_required' component={SettingCompany} />
-                <Route exact path='/edit_company_setting' component={EditSettingCompany} />
-                <Route exact path='/expense_status' component={ExpenseStatus} />
-                <Route exact path='/expense_status_hr' component={ExpenseListHr} />
-                <Route exacct path='/company_expense' component={companyExpenses} />
-                <Route exact path = '/admin_company_empoyees' component={adminEmployeesList}/>
+                    <Route exact path='/' component={() => {
+                        return <HomePanel admin={admin} hr={hr} company={company} />
+                    }} />
+                    <Route exact path='/admin/companies' component={Companies} />
+                    <Route exact path='/admin/create_new_company' component={CreateNewCompany} />
+                    <Route exact path='/expenseCategory' component={ExpenseCategory} />
+                    <Route exact path='/expenseList' component={Admins} />
+                    <Route exact path='/edit_company' component={NewCompany} />
+                    {/* <Route exact path='/confirmPassword-first' component={ConfirmPasswordToMoveSetting} /> */}
+                    <Route exact path='/editSettings' component={EditSetting} />
+                    <Route exact path='/editexpenseGroup' component={EditExpenseGroup} />
+                    <Route exact path='/payment-type' component={PaymentType} />
+                    <Route exact path='/editPaymentType' component={EditPaymentType} />
+                    <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
+                    <Route exact path='/add_employee' component={AddEmployee} />
+                    <Route exact path='/add_new_employee' component={AddEmployeeForm} />
+                    <Route exact path='/authentication_required' component={SettingCompany} />
+                    <Route exact path='/edit_company_setting' component={EditSettingCompany} />
+                    <Route exact path='/expense_status' component={ExpenseStatus} />
+                    <Route exact path='/expense_status_hr' component={ExpenseListHr} />
+                    <Route exacct path='/company_expense' component={companyExpenses} />
+                    <Route exact path='/admin_company_empoyees' component={adminEmployeesList} />
 
 
 
 
-            </main>
+                </main>
 
 
         </div>

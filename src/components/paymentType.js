@@ -220,7 +220,9 @@ class PaymentType extends React.Component {
                                 <h2 class="section-title">Payment Type</h2>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <form class="form-inline form-searchbar">
+                                <form class="form-inline form-searchbar"  onSubmit={(e)=>{
+                                                            e.preventDefault()
+                                                        }}>
                                 <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Search Payment.."
                                         onChange={this.searchItem}
@@ -274,8 +276,9 @@ class PaymentType extends React.Component {
                                                         // to='/editPaymentType'
                                                         onClick={() => {
                                                             this.setState({
-                                                                id: item._id,
-                                                                ind: index
+                                                                id: item,
+                                                                ind: index,
+                                                                
                                                             })
                                                             this.handleClickOpen('edit')
                                                         }}
@@ -443,7 +446,9 @@ class PaymentType extends React.Component {
                                        
 
                                        
-                                                    <form>
+                                                    <form  onSubmit={(e)=>{
+                                                            e.preventDefault()
+                                                        }}>
                                                         <div className="form-group">
                                                              <label for="pwd">
 
@@ -559,7 +564,7 @@ class PaymentType extends React.Component {
 
                         margin: 0,
                         overFlow: 'hidden'
-                    }}>
+                    }}> 
                         
                         <EditPaymentType  handleClose={this.handleClose} id={this.state.id}/>
 

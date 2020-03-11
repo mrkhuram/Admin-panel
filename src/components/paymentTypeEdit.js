@@ -56,7 +56,7 @@ class EditPaymentType extends React.Component {
     onSubmit = (e) => {
         e.preventDefault()
 
-        this.props.editType(this.state.payment_type, this.props.id)
+        this.props.editType(this.state.payment_type, this.props.id._id)
 
         this.props.handleClose('edit')
 
@@ -113,7 +113,7 @@ class EditPaymentType extends React.Component {
                                             <label for="pwd">Payment Type</label>
                                             <input type="text" className="form-control"
                                                 name="payment_type"
-
+                                                placeholder={this.props.id.payment_type}
                                                 style={{
                                                     width: "100%",
                                                 }}

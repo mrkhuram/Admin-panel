@@ -63,7 +63,7 @@ class Companies extends React.Component {
         openPop: false,
         delete: false,
         companies: "",
-        index: 1
+        index: 0
     }
 
     handleClickOpen = (element) => {
@@ -121,6 +121,8 @@ class Companies extends React.Component {
 
     render() {
         let company = this.state.companies
+        console.log(company);
+        
         return (
             <>
                 <div class="content-wrapper">
@@ -180,56 +182,68 @@ class Companies extends React.Component {
 
 
 
-                                                {company.map((item, ind) => {
-                                                    return <tr>
-                                                        <td>{ind + 1}</td>
-                                                        <td>{item.company_name}</td>
-                                                        <td>{item.work_email}</td>
-                                                        <td>{item.employee_limit}</td>
-                                                        <td>{item.ph_no}</td>
-                                                        <td>
-                                                            <span class="badge">{item.status}</span>
-                                                        </td>
-                                                        <td>
-                                                            <Link
-                                                                onClick={() => {
-                                                                    this.setState({
-                                                                        index: ind,
-                                                                        id: item._id
-                                                                    })
-                                                                    this.handleClickOpen('open')
-                                                                }}
-                                                                to='#'
-                                                                class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
-                                                            <Link
-                                                                onClick={() => {
-                                                                    this.setState({
-                                                                        index: ind,
-                                                                        id: item._id
-                                                                    })
-                                                                }}
-                                                                to={{
-                                                                    pathname: '/edit_company',
-                                                                    companyInd: { company: item }
-                                                                }}
-                                                                class="badge del link" data-toggle="modal" data-target="#myModal"
+                                                {
+                                                    company.length !== 0 ?
+                                                        company.map((item, ind) => {
+                                                            return <tr>
+                                                                <td>{ind + 1}</td>
+                                                                <td>{item.company_name}</td>
+                                                                <td>{item.work_email}</td>
+                                                                <td>{item.employee_limit}</td>
+                                                                <td>{item.ph_no}</td>
+                                                                <td>
+                                                                    <span class="badge">{item.status}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <Link
+                                                                        onClick={() => {
+                                                                            this.setState({
+                                                                                index: ind,
+                                                                                id: item._id
+                                                                            })
+                                                                            this.handleClickOpen('open')
+                                                                        }}
+                                                                        to='#'
+                                                                        class="badge blue" ><FontAwesomeIcon icon={faEye} className='iconCompany' /> </Link>
+                                                                    <Link
+                                                                        onClick={() => {
+                                                                            this.setState({
+                                                                                index: ind,
+                                                                                id: item._id
+                                                                            })
+                                                                        }}
+                                                                        to={{
+                                                                            pathname: '/edit_company',
+                                                                            companyInd: { company: item }
+                                                                        }}
+                                                                        class="badge del link" data-toggle="modal" data-target="#myModal"
 
-                                                            >
-                                                                <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
+                                                                    >
+                                                                        <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
 
-                                                            </Link>
-                                                            <Link to='#'
-                                                                onClick={() => {
-                                                                    this.setState({
-                                                                        index: ind,
-                                                                        id: item._id
-                                                                    })
-                                                                    this.handleClickOpen('delete')
+                                                                    </Link>
+                                                                    <Link to='#'
+                                                                        onClick={() => {
+                                                                            this.setState({
+                                                                                index: ind,
+                                                                                id: item._id
+                                                                            })
+                                                                            this.handleClickOpen('delete')
+                                                                        }}
+                                                                        class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
+                                                                </td>
+                                                            </tr>
+                                                        })
+                                                        :
+                                                        <tr>
+                                                            <td
+                                                                colSpan="7"
+                                                                style={{
+                                                                    textAlign: 'center',
+                                                                    fontSize: 16
                                                                 }}
-                                                                class="badge del" > <FontAwesomeIcon icon={faTrashAlt} className='iconCompany' /></Link>
-                                                        </td>
-                                                    </tr>
-                                                })
+                                                            >No item </td>
+                                                        </tr>
                                                 }
 
 
@@ -318,7 +332,7 @@ class Companies extends React.Component {
 
                                         company.map((item) => {
                                             return <> */}
-                                        {company ?
+                                        {company.length !== 0 ?
                                             <>
                                                 <img src={require("./assets/images/logo.png")} alt=""
                                                     style={{
