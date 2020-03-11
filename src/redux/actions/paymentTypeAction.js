@@ -1,19 +1,23 @@
 import {
     PAYMENT_TYPE_ADDED,
     PAYMENT_TYPE_ERROR,
-    DELETE_PAYMENT_TYPE
+    DELETE_PAYMENT_TYPE,
+    EDIT_PAYMENT_TYPE
 } from '../constat'
 import axios from 'axios'
 import {
-    addNewPaymentType,
-    paymentTypeErr,
+    // addNewPaymentType,
+    // paymentTypeErr,
     getPaymentType
 } from '../../components/paymentType'
 import {  
-    expenseGroupErr,
-    addExpenseGroupSuccess,
+    // expenseGroupErr,
+    // addExpenseGroupSuccess,
     getExpenseGroup 
 } from '../../components/expenseCategory'
+import {expenseGroupAdded,expenseGroupFail} from '../../components/expenseCategory'
+import {successFul,createdFail} from '../../components/paymentType'
+
 
 export function addNewPayment(body) {
 
@@ -39,7 +43,7 @@ export function addNewPayment(body) {
         axios.post('https://mr-expense-backend.herokuapp.com/admin/add_payment_type', payment, header)
             .then(res => {
                 getPaymentType()
-                addNewPaymentType()
+                successFul("success")
 
                 dispatch({
                     type: PAYMENT_TYPE_ADDED,
@@ -47,7 +51,7 @@ export function addNewPayment(body) {
                 })
             })
             .catch(err => {
-                paymentTypeErr()
+                createdFail("err")
 
             })
 
@@ -71,22 +75,24 @@ export function addExpenseGroup(body) {
         }
 
         console.log(body);
-        let payment = {
-            payment_type: body
-        }
+        // let payment = {
+        //     payment_type: body
+        // }
 
 
-        axios.post('https://mr-expense-backend.herokuapp.com/admin/add_expense', payment, header)
+        axios.post('https://mr-expense-backend.herokuapp.com/admin/add_expense', body, header)
             .then(res => {
-                addExpenseGroupSuccess()
+                // addExpenseGroupSuccess()
                 getExpenseGroup()
+                expenseGroupAdded("success")
                 dispatch({
                     type: PAYMENT_TYPE_ADDED,
                     payload: res.data
                 })
             })
             .catch(err => {
-                expenseGroupErr()
+                // expenseGroupErr()
+                expenseGroupFail('err')
 
             })
 
@@ -155,10 +161,53 @@ export function deletePaymentType(body) {
                     type: DELETE_PAYMENT_TYPE,
                     payload: res.data
                 })
-                addNewPaymentType()
+                // addNewPaymentType()
             })
             .catch(err => {
                 // expenseGroupErr()
+
+            })
+
+
+    }
+}
+
+
+
+export function editPaymentType(body , id) {
+
+    return dispatch => {
+
+        let token = localStorage.getItem('token')
+
+        let header = {
+
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'x-sh-auth': token
+            }
+        }
+
+        console.log(body);
+        let payment = {
+            payment_type: body
+        }
+
+
+        axios.post(`https://mr-expense-backend.herokuapp.com/admin/edit_payment_type?_id=${id}`, payment, header)
+            .then(res => {
+                getPaymentType()
+                // addNewPaymentType()
+
+                dispatch({
+                    type: EDIT_PAYMENT_TYPE,
+                    payload: res.data
+                })
+
+            })
+            .catch(err => {
+                // paymentTypeErr()
 
             })
 

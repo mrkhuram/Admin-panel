@@ -6,9 +6,27 @@ import {confirmPassword} from '../redux/actions/authAction'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Toast from 'light-toast';
+
 
 
 class ConfirmPasswordToMoveSetting extends React.Component {
+
+
+
+    constructor(props) {
+        super(props)
+    
+        passwordDidntMatch = (parm) => {
+          if(parm === "err"){
+    
+          Toast.fail('Wrong Password, Try Again.', 2000, () => {
+    
+          });
+        }
+        }
+        passwordDidntMatch() 
+      }
 
 
     state = {
@@ -27,7 +45,7 @@ class ConfirmPasswordToMoveSetting extends React.Component {
             e.preventDefault()
 
             this.setState({
-                msg: "Password doesn't match"
+                msg: "Password Rq"
             })
             return true
 
@@ -60,7 +78,8 @@ class ConfirmPasswordToMoveSetting extends React.Component {
                             }}
                         >
                             <div className="col-xs-12 col-md-12">
-                                <form onSubmit={this.confirmSetting}>
+                                <form 
+                                >
                                     <div className="form-group">
                                         <label for="pwd">User Name:</label>
                                         <input type="text" className="form-control" value={this.props.authDetail.userDetail.email} />
@@ -108,4 +127,5 @@ let mapStateToProps = (store) => {
     })
   }
   
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmPasswordToMoveSetting));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ConfirmPasswordToMoveSetting));
+export let passwordDidntMatch

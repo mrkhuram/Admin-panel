@@ -151,7 +151,7 @@ class HomePanel extends React.Component {
                                     </div>
 
                                     <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                        <Link to='/company_setting' class="link ">
+                                        <Link to='/authentication_required' class="link ">
                                             <div class="box">
 
 
@@ -239,7 +239,7 @@ class HomePanel extends React.Component {
                                                 </div>
 
                                                 <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                                    <Link to="/confirmPassword-first" class="link ">
+                                                    <Link to="/authentication_required" class="link ">
                                                         <div class="box">
 
 
@@ -299,7 +299,7 @@ class HomePanel extends React.Component {
                                                         </div>
 
                                                         <div class="col-md-4 wow flipInY" data-wow-delay="0.1s">
-                                                            <Link to="/confirmPassword-first" class="link ">
+                                                            <Link to="/authentication_required" class="link ">
                                                                 <div class="box">
 
 

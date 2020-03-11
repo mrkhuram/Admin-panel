@@ -3,9 +3,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import {userAuth} from '../redux/actions/authAction'
+import { userAuth } from '../redux/actions/authAction'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = theme => ({
     paper: {
@@ -34,9 +35,23 @@ const useStyles = theme => ({
 })
 class SignIn extends React.Component {
 
+    constructor() {
+        super()
+        errFunction = () => {
+            this.setState({
+                msg: "Username Password Didn't Match.",
+                loader: false
+            })
+        }
+
+        errFunction()
+    }
+
+
     state = {
         email: null,
-        password: null
+        password: null,
+        loader: false,
     }
 
     onChangeHandler = (e) => {
@@ -47,12 +62,16 @@ class SignIn extends React.Component {
 
     submitHandler = (e) => {
         e.preventDefault()
+        this.setState({
+            loader: true
+        })
         this.props.loginUser(this.state)
+
     }
 
-    
 
-    
+
+
     render() {
         return (
             <Container component="main" maxWidth="xs" style={{
@@ -83,26 +102,49 @@ class SignIn extends React.Component {
                         <div class="form-group">
                             <label for="pwd">Password</label>
                             <input
-                                type="text"
+                                type="password"
                                 class="form-control"
                                 name="password"
                                 onChange={this.onChangeHandler}
                             />
                         </div>
-                        {/* <div class="form-group">
-                            <label for="pwd">
-                            {this.props.userdetail.message}
-                          
-                            </label>
-                            
-                        </div> */}
 
-                        <button
-                            type="submit"
-                            class="btn btn-default yesBtn"
-                            style={{ marginTop: 10, float: 'right', padding: '8px 16px', fontSize: 16 }}
-                            onClick={this.submitHandler}
-                        >Sign In</button>
+                        {this.state.msg ?
+                            <div style={{
+                                textAlign: 'right',
+                                color: '#e60000d4'
+                            }}
+                            >
+                                <label for="pwd"
+                                    style={{
+                                        fontSize: 16,
+                                        fontWeight: 400
+                                    }}
+                                > {this.state.msg} </label>
+                            </div>
+                            : ''}
+
+                        <div>
+
+                            {this.state.loader ? <CircularProgress color="secondary"
+                                style={{
+                                    float: 'right'
+                                }}
+                            /> :
+                                <button
+                                    type="submit"
+                                    class="btn btn-default yesBtn"
+                                    style={{
+                                        marginTop: 10, float: 'right', padding: '8px 16px', fontSize: 16,
+
+                                    }}
+                                    onClick={this.submitHandler}
+                                >
+                                    Sign In
+                            </button>
+                            }
+                        </div>
+
 
                     </form>
                 </div>
@@ -112,20 +154,21 @@ class SignIn extends React.Component {
     }
 }
 
-let mapStateToProps = (store)=>{
+let mapStateToProps = (store) => {
     console.log(store);
-    
-    
+
+
     return {
         userdetail: store.auth
     }
 }
-let mapDispatchToProps = (dispatch)=>{
+let mapDispatchToProps = (dispatch) => {
     return {
-        loginUser: body =>{
+        loginUser: body => {
             dispatch(userAuth(body))
-        } 
+        }
     }
 }
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(withStyles(useStyles)(SignIn)))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(SignIn)))
+export let errFunction

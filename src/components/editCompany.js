@@ -11,6 +11,8 @@ import {
   Col,
 } from 'reactstrap'
 import { editCompany } from '../redux/actions/companyAction'
+import Toast from 'light-toast';
+
 
 
 
@@ -19,11 +21,25 @@ class EditCompany extends React.Component {
   constructor(props) {
     super(props)
 
-    // let companyIndex = props.location
-    // this.setState({
-    //   companyInd: companyIndex
-    // })
-    // console.log(this.state.companyInd);
+    successFulEdit = (parm) => {
+      if(parm === "success"){
+
+        Toast.success('Successfully Edit...!!', 2000, () => {
+          
+        });
+      }
+    }
+    editFail = (parm) => {
+      if(parm === "err"){
+
+      Toast.fail('Email Already in use, Try Again.', 2000, () => {
+
+      });
+    }
+    }
+    successFulEdit()
+    editFail() 
+
 
   }
 
@@ -277,3 +293,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditCompany));
+export let successFulEdit,editFail

@@ -17,25 +17,25 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
 class EditExpenseGroup extends React.Component {
 
+
+
+    expense = null
+    componentDidMount() {
+      console.log(this.props.location.expenseItem.expense);
+      this.expense = this.props.location.expenseItem.expense
+     
+      this.setState({
+        expense: this.expense
+      })
+  
+  
+  
+    }
+
     state = {
-        title: '',
-        to_client: null,
-        to_adviser: null,
-        description: '',
-        coupons: [
-            {
-                group_name: 'Bike',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'Car',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'APV',
-                expenseCategory: 'Maintanence'
-            },
-        ],
+        
+        
+        
     }
 
     onChangeHandler = (e) => {
@@ -88,7 +88,7 @@ class EditExpenseGroup extends React.Component {
                                         <div class="form-group">
                                             <label for="pwd">Group Name</label>
                                             <input type="text" class="form-control" name="companyName"
-                                                value='Faisalabad'
+                                                placeholder={this.state.expense ? this.state.expense.expense_name : ''}
                                                 onChange={this.onChangeHandler}
                                                 style={{
 
@@ -101,7 +101,7 @@ class EditExpenseGroup extends React.Component {
                                             <table class="table table-bordered">
                                                 <tbody>
                                                   
-                                                    {this.state.coupons ? this.state.coupons.map((item, index) => {
+                                                    {this.state.expense ? this.state.expense.expense_type.map((item, index) => {
 
                                                         return <tr>
                                                        
@@ -118,6 +118,8 @@ class EditExpenseGroup extends React.Component {
                                                                 <textarea type="text" className="form-control"
                                                                     value={item.group_name}
                                                                     data-id={index}
+                                                                    placeholder={item}
+                                                                    onBlur={this.onBlurhandling}
                                                                  
 
                                                                 >

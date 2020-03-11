@@ -14,10 +14,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { toast } from 'react-toastify';
 import axios from 'axios'
-import {approveByAdmin,rejectByAdmin} from '../redux/actions/employeeAction'
+import { approveByAdmin, rejectByAdmin } from '../redux/actions/employeeAction'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-class ExpenseList extends React.Component {
+
+class CompanyExpenses extends React.Component {
 
 	constructor(props) {
 		super(props)
@@ -33,6 +35,9 @@ class ExpenseList extends React.Component {
 			axios.get('https://mr-expense-backend.herokuapp.com/expenses/get_all_Expenses', header)
 				.then(res => {
 					console.log(res.data);
+					this.setState({
+						expenses: null
+					})
 					let expesnes = res.data.expenses
 					expesnes.forEach((item) => {
 						if (item.approved) {
@@ -57,24 +62,14 @@ class ExpenseList extends React.Component {
 					})
 
 					this.setState({
-						expenses: res.data.expenses
+						expenses: res.data.expenses,
+						allExpenses: res.data.expenses
 					})
 				})
 		}
 
-
-		addExpenseGroupSuccess = () => {
-			this.notifySuccess()
-			// this.handleClose('openPop')
-
-		}
-		expenseGroupErr = () => {
-			this.notifyErr()
-			// this.handleClose('openPop')
-
-		}
-		expenseGroupErr()
-		addExpenseGroupSuccess()
+		// expenseGroupErr()
+		// addExpenseGroupSuccess()
 		getExpenseList()
 	}
 
@@ -92,21 +87,56 @@ class ExpenseList extends React.Component {
 	}
 
 
-	notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
-	notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
+	// notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+	// notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
 
 
+
+	searchedItems = []
+
+	searchItem = (e) => {
+
+		let searchVal = e.target.value
+		if (searchVal !== '') {
+			this.searchedItems = this.state.expenses.filter((item) => {
+				return item.title.toLowerCase().includes(searchVal.toLowerCase())
+
+			})
+			console.log(this.searchedItems);
+
+			this.setState({
+				expenses: this.searchedItems
+			})
+		} else {
+			this.setState({
+				expenses: this.state.allExpenses
+			})
+		}
+
+	}
+
+	searchBtn = (e) => {
+		e.preventDefault()
+		console.log(this.searchingItem);
+
+
+		if (this.searchingItem.length !== 0) {
+
+			this.setState({
+				employees: this.searchingItem
+			})
+
+		}
+
+
+	}
 
 
 	render() {
-
-		// console.log(this.state);
-
-
-
+		
+		
 		return (
 			<div>
-
 
 				{/* Tab 1 Start*/}
 
@@ -128,7 +158,10 @@ class ExpenseList extends React.Component {
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control"
+															placeholder="Search Expense.."
+
+														/>
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -145,7 +178,7 @@ class ExpenseList extends React.Component {
 												<Nav tabs
 													style={{
 
-														fontSize: 18,
+														fontSize: 16,
 														border: 'none',
 														marginLeft: 15
 													}}
@@ -228,56 +261,81 @@ class ExpenseList extends React.Component {
 
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
-												<table class="table table-bordered">
-													<tbody>
-														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
-															<th class="active" width="100">Added By</th>
-															<th class="active" width="100">Added on</th>
-															<th class="active" width="100">Status</th>
-															<th class="active" width="100">Action</th>
+												{
+													this.state.pending ?
+														<table class="table table-bordered">
+															<tbody>
+																<tr>
+																	<th class="active" width="50">S#</th>
+																	<th class="active" width="200">Expense Name</th>
+																	<th class="active" width="100">Added By</th>
+																	<th class="active" width="100">Added on</th>
+																	<th class="active" width="100">Status</th>
+																	<th class="active" width="100">Action</th>
 
-														</tr>
-														{this.state.pending ?
-															this.state.pending.map((item, index) => {
-																return <tr>
-																	<td>{index + 1}</td>
-																	<td>{item.title}</td>
-																	<td>{item.user.employee_name}</td>
-
-																	<td>{item.submit_date}</td>
-																	<td>{item.status}</td>
-
-																	<td>
-																		<Link
-																			to='#'
-																			title="Approve"
-																			class="badge blue"
-
-																			onClick={() => {
-																				this.props.approved(item._id)
-																			}}
-
-																		> <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
-
-
-																		<Link to='#'
-																			title="Reject"
-
-																			// onClick={() => {
-																			// 	this.props.reject(item._id)
-																			// }}
-																			class="badge red"
-																		> <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
-
-																	</td>
 																</tr>
-															}) : <></>
-														}
+																{this.state.pending.length !== 0 ?
+																	this.state.pending.map((item, index) => {
+																		return <tr>
+																			<td>{index + 1}</td>
+																			<td>{item.title}</td>
+																			<td>{item.user.employee_name}</td>
 
-													</tbody>
-												</table>
+																			<td>{item.submit_date}</td>
+																			<td>{item.status}</td>
+
+																			<td>
+																				<Link
+																					to='#'
+																					title="Approve"
+																					class="badge blue"
+
+																					onClick={() => {
+																						this.props.approved(item._id)
+																					}}
+
+																				> <FontAwesomeIcon icon={faCheck} className='iconCompany' /> </Link>
+
+
+																				<Link to='#'
+																					title="Reject"
+
+																					onClick={() => {
+																						this.props.reject(item._id)
+																					}}
+																					class="badge red"
+																				> <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
+
+																			</td>
+																		</tr>
+																	})
+																	:
+																	<tr>
+																		<td
+																			colSpan="6"
+																			style={{
+																				textAlign: 'center',
+																				fontSize: 16
+																			}}
+																		>No item </td>
+																	</tr>
+
+																}
+
+
+
+															</tbody>
+														</table>
+														:
+
+														<CircularProgress color="secondary"
+															style={{
+																marginLeft: "45%",
+																marginTop: 30,
+																marginBottom: 30
+															}}
+														/>
+												}
 											</div>
 										</div>
 									</div>
@@ -325,7 +383,7 @@ class ExpenseList extends React.Component {
 											<>
 												<Nav tabs
 													style={{
-														fontSize: 18,
+														fontSize: 16,
 														border: 'none',
 														marginLeft: 15
 													}}
@@ -407,32 +465,54 @@ class ExpenseList extends React.Component {
 
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
-												<table class="table table-bordered">
-													<tbody>
-														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
-															<th class="active" width="100">Approved By</th>
-															<th class="active" width="100">Approved on</th>
+												{this.state.approved ?
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="active" width="50">S#</th>
+																<th class="active" width="200">Expense Name</th>
+																<th class="active" width="100">Approved By</th>
+																<th class="active" width="100">Approved on</th>
 
-														</tr>
-														{this.state.approved ?
-															this.state.approved.map((item, index) => {
-																return <tr>
-																	<td>{index + 1}</td>
-																	<td>{item.title}</td>
+															</tr>
+															{this.state.approved.length !== 0 ?
 
-																	<td>{item.user.employee_name}</td>
+																this.state.approved.map((item, index) => {
+																	return <tr>
+																		<td>{index + 1}</td>
+																		<td>{item.title}</td>
 
-																	<td>{item.submit_date}</td>
+																		<td>{item.user.employee_name}</td>
+
+																		<td>{item.submit_date}</td>
 
 
+																	</tr>
+																})
+
+																:
+																<tr>
+																	<td
+																		colSpan="6"
+																		style={{
+																			textAlign: 'center',
+																			fontSize: 16
+																		}}
+																	>No item </td>
 																</tr>
-															}) : <></>
-														}
 
-													</tbody>
-												</table>
+															}
+
+														</tbody>
+													</table>
+													: <CircularProgress color="secondary"
+														style={{
+															marginLeft: "45%",
+															marginTop: 30,
+															marginBottom: 30
+														}}
+													/>
+												}
 											</div>
 										</div>
 									</div>
@@ -481,7 +561,7 @@ class ExpenseList extends React.Component {
 												<Nav tabs
 													style={{
 
-														fontSize: 18,
+														fontSize: 16,
 														border: 'none',
 														marginLeft: 15
 													}}
@@ -564,32 +644,54 @@ class ExpenseList extends React.Component {
 
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
-												<table class="table table-bordered">
-													<tbody>
-														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
-															<th class="active" width="100">Rejected By</th>
-															<th class="active" width="100">Rejected on</th>
+												{this.state.rejected ?
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="active" width="50">S#</th>
+																<th class="active" width="200">Expense Name</th>
+																<th class="active" width="100">Rejected By</th>
+																<th class="active" width="100">Rejected on</th>
 
-														</tr>
-														{this.state.rejected ?
-															this.state.rejected.map((item, index) => {
-																return <tr>
-																	<td>{index + 1}</td>
-																	<td>{item.title}</td>
+															</tr>
+															{
+																this.state.rejected.length !== 0 ?
+																	this.state.rejected.map((item, index) => {
+																		return <tr>
+																			<td>{index + 1}</td>
+																			<td>{item.title}</td>
 
-																	<td>{item.user.employee_name}</td>
+																			<td>{item.user.employee_name}</td>
 
-																	<td>{item.submit_date}</td>
+																			<td>{item.submit_date}</td>
 
 
-																</tr>
-															}) : <></>
-														}
+																		</tr>
+																	})
 
-													</tbody>
-												</table>
+																	:
+																	<tr>
+																		<td
+																			colSpan="6"
+																			style={{
+																				textAlign: 'center',
+																				fontSize: 16
+																			}}
+																		>No item </td>
+																	</tr>
+
+															}
+
+														</tbody>
+													</table>
+													: <CircularProgress color="secondary"
+														style={{
+															marginLeft: "45%",
+															marginTop: 30,
+															marginBottom: 30
+														}}
+													/>
+												}
 											</div>
 										</div>
 									</div>
@@ -622,7 +724,10 @@ class ExpenseList extends React.Component {
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control"
+															placeholder="Search Expense.."
+															onChange={this.searchItem}
+														/>
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -636,7 +741,7 @@ class ExpenseList extends React.Component {
 											<>
 												<Nav tabs
 													style={{
-														fontSize: 18,
+														fontSize: 16,
 														border: 'none',
 														marginLeft: 15
 													}}
@@ -719,29 +824,31 @@ class ExpenseList extends React.Component {
 
 										<div class="row">
 											<div class="col-xs-12 col-md-12">
-												<table class="table table-bordered">
-													<tbody>
-														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
-															<th class="active" width="100">Added By</th>
-															<th class="active" width="100">Added on</th>
-															<th class="active" width="100">Status</th>
-															<th class="active" width="100">Action</th>
+												{this.state.expenses ?
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<th class="active" width="50">S#</th>
+																<th class="active" width="200">Expense Name</th>
+																<th class="active" width="100">Added By</th>
+																<th class="active" width="100">Added on</th>
+																<th class="active" width="100">Status</th>
+																{/* <th class="active" width="100">Action</th> */}
 
-														</tr>
-														{this.state.expenses ?
-															this.state.expenses.map((item, index) => {
-																return <tr>
-																	<td>{index + 1}</td>
-																	<td>{item.title}</td>
-																	<td>{item.user.employee_name}</td>
+															</tr>
+															{
+																this.state.expenses.length !== 0 ?
+																	this.state.expenses.map((item, index) => {
+																		return <tr>
+																			<td>{index + 1}</td>
+																			<td>{item.title}</td>
+																			<td>{item.user.employee_name}</td>
 
 
-																	<td>{item.submit_date}</td>
-																	<td>{item.status}</td>
+																			<td>{item.submit_date}</td>
+																			<td>{item.status}</td>
 
-																	<td>
+																			{/* <td>
 																		<Link
 																			to='#'
 																			title="Approve"
@@ -757,19 +864,38 @@ class ExpenseList extends React.Component {
 																		<Link to='#'
 																			title="Reject"
 
-																			// onClick={() => {
-																			// 	this.props.reject(item._id)
-																			// }}
+																			onClick={() => {
+																				this.props.reject(item._id)
+																			}}
 																			class="badge red"
 																		> <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
 
-																	</td>
-																</tr>
-															}) : <></>
-														}
+																	</td> */}
+																		</tr>
 
-													</tbody>
-												</table>
+																	})
+																	:
+																	<tr>
+																		<td
+																			colSpan="6"
+																			style={{
+																				textAlign: 'center',
+																				fontSize: 16
+																			}}
+																		>No item </td>
+																	</tr>
+
+															}
+														</tbody>
+													</table>
+													: <CircularProgress color="secondary"
+														style={{
+															marginLeft: "45%",
+															marginTop: 30,
+															marginBottom: 30
+														}}
+													/>
+												}
 											</div>
 										</div>
 									</div>
@@ -797,14 +923,14 @@ let mapStateToProps = (store) => {
 let mapDispatchToProps = (dispatch) => {
 
 	return ({
-		approved: id =>{
-		    dispatch(approveByAdmin(id))
+		approved: id => {
+			dispatch(approveByAdmin(id))
 		},
-		reject: id =>{
-		    dispatch(rejectByAdmin(id))
+		reject: id => {
+			dispatch(rejectByAdmin(id))
 		}
 	})
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExpenseList));
-export let expenseGroupErr, addExpenseGroupSuccess, getExpenseList
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CompanyExpenses));
+export let expenseGroupErr, addExpenseGroupSuccess, getExpenseList  

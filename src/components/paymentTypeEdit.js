@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 
 import IntlTelInput from 'react-intl-tel-input';
@@ -13,29 +14,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import { toast } from 'react-toastify';
 
+import {editPaymentType } from '../redux/actions/paymentTypeAction'
+import axios from 'axios'
 
 class EditPaymentType extends React.Component {
 
+
+    constructor(props){
+        super(props)
+      
+        
+    }
+
     state = {
-        title: '',
-        to_client: null,
-        to_adviser: null,
-        description: '',
-        coupons: [
-            {
-                group_name: 'Bike',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'Car',
-                expenseCategory: 'Maintanence'
-            },
-            {
-                group_name: 'APV',
-                expenseCategory: 'Maintanence'
-            },
-        ],
+        
     }
 
     onChangeHandler = (e) => {
@@ -59,6 +55,10 @@ class EditPaymentType extends React.Component {
     }
     onSubmit = (e) => {
         e.preventDefault()
+
+        this.props.editType(this.state.payment_type, this.props.id)
+
+        this.props.handleClose('edit')
 
     }
     render() {
@@ -119,18 +119,7 @@ class EditPaymentType extends React.Component {
                                                 }}
                                                 onChange={this.onChangeHandler}
                                             />
-                                            {/* <select class="form-control" name='to_client'
-                                                onChange={this.onChangeHandler}
-                                            >
-                                                <option value="client">Select Payment Type</option>
-
-                                                <option value="client" selected>Cheque</option>
-                                                <option value="reader">Cash</option>
-                                                <option value="reader">Contract</option>
-                                                <option value="reader">Intern</option>
-
-
-                                            </select> */}
+                                            
                                         </div>
 
 
@@ -158,4 +147,23 @@ class EditPaymentType extends React.Component {
         )
     }
 }
-export default EditPaymentType
+
+let mapStateToProps = (store) => {
+
+    return {
+        admin: store.AdminReducer
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+    return ({
+        editType: (body,id) =>{
+            dispatch(editPaymentType(body,id))
+        },
+       
+    })
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditPaymentType));
+// export let paymentTypeErr, addNewPaymentType,getPaymentType

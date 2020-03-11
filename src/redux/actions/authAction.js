@@ -13,9 +13,11 @@ import {
 } from '../constat'
 import { setData } from '../../App'
 import { getData } from '../../components/admin'
-import { notify } from '../../components/settingCompany'
+import { passwordDidntMatch } from '../../components/settingCompany'
 import { pwSuccess } from '../../components/editSettingCompany'
 import { pwErr } from '../../components/editSettingCompany'
+import { errFunction } from '../../components/signIn'
+// import {passwordDidntMatch} from '../../components/pwSetting'
 
 
 // user login 
@@ -42,10 +44,14 @@ export function userAuth(body) {
                 getData()
             }
             )
-            .catch(err => dispatch({
-                type: LOGIN_FAILED,
-                payload: err
-            }))
+            .catch(err =>{
+                errFunction()
+                
+                dispatch({
+                    type: LOGIN_FAILED,
+                    payload: err
+                })
+            })
 
 
     }
@@ -129,7 +135,7 @@ export function confirmPassword(body) {
             }
             )
             .catch(err => {
-                notify()
+                passwordDidntMatch("err")
                 dispatch({
                     type: PASSWORD_CONFIRMED_ERROR
                 })
@@ -154,8 +160,8 @@ export function updateUser(body) {
         }
         let device_token = '12345'
         let platform = 'windows'
-        let {email,password,old_password} = body
-        let newBody = {email,password,old_password,device_token,platform}
+        let { email, password, old_password } = body
+        let newBody = { email, password, old_password, device_token, platform }
         axios.post('https://mr-expense-backend.herokuapp.com/user/change/password', newBody, header)
             .then(resp => {
                 pwSuccess()

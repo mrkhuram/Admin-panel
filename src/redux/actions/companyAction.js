@@ -7,6 +7,8 @@ import {
 } from '../constat'
 import { getCompanieslist } from '../../components/Companies'
 // import {Propstype} from 'Prop'
+import { successFul,createdFail} from '../../components/createNewCompany'
+import { successFulEdit, editFail} from '../../components/editCompany'
 
 
 
@@ -30,12 +32,16 @@ export function createCompany(body) {
             .then(resp => {
                 // getCompanieslist()
                 localStorage.setItem("company_id", resp.data.company._id)
+                successFul("success") 
                 
                 dispatch({
                     type: CREATE_COMPANY,
                     payload: resp.data
                 })
-            }).catch(err => console.log(err)
+            }).catch(err => { 
+                createdFail("err")
+                console.log(err)
+            }
             )
     }
 }
@@ -116,11 +122,40 @@ export function editCompany(id, body) {
         axios.post(`https://mr-expense-backend.herokuapp.com/admin/edit_company?_id=${id}`, newCompany, header)
             .then(resp => {
                 getCompanieslist()
+                successFulEdit("success")
                 dispatch({
                     type: EDIT_COMPANY,
                     payload: resp.data
                 })
-            }).catch(err => console.log(err)
+            }).catch(err => {
+                editFail("err")
+                console.log(err)}
             )
     }
 }
+
+
+
+// export function approveExpenseByCompany(id) {
+
+//     return dispatch => {
+
+//         let token = localStorage.getItem('token')
+
+//         let header = {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'x-sh-auth': token
+//             }
+//         }
+
+//         axios.get(`https://mr-expense-backend.herokuapp.com/admin/delete_company?_id=${id}`, header)
+//             .then(resp => {
+//                 getCompanieslist()
+//                 dispatch({
+//                     type: DELETE_COMPANY,
+//                     payload: resp.data
+//                 })
+//             })
+//     }
+// }

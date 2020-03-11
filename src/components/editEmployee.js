@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,34 +10,66 @@ import "react-datepicker/dist/react-datepicker.css";
 import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 
+import {updateEmployee} from '../redux/actions/employeeAction'
 
 
 
-const EditEmployeeForm
 
-    = (props) => {
-        const [activeTab, setActiveTab] = useState('1');
+class EditEmployee extends React.Component {
 
-        const toggle = tab => {
-            if (activeTab !== tab) setActiveTab(tab);
+
+    state = {
+        activeTab: '1',
+        start_date: new Date(),
+        personal_information: []
+    }
+
+    toggle = tab => {
+        if (this.state.activeTab !== tab) this.setState({ activeTab: tab })
+    }
+
+
+    onChangeHandler = e => {
+        // console.log(e.target.value);
+
+        this.setState({
+
+            [e.target.name]: e.target.value
+        })
+    }
+
+    onChangeDate = date => {
+        // console.log(date);
+
+        this.setState({
+            start_date: date
+        })
+    }
+
+    onBlurHandler = (e) => {
+        let name = e.target.name
+        let value = e.target.value
+        let obj
+        if (value) {
+
+            obj = { "name": name, "value": value }
+            this.state.personal_information.push(obj)
         }
 
-        const onChangeHandler = () => {
+        console.log(this.state.personal_information);
 
-        }
+    }
+    onSubmit = (e) => {
+        e.preventDefault()
 
-        const [startDate, setStartDate] = useState(new Date())
+        this.props.updateProfile(this.props.employees._id , this.state)
+        // this.props.close()
+    }
 
+    render() {
+        let { employees } = this.props
+        console.log(this.props.employees);
 
-        const handleChange = date => {
-            setStartDate(date)
-        };
-
-        const nextMove = e => {
-            e.preventDefault()
-            toggle('2')
-
-        }
         return (
             <div>
                 <Nav tabs
@@ -45,11 +78,11 @@ const EditEmployeeForm
                     }}
                 >
 
-                    
+
                     <NavItem>
                         <NavLink
-                            className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-                            onClick={() => { toggle('1'); }}
+                            className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+                            onClick={() => { this.toggle('1'); }}
                             style={{
                                 margin: 0,
                                 marginTop: 10,
@@ -66,8 +99,8 @@ const EditEmployeeForm
                     </NavItem>
                     <NavItem>
                         <NavLink
-                            className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-                            onClick={() => { toggle('2'); }}
+                            className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+                            onClick={() => { this.toggle('2'); }}
                             style={{
                                 margin: 0,
                                 marginTop: 10,
@@ -81,28 +114,32 @@ const EditEmployeeForm
                         </NavLink>
                     </NavItem>
                 </Nav>
-                <TabContent activeTab={activeTab}>
+                <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                         <Row>
                             <Col sm="12" md='6'>
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Firt Name</label>
-                                        <input type="text" class="form-control" name="companyName"
-                                            value="John Doe"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="first_name"
+                                           
+                                            placeholder={employees.first_name}
+                                            onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Position</label>
-                                        <input type="text" class="form-control" name="workEmail"
-                                            value="Admin"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="position"
+                                           
+                                            placeholder={employees.position}
+                                            onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Work Email</label>
                                         <input type="text" class="form-control"
-                                            value="demo@gmail.com"
-                                            name="phone" onChange={onChangeHandler} />
+                                           
+                                            placeholder={employees.email}
+
+                                            name="email" onChange={this.onChangeHandler} />
 
                                     </div>
 
@@ -115,7 +152,8 @@ const EditEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
-                                            value="09876678"
+                                           
+                                            placeholder={employees.ph_no}
 
                                         />
                                     </div>
@@ -123,34 +161,43 @@ const EditEmployeeForm
                                         <label for="pwd">Profile Picture</label>
                                         <input type="file" class="form-control"
 
-                                            name="limit" onChange={onChangeHandler} />
+                                            name="dp_active_file" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Team</label>
                                         <input type="text" class="form-control"
-                                            value="No"
-                                            name="limit" onChange={onChangeHandler} />
+                                           
+                                            placeholder={employees.team}
+
+                                            name="team" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Location</label>
                                         <input type="text" class="form-control"
-                                            value="Pakistan"
-                                            name="limit" onChange={onChangeHandler} />
+                                           
+                                            placeholder={employees.location}
+
+                                            name="location" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Driving License</label>
                                         <input type="text" class="form-control"
-                                            value="NH32423IM"
-                                            name="limit" onChange={onChangeHandler} />
+                                           
+                                            placeholder={employees.driving_license}
+
+                                            name="driving_license" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">LinkedIn</label>
                                         <input type="text" class="form-control"
-                                            value="/John_Doe"
+                                           
 
-                                            name="limit" onChange={onChangeHandler} />
+
+                                            placeholder={employees.linkedIn}
+
+                                            name="linkedIn" onChange={this.onChangeHandler} />
                                     </div>
 
 
@@ -162,29 +209,38 @@ const EditEmployeeForm
                                     <div class="form-group">
                                         <label for="pwd">Last Name</label>
                                         <input type="text"
-                                            value="Doe"
-                                            class="form-control" name="companyName" onChange={onChangeHandler} />
+                                           
+                                            class="form-control"
+                                            placeholder={employees.last_name}
+
+                                            name="last_name" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Title</label>
                                         <input type="text" class="form-control"
-                                            value="John"
-                                            name="workEmail" onChange={onChangeHandler} />
+                                           
+
+                                            placeholder={employees.title}
+
+                                            name="title" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Starting Date</label>
 
                                         <DatePicker
-                                            selected={startDate}
-                                            onChange={handleChange}
+                                            selected={this.state.startDate}
+                                            onChange={this.handleChange}
                                             style={{
                                                 width: '100%'
                                             }}
+                                            name="starting_date"
+                                            placeholder={employees.starting_date}
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Employee Status</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
+                                        <select class="form-control"
+                                            name='employee_status' onChange={this.onChangeHandler}>
                                             <option value="client">Select Employee Status</option>
 
                                             <option value="client" selected>Full Time</option>
@@ -197,21 +253,30 @@ const EditEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Direct Manager</label>
-                                        <input type="text" class="form-control" name="limit"
-                                            value="no"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.direct_manager}
+
+                                            name="direct_manager"
+                                           
+                                            onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Public Holiday Group</label>
-                                        <input type="text" class="form-control" name="limit"
-                                            value="3"
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.public_holiday_group}
 
-                                            onChange={onChangeHandler} />
+                                            name="public_holiday_group"
+                                           
+
+                                            onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Access Level</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
+                                        <select class="form-control"
+
+
+                                            name='access_level' onChange={this.onChangeHandler}>
                                             <option value="client">Select Access Level</option>
 
                                             <option value="client" selected>Employee</option>
@@ -224,21 +289,27 @@ const EditEmployeeForm
 
                                     <div class="form-group">
                                         <label for="pwd">Employee No</label>
-                                        <input type="text" class="form-control" name="limit"
-                                            value="23002"
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.employee_number}
 
-                                            onChange={onChangeHandler} />
+                                            name="employee_number"
+                                           
+
+                                            onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Skype</label>
-                                        <input type="text" class="form-control" name="limit"
-                                            value="/ksalex23"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.skype}
+
+                                            name="skype"
+                                           
+                                            onChange={this.onChangeHandler} />
                                     </div>
 
                                     <button type="submit" class="btn btn-default"
                                         style={{ marginTop: 10, float: 'right' }}
-                                        onClick={nextMove}
+                                    // onClick={nextMove}
                                     >Next</button>
 
 
@@ -254,39 +325,54 @@ const EditEmployeeForm
                                     <div class="form-group">
                                         <label for="pwd">Personal Email</label>
                                         <input type="text"
-                                            value="demo@gmail.com"
+                                           
 
-                                            class="form-control" name="companyName" onChange={onChangeHandler} />
+                                            class="form-control"
+                                            placeholder={employees.personal_email}
+
+                                            name="personal_email" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Nationality</label>
                                         <input type="text" class="form-control"
-                                            value="Demo"
+                                           
 
-                                            name="workEmail" onChange={onChangeHandler} />
+
+                                            placeholder={employees.nationality}
+
+                                            name="nationality" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Street 1</label>
                                         <input type="text" class="form-control"
-                                            value="Demo"
+                                           
 
-                                            name="phone" onChange={onChangeHandler} />
+
+                                            placeholder={employees.street1}
+
+                                            name="street1" onChange={this.onChangeHandler} />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">City</label>
-                                        <input type="text" class="form-control" name="phone"
-                                            value="Faisalabad"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.city}
+
+                                            name="city"
+                                           
+                                            onChange={this.onChangeHandler} />
 
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Post Code</label>
-                                        <input type="text" class="form-control" name="phone"
-                                            value="38000"
+                                        <input type="text" class="form-control"
+                                            placeholder={employees.postal_code}
 
-                                            onChange={onChangeHandler} />
+                                            name="postal_code"
+                                           
+
+                                            onChange={this.onChangeHandler} />
 
                                     </div>
 
@@ -304,7 +390,7 @@ const EditEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Gender</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
+                                        <select class="form-control" name='gender' onChange={this.onChangeHandler}>
                                             <option value="client">Select Gender</option>
 
                                             <option value="male" selected>Male</option>
@@ -330,7 +416,18 @@ const EditEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
-                                            value="4344434229"
+                                           
+                                            placeholder={employees.home_phone}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ home_phone: newPhn })
+
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
 
                                         />
                                     </div>
@@ -342,36 +439,50 @@ const EditEmployeeForm
                                             style={{
                                                 width: "100%"
                                             }}
-                                            value="4344434229"
+                                           
+                                            placeholder={employees.mobile_phone}
+                                            onPhoneNumberChange={
+                                                (status, value, countryData, number, id) => {
+                                                    console.log('onPhoneNumberChange value', value);
+                                                    let newPhn = value.replace(/\s+/g, "")
+                                                    this.setState({ mobile_phone: newPhn })
 
+                                                    console.log('onPhoneNumberChange number', newPhn);
+
+
+                                                }}
                                         />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Street 2 </label>
-                                        <input type="text" class="form-control" name="workEmail"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="street2"
+                                            placeholder={employees.street2}
+                                            onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">State </label>
-                                        <input type="text" class="form-control" name="workEmail"
-                                            value="Punjab"
-                                            onChange={onChangeHandler} />
+                                        <input type="text" class="form-control" name="state"
+                                           
+                                            placeholder={employees.state}
+                                            onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Country </label>
                                         <input type="text" class="form-control"
-                                            value="Pakistan"
-                                            name="workEmail" onChange={onChangeHandler} />
+                                           
+                                            placeholder={employees.country}
+
+                                            name="country" onChange={this.onChangeHandler} />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Starting Date</label>
 
                                         <DatePicker
-                                            selected={startDate}
-                                            onChange={handleChange}
+                                            selected={this.startDate}
+                                            onChange={this.handleChange}
                                             style={{
                                                 width: '100%'
                                             }}
@@ -379,13 +490,13 @@ const EditEmployeeForm
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Marital Status</label>
-                                        <select class="form-control" name='to_client' onChange={onChangeHandler}>
-                                            <option value="client">Select Marital Status</option>
+                                        <select class="form-control" name='meterial_status' onChange={this.onChangeHandler}>
+                                            <option>Select Marital Status</option>
 
-                                            <option value="male">Single</option>
-                                            <option value="female" selected>Married</option>
-                                            <option value="female">Divorced</option>
-                                            <option value="female">Widowed</option>
+                                            <option value="single">Single</option>
+                                            <option value="married" selected>Married</option>
+                                            <option value="divorced">Divorced</option>
+                                            <option value="widowed">Widowed</option>
 
                                         </select>
                                     </div>
@@ -393,6 +504,7 @@ const EditEmployeeForm
 
                                     <button type="submit" class="btn btn-default"
                                         style={{ marginTop: 10, float: 'right' }}
+                                        onClick={this.onSubmit}
                                     >Save</button>
 
 
@@ -403,7 +515,26 @@ const EditEmployeeForm
                     </TabPane>
                 </TabContent>
             </div>
-        );
+        )
     }
+}
 
-export default EditEmployeeForm
+
+
+let mapStateToProps = (store) => {
+
+	return {
+		admin: store.AdminReducer
+	}
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+	return ({
+		updateProfile: (id,body) => {
+			dispatch(updateEmployee(id,body))
+		}
+	})
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditEmployee));

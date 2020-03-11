@@ -10,12 +10,11 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import EditPaymentType from './paymentTypeEdit';
 
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { toast } from 'react-toastify';
-
 import {addNewPayment , deletePaymentType} from '../redux/actions/paymentTypeAction'
 import axios from 'axios'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import Toast from 'light-toast';
 
 
 class PaymentType extends React.Component {
@@ -35,24 +34,30 @@ class PaymentType extends React.Component {
                 console.log(res.data);
                 
                 this.setState({
-                    allPayment: res.data.expense_group
+                    allPayment: res.data.expense_group,
+                    paymentList: res.data.expense_group
                 })
             })
         }
 
-
-        addNewPaymentType = ()=>{
-            this.notifySuccess()
-            this.handleClose('openPop')
-
-        }
-        paymentTypeErr =()=>{
-            this.notifyErr()
-            this.handleClose('openPop')
-
-        }
-        paymentTypeErr()
-        addNewPaymentType()
+        successFul = (parm) => {
+            if(parm === "success"){
+      
+              Toast.success('Successfully Created...!!', 2000, () => {
+                
+              });
+            }
+          }
+          createdFail = (parm) => {
+            if(parm === "err"){
+      
+            Toast.fail('Internal Server Error, Try Again.', 2000, () => {
+      
+            });
+          }
+          }
+          successFul()
+          createdFail() 
         getPaymentType()
     }
     state = {
@@ -145,25 +150,68 @@ class PaymentType extends React.Component {
 
     onSubmitPayment = (eve) => {
         eve.preventDefault()
+        if(this.state.payment_type){
+            
+            this.props.addNewType(this.state.payment_type)
+        }else{
+            Toast.fail('Payment Type Required, Try Again.', 2000)
+        
+        }
+        this.handleClose('openPop')   
 
-        this.props.addNewType(this.state.payment_type)
+        
     }
 
 
-    notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
-    notifySuccess = () => toast.success("Request Successfully Completed", { autoClose: 2000 })
+    // notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+    // notifySuccess = () => toast.success("Request Successfully Completed", { autoClose: 2000 })
 
 
     // deletePType = ()=>{
 
     // }
-    
+    searchingItem = []
+    searchItem = (e)=>{
+
+        let searchVal = e.target.value
+        if(searchVal == ''){
+            this.setState({
+                allPayment: this.state.paymentList
+            })
+        }
+        
+        this.searchingItem = this.state.allPayment.filter((item)=>{
+                                if(searchVal == item.payment_type){
+                                        return item
+                                        
+                                    }
+                                }
+        )
+        
+        
+        
+    }
+    searchBtn = (e)=>{
+        e.preventDefault()
+
+        console.log(this.searchingItem);
+        
+        if(this.searchingItem.length !== 0){
+
+            this.setState({
+                allPayment: this.searchingItem
+            })
+                   
+        }
+        
+        
+    }
 
     render() {
         return (
             <>
                 <div class="content-wrapper">
-                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+                {/* <ToastContainer position="top-right"  style={{zIndex: 1111}}/> */}
 
                     <div id="order_preview" class="wow fadeInUp content_box"
                         style={{ visibility: 'visible', animationName: "fadeInUp" }}>
@@ -173,10 +221,14 @@ class PaymentType extends React.Component {
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <form class="form-inline form-searchbar">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search Group.." />
+                                <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Search Payment.."
+                                        onChange={this.searchItem}
+                                        />
                                     </div>
-                                    <button type="submit" class="btn btn-default">Search</button>
+                                    <button type="submit" class="btn btn-default"
+                                    onClick={this.searchBtn}
+                                    >Search</button>
                                     <a href="#" class="btn btn-default"
                                         onClick={() => {
                                             this.handleClickOpen('openPop')
@@ -191,14 +243,17 @@ class PaymentType extends React.Component {
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <th class="active" width="50">No. </th>
-                                            <th class="active" width="250">Payment Type</th>
-                                            <th class="active" style={{ width: "200px" }}>Action</th>
-                                        </tr>
-                                        {this.state.allPayment ? this.state.allPayment.map((item, index) => {
+                                { this.state.allPayment ? 
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="active" width="50">No. </th>
+                                                <th class="active" width="250">Payment Type</th>
+                                                <th class="active" style={{ width: "200px" }}>Action</th>
+                                            </tr>
+                                        
+                                       { 
+                                        this.state.allPayment.map((item, index) => {
 
                                             return <tr>
                                                 <td>{index + 1}</td>
@@ -240,9 +295,19 @@ class PaymentType extends React.Component {
 
                                                 </td>
                                             </tr>
-                                        }) : <></>}
-                                    </tbody>
-                                </table>
+                                            }) }
+                                        </tbody>
+                                    </table>
+                                : 
+                                
+                                <CircularProgress color="secondary"
+                                style={{
+                                    marginLeft: "45%",
+                                    marginTop: 30,
+                                    marginBottom: 30
+                                }}
+                            />
+                                }
                             </div>
                         </div>
                     </div>
@@ -387,7 +452,7 @@ class PaymentType extends React.Component {
                                                             </label>
 
                                                             <input type="text" className="form-control"
-                                                                name="name"
+                                                                name="payment_type"
                                                                
                                                                 style={{
                                                                     width: "100%",
@@ -496,7 +561,7 @@ class PaymentType extends React.Component {
                         overFlow: 'hidden'
                     }}>
                         
-                        <EditPaymentType  handleClose={this.handleClose}/>
+                        <EditPaymentType  handleClose={this.handleClose} id={this.state.id}/>
 
                     </MuiDialogContent>
                 </Dialog>
@@ -527,4 +592,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PaymentType));
-export let paymentTypeErr, addNewPaymentType,getPaymentType
+export let successFul, createdFail, getPaymentType

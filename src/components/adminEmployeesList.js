@@ -20,7 +20,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-class AddEmployee extends React.Component {
+class AdminEmployeesList extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -32,8 +32,8 @@ class AddEmployee extends React.Component {
 				'x-sh-auth': token
 			}
 		}
-		let companyId = localStorage.getItem('company_id')
-		console.log(companyId);
+		let companyId = props.location.companyID.id
+		console.log(props.location.companyID);
 
 		employeeList = () => {
 			axios.get(`https://mr-expense-backend.herokuapp.com/user/get_company_employee?_id=${companyId}`, header)
@@ -145,7 +145,8 @@ class AddEmployee extends React.Component {
 
 
 	render() {
-
+		console.log(this.props.location.companyID);
+		
 		let { employees } = this.state
 		return (
 			<>
@@ -299,7 +300,7 @@ class AddEmployee extends React.Component {
 							}}
 						>X</p>
 
-						<ViewEmployee 
+						<ViewEmployee
 							employees={this.state.item}
 							handleClose={this.handleClose}
 							handleClickOpen={this.handleClickOpen}
@@ -340,7 +341,7 @@ class AddEmployee extends React.Component {
 						>X</p>
 
 						<ViewEmployeeTwo
-   
+
 							employees={this.state.item}
 							handleClose={this.handleClose}
 							handleClickOpen={this.handleClickOpen}
@@ -430,7 +431,7 @@ class AddEmployee extends React.Component {
 							onClick={() => {
 								this.handleClose('addNew')
 							}}
-						>X</p> 
+						>X</p>
 						<AddEmployeeForm close={this.closeTab} />
 
 					</MuiDialogContent>
@@ -495,5 +496,5 @@ let mapDispatchToProps = (dispatch) => {
 	})
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddEmployee));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AdminEmployeesList));
 export let employeeList   

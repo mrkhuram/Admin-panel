@@ -9,7 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
-import { addNewEmployee} from '../redux/actions/employeeAction'
+import { addNewEmployee } from '../redux/actions/employeeAction'
+import Toast from 'light-toast';
+
 
 
 
@@ -18,7 +20,8 @@ class AddEmployeeForm extends React.Component {
 
     state = {
         activeTab: '1',
-        start_date: new Date()
+        start_date: new Date(),
+        personal_information: []
     }
 
     toggle = tab => {
@@ -27,7 +30,7 @@ class AddEmployeeForm extends React.Component {
 
 
     onChangeHandler = e => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
 
         this.setState({
 
@@ -36,18 +39,40 @@ class AddEmployeeForm extends React.Component {
     }
 
     onChangeDate = date => {
-        console.log(date);
+        // console.log(date);
 
         this.setState({
             start_date: date
         })
     }
 
-    onSubmit = (e)=>{
+    // onBlurHandler = (e)=>{
+    //     let name = e.target.name
+    //     let value = e.target.value
+    //     let obj
+    //     if(value){
+
+    //          obj = {"name": name ,"value": value}
+    //          this.state.personal_information.push(obj)
+    //     }
+
+    //     console.log(this.state.personal_information);
+
+    // }
+    onSubmit = (e) => {
         e.preventDefault()
 
-        this.props.addNewEmp(this.state)
-        this.props.close()
+        if (this.state.email && this.state.password) {
+            this.props.addNewEmp(this.state)
+            this.props.close()
+        } else {
+
+            Toast.fail("Email and Password Can't be Empty...!!", 2000, () => {
+
+            });
+        }
+
+
     }
 
     render() {
@@ -138,11 +163,7 @@ class AddEmployeeForm extends React.Component {
 
 
                                                 }}
-                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
 
-
-
-                                            }}
                                         />
                                     </div>
                                     <div class="form-group">
@@ -154,7 +175,7 @@ class AddEmployeeForm extends React.Component {
 
                                     <div class="form-group">
                                         <label for="pwd">Team</label>
-                                        <input type="text" class="form-control" name="team" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="" onChange={this.onChangeHandler} />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Location</label>
@@ -193,7 +214,7 @@ class AddEmployeeForm extends React.Component {
                                             style={{
                                                 width: '100%'
                                             }}
-                                            name="start_date"
+                                            name="starting_date"
                                         />
 
                                     </div>
@@ -254,68 +275,51 @@ class AddEmployeeForm extends React.Component {
                                 <form>
                                     <div class="form-group">
                                         <label for="pwd">Personal Email</label>
-                                        <input type="email" class="form-control" name="personal_email" onChange={this.onChangeHandler} />
+                                        <input type="email" class="form-control" name="personal_email" onChange={this.onChangeHandler}
+
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Nationality</label>
-                                        <input type="text" class="form-control" name="workEmail" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="nationality" onChange={this.onChangeHandler}
+
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Street 1</label>
-                                        <input type="text" class="form-control" name="street1" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="street1" onChange={this.onChangeHandler}
+
+                                        />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">City</label>
-                                        <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="city" onChange={this.onChangeHandler}
+
+                                        />
 
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Postal Code</label>
-                                        <input type="text" class="form-control" name="postal_code" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="postal_code" onChange={this.onChangeHandler}
+
+                                        />
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Set a Password</label>
-                                        <input type="password" class="form-control" name="password" onChange={this.onChangeHandler} />
+                                        <input type="password" class="form-control" name="password" onChange={this.onChangeHandler}
 
+                                        />
 
-
-
-
-{/* 
-                                        <IntlTelInput
-                                            containerClassName="intl-tel-input"
-                                            inputClassName="form-control"
-                                            style={{
-                                                width: "100%",
-                                                //  marginBottom: 10, marginLeft: 15, zIndex: 5 
-                                            }}
-                                            ref='phone'
-                                            onSelectFlag={(num, country) => {
-                                                console.log('onSelectFlag', country);
-                                            }}
-                                            onPhoneNumberChange={
-                                                (status, value, countryData, number, id) => {
-                                                    console.log('onPhoneNumberChange value', value);
-                                                    let newPhn = value.replace(/\s+/g, "")
-                                                    this.setState({ ph_no: newPhn })
-                                                    console.log('onPhoneNumberChange number', newPhn);
-
-
-                                                }}
-                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
-
-
-
-                                            }}
-                                        /> */}
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Gender</label>
-                                        <select class="form-control" name='gender' onChange={this.onChangeHandler}>
+                                        <select class="form-control" name='gender' onChange={this.onChangeHandler}
+
+                                        >
                                             <option value="">Select Gender</option>
 
                                             <option value="male">Male</option>
@@ -352,15 +356,18 @@ class AddEmployeeForm extends React.Component {
                                                     console.log('onPhoneNumberChange value', value);
                                                     let newPhn = value.replace(/\s+/g, "")
                                                     this.setState({ home_phone: newPhn })
+
+
                                                     console.log('onPhoneNumberChange number', newPhn);
 
 
                                                 }}
-                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+                                        // onPhoneNumberBlur={(status, value, countryData, number, id) => {
+                                        //     let newPhn = value.replace(/\s+/g, "")
+                                        //     this.state.personal_information.push({home_phone: newPhn})
 
 
-
-                                            }}
+                                        // }}
                                         />
                                     </div>
                                     <div class="form-group">
@@ -382,30 +389,37 @@ class AddEmployeeForm extends React.Component {
                                                     console.log('onPhoneNumberChange value', value);
                                                     let newPhn = value.replace(/\s+/g, "")
                                                     this.setState({ mobile_phone: newPhn })
+
                                                     console.log('onPhoneNumberChange number', newPhn);
 
 
                                                 }}
-                                            onPhoneNumberBlur={(status, value, countryData, number, id) => {
+                                        // onPhoneNumberBlur={(status, value, countryData, number, id) => {
+                                        //     let newPhn = value.replace(/\s+/g, "")
+                                        //     this.state.personal_information.push({mobile_phone: newPhn})
 
-
-
-                                            }}
+                                        // }}
                                         />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Street 2 </label>
-                                        <input type="text" class="form-control" name="street2" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="street2" onChange={this.onChangeHandler}
+
+                                        />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">State </label>
-                                        <input type="text" class="form-control" name="state" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="state" onChange={this.onChangeHandler}
+
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Country </label>
-                                        <input type="text" class="form-control" name="country" onChange={this.onChangeHandler} />
+                                        <input type="text" class="form-control" name="country" onChange={this.onChangeHandler}
+
+                                        />
                                     </div>
 
                                     <div class="form-group">
@@ -417,12 +431,14 @@ class AddEmployeeForm extends React.Component {
                                             style={{
                                                 width: '100%'
                                             }}
-                                            name="start_date"
+                                            name="starting_date"
                                         />
                                     </div>
                                     <div class="form-group">
                                         <label for="pwd">Marital Status</label>
-                                        <select class="form-control" name='meterial_status' onChange={this.onChangeHandler}>
+                                        <select class="form-control" name='meterial_status' onChange={this.onChangeHandler}
+
+                                        >
                                             <option value="">Select Marital Status</option>
 
                                             <option value="single">Single</option>
@@ -461,10 +477,10 @@ let mapStateToProps = (store) => {
 let mapDispatchToProps = (dispatch) => {
 
     return ({
-        addNewEmp: body =>{
+        addNewEmp: body => {
             dispatch(addNewEmployee(body))
         },
-        // deleteGroup: body =>{
+        // deleteGroup: body =>{   
         //     dispatch(deleteExpenseGroup(body))
         // }
     })

@@ -42,7 +42,7 @@ import EditExpenseGroup from '../editExpenseGroup';
 import EditSettingCompany from '../editSettingCompany';
 import ExpenseCategory from '../expenseCategory';
 import Admins from '../expenseList';
-import ExpenseStatus from '../expenseStatus';
+import ExpenseStatus from '../companyExpenses';
 import ExpenseListHr from '../expenseStatusHr';
 import HomePanel from '../home'
 import CreateNewCompany from '../createNewCompany';
@@ -58,6 +58,8 @@ import AddEmployeeForm from '../tabsAddEmployee';
 // Redux
 
 import { logoutuser } from '../../redux/actions/authAction'
+import companyExpenses from '../companyExpenses';
+import adminEmployeesList from '../adminEmployeesList';
 
 
 
@@ -283,7 +285,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                         >Hi, {props.authState.auth.userDetail.display_name}
                                             <span class="caret"></span></a>
                                         <ul class="dropdown-menu meu-liust signoutoptions">
-                                            <li><Link href="#" to='/confirmPassword-first'
+                                            <li><Link href="#" to='/authentication_required'
                                             // onClick={handleAdmin}
 
                                             ><i class="fa fa-user-o"></i> Settings</Link></li>
@@ -389,7 +391,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                     Payment Type</Link>
                                             </li>
                                             <li>
-                                                <Link to="/confirmPassword-first" class="">
+                                                <Link to="/company_setting" class="">
                                                     <FontAwesomeIcon icon={faCogs}
                                                         className='iconDrawer'
                                                     />
@@ -428,7 +430,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                         </li>
 
                                                         <li>
-                                                            <Link to='/company_setting' class="">
+                                                            <Link to='/authentication_required' class="">
                                                                 <FontAwesomeIcon icon={faCogs}
                                                                     className='iconDrawer'
                                                                 />
@@ -466,7 +468,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                                     </li>
 
                                                                     <li>
-                                                                        <Link to='/company_setting' class="">
+                                                                        <Link to='/authentication_required' class="">
                                                                             <FontAwesomeIcon icon={faCogs}
                                                                                 className='iconDrawer'
                                                                             />
@@ -575,7 +577,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                     Payment Type</Link>
                                             </li>
                                             <li>
-                                                <Link to="/confirmPassword-first" class="">
+                                                <Link to="/company_setting" class="">
                                                     <FontAwesomeIcon icon={faCogs}
                                                         className='iconDrawer'
                                                     />
@@ -614,7 +616,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                         </li>
 
                                                         <li>
-                                                            <Link to='/company_setting' class="">
+                                                            <Link to='/authentication_required' class="">
                                                                 <FontAwesomeIcon icon={faCogs}
                                                                     className='iconDrawer'
                                                                 />
@@ -652,7 +654,7 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                                                                     </li>
 
                                                                     <li>
-                                                                        <Link to='/company_setting' class="">
+                                                                        <Link to='/authentication_required' class="">
                                                                             <FontAwesomeIcon icon={faCogs}
                                                                                 className='iconDrawer'
                                                                             />
@@ -703,8 +705,8 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                 <Route exact path='/admin/create_new_company' component={CreateNewCompany} />
                 <Route exact path='/expenseCategory' component={ExpenseCategory} />
                 <Route exact path='/expenseList' component={Admins} />
-                <Route exact path='/new_company' component={NewCompany} />
-                <Route exact path='/confirmPassword-first' component={ConfirmPasswordToMoveSetting} />
+                <Route exact path='/edit_company' component={NewCompany} />
+                {/* <Route exact path='/confirmPassword-first' component={ConfirmPasswordToMoveSetting} /> */}
                 <Route exact path='/editSettings' component={EditSetting} />
                 <Route exact path='/editexpenseGroup' component={EditExpenseGroup} />
                 <Route exact path='/payment-type' component={PaymentType} />
@@ -712,11 +714,12 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(function 
                 <Route exact path='/companyDeshboard' component={CompanyDeshboard} />
                 <Route exact path='/add_employee' component={AddEmployee} />
                 <Route exact path='/add_new_employee' component={AddEmployeeForm} />
-                <Route exact path='/company_setting' component={SettingCompany} />
+                <Route exact path='/authentication_required' component={SettingCompany} />
                 <Route exact path='/edit_company_setting' component={EditSettingCompany} />
                 <Route exact path='/expense_status' component={ExpenseStatus} />
                 <Route exact path='/expense_status_hr' component={ExpenseListHr} />
-
+                <Route exacct path='/company_expense' component={companyExpenses} />
+                <Route exact path = '/admin_company_empoyees' component={adminEmployeesList}/>
 
 
 

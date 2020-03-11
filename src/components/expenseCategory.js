@@ -7,14 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { toast } from 'react-toastify';
 import axios from 'axios'
 
 
 import {addExpenseGroup, deleteExpenseGroup} from '../redux/actions/paymentTypeAction'
-
+import ViewExpenseGroup from './viewExpenseGroup';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Toast from 'light-toast';
 
 
 
@@ -35,51 +34,69 @@ class ExpenseGroup extends React.Component {
                 console.log(res.data);
                 
                 this.setState({
-                    allPayment: res.data.expense_group
+                    allPayment: res.data.expense_group,
+                    paymentList: res.data.expense_group
                 })
+                // console.log(this.state.allPayment[4].expense_type);
+                
             })
         }
 
 
-        addExpenseGroupSuccess = ()=>{
-            this.notifySuccess()
-            this.handleClose('openPop')
+        // addExpenseGroupSuccess = ()=>{
+        //     this.notifySuccess()
+        //     this.handleClose('openPop')
 
-        }
-        expenseGroupErr =()=>{
-            this.notifyErr()
-            this.handleClose('openPop')
+        // }
+        // expenseGroupErr =()=>{
+        //     this.notifyErr()
+        //     this.handleClose('openPop')
 
-        }
-        expenseGroupErr()
-        addExpenseGroupSuccess()
+        // }
+
+
+
+
+        expenseGroupAdded = (parm) => {
+            if(parm === "success"){
+      
+              Toast.success('Successfully Created...!!', 2000, () => {
+                
+              });
+            } 
+          }
+          expenseGroupFail = (parm) => {
+            if(parm === "err"){
+      
+            Toast.fail('Email Already in use, Try Again.', 2000, () => {
+      
+            });
+          }
+          }
+          expenseGroupAdded()
+          expenseGroupFail()
+        // expenseGroupErr()
+        // addExpenseGroupSuccess()
         getExpenseGroup()
     }
+
+
+
+
+
     state = {
         open: false,
         openPop: false,
         delete: false,
-        expense: [
-            {
-                expenseName: 'Bike Maintance',
-                expenseAmount: '1000'
-            },
-            {
-                expenseName: 'Car Wash',
-                expenseAmount: '500'
-            },
-            {
-                expenseName: 'Electrical work',
-                expenseAmount: '4300'
-            },
-        ],
         arr: [
             {
                 groupName: '',
                 introExpense: ''
 
             },
-        ]
+        ],
+        expense_type: [],
+        id: 2
     }
 
     shouldComponentUpdate(newProps, newState) {
@@ -88,15 +105,7 @@ class ExpenseGroup extends React.Component {
 
 
 
-    deleteItem = (index, id) => {
-        this.state.coupons.splice(index, 1)
-        this.setState({
-            coupons: this.state.coupons
-        })
-
-        this.props.couponDelete(id)
-    }
-
+   
     handleClickOpen = (element) => {
         this.setState({
             [element]: true
@@ -118,8 +127,8 @@ class ExpenseGroup extends React.Component {
 
     }
 
-    notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
-    notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
+    // notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+    // notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
 
 
 
@@ -140,20 +149,76 @@ class ExpenseGroup extends React.Component {
         }
 
     }
+    
+    onBlurHandler =(e)=>{
+    let name =  e.target.name
+    let value =  e.target.value
 
+    this.state.expense_type.push(value)
+    console.log(this.state.expense_type);
+    
+
+    }
 
     onSubmit = (eve) => {
         eve.preventDefault()
         console.log(this.state);
-        this.props.addNewExpenseGroup(this.state)
+        let {expense_name,expense_type} = this.state
+        let obj = {expense_name,expense_type}
+        this.props.addNewExpenseGroup(obj)
+        setTimeout(() => {
+            this.handleClose('openPop')   
+        });
 
     }
 
+    expense_type = false
+
+    searchingItem = []
+    searchItem = (e)=>{
+
+        let searchVal = e.target.value
+        if(searchVal == ''){
+            this.setState({
+                paymentList: this.state.allPayment
+            })
+        }
+        
+        this.searchingItem = this.state.paymentList.filter((item)=>{
+                                if(searchVal == item.expense_name){
+                                        return item
+                                        
+                                    }
+                                }
+        )
+        
+        
+        
+    }
+    searchBtn = (e)=>{
+        e.preventDefault()
+
+        
+        if(this.searchingItem.length !== 0){
+
+            this.setState({
+                paymentList: this.searchingItem
+            })
+                   
+        }
+        
+        
+    }
+
+
+
+
     render() {
+        
         return (
             <>
                 <div class="content-wrapper">
-                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+                {/* <ToastContainer position="top-right"  style={{zIndex: 1111}}/> */}
 
                     <div 
                     id="order_preview"
@@ -167,9 +232,13 @@ class ExpenseGroup extends React.Component {
                             <div class="col-xs-12 col-md-6">
                                 <form class="form-inline form-searchbar">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search Group.." />
+                                        <input type="text" class="form-control" placeholder="Search Group.."
+                                        onChange={this.searchItem}
+                                        />
                                     </div>
-                                    <button type="submit" class="btn btn-default">Search</button>
+                                    <button type="submit" class="btn btn-default"
+                                    onClick={this.searchBtn}
+                                    >Search</button>
                                     <a href="#" class="btn btn-default"
                                         onClick={() => {
                                             this.handleClickOpen('openPop')
@@ -185,6 +254,9 @@ class ExpenseGroup extends React.Component {
 
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
+                                        {
+                                        this.state.paymentList 
+                                                    ? 
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
@@ -192,11 +264,8 @@ class ExpenseGroup extends React.Component {
                                             <th class="active" width="250">Group Name</th>
                                             <th class="active" style={{ width: "200px" }}>Action</th>
                                         </tr>
-                                        
-                                        {
-                                        this.state.allPayment 
-                                                    ? 
-                                            this.state.allPayment.map((item, index) => {
+                                    {
+                                            this.state.paymentList.map((item, index) => {
 
                                             return <tr>
                                                 <td>{index + 1}</td>
@@ -205,13 +274,25 @@ class ExpenseGroup extends React.Component {
                                                 <td>
                                                     <Link to='#' class="badge blue"
                                                         onClick={() => {
+                                                            
+                                                            this.setState({
+                                                                item: item
+                                                            })
+                                                            
                                                             this.handleClickOpen('open')
+
+                                                            
                                                         }}
                                                     > <FontAwesomeIcon icon={faEye} className='iconCompany' /></Link>
 
                                                     <Link
-                                                        to='/editexpenseGroup'
-                                                        class="badge del link" data-toggle="modal" data-target="#myModal">
+                                                        // to='/editexpenseGroup'
+                                                        class="badge del link" data-toggle="modal" data-target="#myModal"
+                                                        to={{
+                                                            pathname: '/editexpenseGroup',
+                                                            expenseItem: { expense: item }
+                                                        }}
+                                                        >
                                                         <FontAwesomeIcon icon={faUserEdit} className='iconCompany' />
                                                     </Link>
 
@@ -228,11 +309,20 @@ class ExpenseGroup extends React.Component {
 
                                                 </td>
                                             </tr>
-                                        }) : 
-                                        null
-                                        }
+                                        }) 
+                                    }
+                                        
                                     </tbody>
                                 </table>
+                                        : 
+                                        <CircularProgress color="secondary"
+                                        style={{
+                                            marginLeft: "45%",
+                                            marginTop: 30,
+                                            marginBottom: 30
+                                        }}
+                                    />
+                                        }
                             </div>
                         </div>
                     </div>
@@ -262,58 +352,9 @@ class ExpenseGroup extends React.Component {
                         margin: 0
                     }}>
                         
-                        <div class="content-wrapper" 
-                        style={{
-                            padding: 0,
-                            overflowY: 'auto'
-                        }}
-                        >
-                            <div id="order_preview" class="wow fadeInUp content_box"
-                                style={{ visibility: 'visible', animationName: "fadeInUp",padding: "35px 50px" }}>
-                                    <p
-                                        style={{
-                                            float: 'right',
-                                            marginTop: '-20',
-                                            cursor: 'pointer'
-                                        }}
-                                        onClick={() => {
-                                            this.handleClose('open')
-                                        }}
-                                    >X</p>
-                                    <div class="row table-header">
-                                        <div class="col-xs-12 col-md-6">
-                                            <h2 class="section-title">Expense Details</h2>
-                                        </div>
-                                    </div>
-                                    <hr style={{marginTop: 10,borderTop: "1px solid #909090", width: "94%", marginLeft: 15}}/>
-                                    
-                                    
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                    <tr>
-                                                        <th class="active" width="80">No.</th>
-                                                        <th class="active" width="280">Name</th>
-                                                        <th class="active" width="130">Amount</th>
-
-                                                    </tr>
-                                                    {this.state.expense ? this.state.expense.map((item, index) => {
-
-                                                        return <tr>
-                                                            <td>{index + 1}</td>
-                                                            <td>{item.expenseName}</td>
-                                                            <td>{item.expenseAmount}</td>
+                        <ViewExpenseGroup item={this.state.item} />    
 
 
-                                                        </tr>
-                                                    }) : <></>}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
                     </MuiDialogContent>
                 </Dialog>
 
@@ -428,6 +469,7 @@ class ExpenseGroup extends React.Component {
                                                                 name={amount}
                                                                 data-id={ind}
                                                                 id={amount}
+                                                                onBlur={this.onBlurHandler}
 
                                                             >
                                                             </textarea>
@@ -556,4 +598,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExpenseGroup));
-export let expenseGroupErr, addExpenseGroupSuccess, getExpenseGroup
+export let getExpenseGroup,expenseGroupAdded,expenseGroupFail

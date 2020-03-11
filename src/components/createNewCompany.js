@@ -5,8 +5,7 @@ import IntlTelInput from 'react-intl-tel-input';
 import 'react-intl-tel-input/dist/main.css';
 import { createCompany } from '../redux/actions/companyAction'
 
-
-
+import Toast from 'light-toast';
 
 
 import {
@@ -16,6 +15,30 @@ import {
 } from 'reactstrap'
 
 class NewCompany extends React.Component {
+
+  constructor() {
+    super()
+
+    successFul = (parm) => {
+      if(parm === "success"){
+
+        Toast.success('Successfully Created...!!', 2000, () => {
+          
+        });
+      }
+    }
+    createdFail = (parm) => {
+      if(parm === "err"){
+
+      Toast.fail('Email Already in use, Try Again.', 2000, () => {
+
+      });
+    }
+    }
+    successFul()
+    createdFail() 
+  }
+
 
   state = {
     ph_no: null
@@ -39,14 +62,40 @@ class NewCompany extends React.Component {
     })
   }
 
+  emailRequired = () => {
+   
+
+    Toast.fail('Fill all the fields, Try Again.', 2000, () => {
+
+    });
+  
+  }
+
   onSubmit = (e) => {
     e.preventDefault()
-    
+    let { 
+      company_name,
+      work_email,
+      ph_no,
+      employee_limit,
+      payment_type,
+      expense_group,
+      expense_image,
+      email_template,
+      services
+    } = this.state
+    if(company_name,work_email,ph_no,employee_limit,payment_type,expense_group,email_template,services,expense_image){
 
-    this.props.create_company(this.state)
-    
+      this.props.create_company(this.state)
+    }else{
+      this.emailRequired()
+    }
+
 
   }
+
+
+
   render() {
     return (
       <>
@@ -70,15 +119,15 @@ class NewCompany extends React.Component {
                   <form>
                     <div class="form-group">
                       <label for="pwd">Company Name</label>
-                      <input type="text" class="form-control" name="company_name" onChange={this.onChangeHandler} />
+                      <input type="text" class="form-control" required name="company_name" onChange={this.onChangeHandler} />
                     </div>
                     <div class="form-group">
                       <label for="pwd">Work Email</label>
-                      <input type="text" class="form-control" name="work_email" onChange={this.onChangeHandler} />
+                      <input type="text" class="form-control" required name="work_email" onChange={this.onChangeHandler} />
                     </div>
                     <div class="form-group">
                       <label for="pwd">Phone</label>
-                      {/* <input type="text" class="form-control" name="phone" onChange={this.onChangeHandler} /> */}
+                      {/* <input type="text" class="form-control" required name="phone" onChange={this.onChangeHandler} /> */}
                       {/* <IntlTelInput
                         containerClassName="intl-tel-input"
                         inputClassName="form-control"
@@ -105,7 +154,7 @@ class NewCompany extends React.Component {
                           (status, value, countryData, number, id) => {
                             console.log('onPhoneNumberChange value', value);
                             let newPhn = value.replace(/\s+/g, "")
-                            this.setState({ ph_no: newPhn})
+                            this.setState({ ph_no: newPhn })
                             console.log('onPhoneNumberChange number', newPhn);
 
 
@@ -122,13 +171,13 @@ class NewCompany extends React.Component {
 
                     <div class="form-group">
                       <label for="pwd">Employee Limit</label>
-                      <input type="number" class="form-control" name="employee_limit" onChange={this.onChangeHandler} />
+                      <input type="number" class="form-control" required name="employee_limit" onChange={this.onChangeHandler} />
                     </div>
 
                     <div class="form-group">
                       <label for="pwd">Payment Type</label>
-                      <input type="number" class="form-control" name="payment_type" onChange={this.onChangeHandler} />
-                      {/* <select class="form-control" name='payment_type' onChange={this.onChangeHandler}>
+                      <input type="number" class="form-control" required name="payment_type" onChange={this.onChangeHandler} />
+                      {/* <select class="form-control" required name='payment_type' onChange={this.onChangeHandler}>
                         <option value="" >Select Payment Type</option>
 
                         <option value="12">Cheque</option>
@@ -141,12 +190,12 @@ class NewCompany extends React.Component {
                 </Col>
 
                 <Col xs='12' md='5'>
-                  <form>
+                  <form encType="multipart/form-data">
                     <div class="form-group">
                       <label for="pwd">Expense Group</label>
-                      <input type="number" class="form-control" name="expense_group" onChange={this.onChangeHandler} />
+                      <input type="number" class="form-control" required name="expense_group" onChange={this.onChangeHandler} />
 
-                      {/* <select class="form-control" name='expense_group' onChange={this.onChangeHandler}>
+                      {/* <select class="form-control" required name='expense_group' onChange={this.onChangeHandler}>
                         <option value="">Select Expense Group</option>
 
                         <option value="1">1</option>
@@ -157,7 +206,7 @@ class NewCompany extends React.Component {
                     </div>
                     <div class="form-group">
                       <label for="pwd">Expense Image</label>
-                      <select class="form-control" name='expense_image' onChange={this.onChangeHandler}>
+                      <select class="form-control" required name='expense_image' onChange={this.onChangeHandler}>
                         <option value="">Select Expense Image</option>
 
                         <option value="yes">Yes</option>
@@ -166,7 +215,7 @@ class NewCompany extends React.Component {
                     </div>
                     <div class="form-group">
                       <label for="pwd">Email Templates</label>
-                      <select class="form-control" name='email_template' onChange={this.onChangeHandler}>
+                      <select class="form-control" required name='email_template' onChange={this.onChangeHandler}>
                         <option value="">Select Email Templates</option>
 
                         <option value="new">new</option>
@@ -176,7 +225,7 @@ class NewCompany extends React.Component {
                     </div>
                     <div class="form-group">
                       <label for="pwd">Upload Logo</label>
-                      <input type="file" class="form-control" name="image_file" onChange={this.onChangeHandler} />
+                      <input type="file" class="form-control" required name="image_file" onChange={this.onChangeHandler} />
                     </div>
 
                     <div class="form-group"
@@ -192,8 +241,7 @@ class NewCompany extends React.Component {
                         <span class="checkbox_slider round"></span>
                       </label>
                     </div>
-                    <label for="pwd">{this.props.com.msg}</label>
-
+  
                     <button type="submit" class="btn btn-default" onClick={this.onSubmit}
                       style={{ marginTop: 10, float: 'right', padding: '8px 16px', fontSize: 16 }}
                     >Create</button>
@@ -226,5 +274,6 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewCompany));
+export let successFul, createdFail
 
 

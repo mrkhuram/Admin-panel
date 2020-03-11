@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,91 +12,143 @@ import 'react-intl-tel-input/dist/main.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { act } from 'react-dom/test-utils';
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { toast } from 'react-toastify';
+import axios from 'axios'
+import {approveByAdmin,rejectByAdmin} from '../redux/actions/employeeAction'
 
 
 
+import Toast from 'light-toast';
 
-const ExpenseListHr
 
-	= (props) => {
-		const [activeTab, setActiveTab] = useState('1');
 
-		const toggle = tab => {
-			if (activeTab !== tab) setActiveTab(tab);
+class ExpenseHr extends React.Component {
+
+	constructor(props) {
+		super(props)
+
+		getExpenseList = () => {
+
+			let header = {
+				headers: {
+					'Content-Type': 'application/json',
+					"x-sh-auth": localStorage.getItem('token')
+				}
+			}
+			axios.get('https://mr-expense-backend.herokuapp.com/expenses/get_all_Expenses', header)
+				.then(res => {
+					console.log(res.data);
+					this.setState({
+						expenses: null
+					})
+					let expesnes = res.data.expenses
+					expesnes.forEach((item) => {
+						if (item.approved) {
+							this.setState({ approved: [...this.state.approved, item] })
+							return true
+						}
+						if (item.rejected) {
+							this.setState({ rejected: [...this.state.rejected, item] })
+
+							return true
+
+						}
+						if (!item.approved) {
+							this.setState({ pending: [...this.state.pending, item] })
+
+							return true
+
+						}
+						console.log(item);
+
+
+					})
+
+					this.setState({
+						expenses: res.data.expenses,
+						allExpenses: res.data.expenses
+					})
+				})
 		}
 
-		const onChangeHandler = () => {
+
+		addExpenseGroupSuccess = () => {
+			// this.notifySuccess()
+			// this.handleClose('openPop')
 
 		}
-
-		const [startDate, setStartDate] = useState(new Date())
-
-
-		const handleChange = date => {
-			setStartDate(date)
-		};
-
-		const nextMove = e => {
-			e.preventDefault()
-			toggle('2')
+		expenseGroupErr = () => {
+			// this.notifyErr()
+			// this.handleClose('openPop')
 
 		}
+		expenseGroupErr()
+		addExpenseGroupSuccess()
+		getExpenseList()
+	}
 
-		const articlesList = [
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019',
-				companyName: 'Admin',
-				companyDate: '20/1/2019',
-				hrName: 'Admin',
-				hrDate: '20/1/2019',
-				status: 'pending',
-				fStatus: 'pending'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019',
-				companyName: 'Admin',
-				companyDate: '20/1/2019',
-				hrName: 'Admin',
-				hrDate: '20/1/2019',
-				status: 'pending',
-				fStatus: 'pending'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019',
-				companyName: 'Admin',
-				companyDate: '20/1/2019',
-				hrName: 'Admin',
-				hrDate: '20/1/2019',
-				status: 'pending',
-				fStatus: 'pending'
-			},
-			{
-				name: 'john',
-				addedBy: 'Admin',
-				addedOn: '20/1/2019',
-				companyName: 'Admin',
-				companyDate: '20/1/2019',
-				hrName: 'Admin',
-				hrDate: '20/1/2019',
-				status: 'pending',
-				fStatus: 'pending'
-			},
+	state = {
+		activeTab: '1',
+		expenses: [],
+		approved: [],
+		rejected: [],
+		pending: [],
+
+	}
+
+	toggle = tab => {
+		if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
+	}
 
 
-		]
+	// notifyErr = () => toast.error("Sorry your request didn't complete , Try Again.", { autoClose: 2000 })
+	// notifySuccess = () => toast.success("Successfully Added", { autoClose: 2000 })
 
 
+
+
+	notification=(e) => {
+		e.preventDefault()
+		Toast.success('Successfully Added', 2000, () => {
+		
+		});
+	  }
+
+	  searchedItems = []
+	  searchItem = (e) => {
+
+		let searchVal = e.target.value
+		if (searchVal !== '') {
+			this.searchedItems = this.state.expenses.filter((item) => {
+				return item.title.toLowerCase().includes(searchVal.toLowerCase())
+
+			})
+			console.log(this.searchedItems);
+
+			this.setState({
+				expenses: this.searchedItems
+			})
+		} else {
+			this.setState({
+				expenses: this.state.allExpenses
+			})
+		}
+
+	}
+
+
+
+	  
+	render() {
+
+		let {pending,rejected,approved,expenses} = this.state
 		return (
 			<div>
 
-				<TabContent activeTab={activeTab}>
-					{/* Tab 1 Start */}
+				<TabContent activeTab={this.state.activeTab}>
+					{/* Tab 1 Starthis.t */}
 					<TabPane tabId="1">
 						<Row>
 							<Col sm="12" md='12'>
@@ -115,9 +166,11 @@ const ExpenseListHr
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Pending.." />
 													</div>
-													<button type="submit" class="btn btn-default">Search</button>
+													<button type="submit" class="btn btn-default"
+													onClick={this.notification}
+													>Search</button>
 
 												</form>
 											</div>
@@ -139,8 +192,8 @@ const ExpenseListHr
 												>
 													<NavItem>
 														<NavLink
-															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('1'); }}
+															className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('1'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -156,8 +209,8 @@ const ExpenseListHr
 													</NavItem>
 													<NavItem>
 														<NavLink
-															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('2'); }}
+															className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('2'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -172,8 +225,8 @@ const ExpenseListHr
 													</NavItem>
 													<NavItem>
 														<NavLink
-															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('3'); }}
+															className={this.state.activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('3'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -190,8 +243,8 @@ const ExpenseListHr
 
 													<NavItem>
 														<NavLink
-															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('4'); }}
+															className={this.state.activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('4'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -218,54 +271,33 @@ const ExpenseListHr
 												<table class="table table-bordered">
 													<tbody>
 														<tr>
-															<th class="active" 
-															// width="50"
-															>
-																S#</th>
-															<th class="active" 
-															// width="200"
-															>Expense Name</th>
-															<th class="active" 
-															// width="100"
-															>Added By</th>
-															<th class="active" 
-															// width="100"
-															>Added on</th>
-															<th class="active" 
-															// width="100"
-															>Comapny Approval </th>
-															<th class="active" 
-															// width="100"
-															>Approval date</th>
-															<th class="active" 
-															// width="100"
-															>HR Name</th>
-															<th class="active" 
-															// width="100"
-															>Status Changed On</th>
+														<th class="active" width="50">S#</th>
+															<th class="active" width="140">Expense Name</th>
+															<th class="active" width="100">Added By</th>
+															<th class="active" width="80">Added on</th>
+															<th class="active" width="120">Comapny Approval </th>
+															<th class="active" width="100">Approval date</th>
+															<th class="active" width="80">HR Name</th>
+															<th class="active" width="100">Status Changed On</th>
 
-															<th class="active" 
-															// width="100"
-															>Status</th>
-															<th class="active" 
-															// width="100"
-															>Action</th>
+															<th class="active" width="80">Status</th>
+															<th class="active" width="80">Action</th>
 
 														</tr>
-														{articlesList ?
-															articlesList.map((item, index) => {
+														{pending ?
+															pending.map((item, index) => {
 																return <tr>
 																	<td>{index + 1}</td>
-																	<td>{item.name}</td>
+																	<td>{item.title}</td>
 
-																	<td>{item.addedBy}</td>
-																	<td>{item.addedOn}</td>
-																	<td>{item.companyName}</td>
-																	<td>{item.companyDate}</td>
-																	<td>{item.hrName}</td>
-																	<td>{item.hrDate}</td>
+																	<td>{item.user.employee_name}</td>
+																	<td>{item.submit_date}</td>
+																	<td>{item.company_admin_name}</td>
+																	<td>{item.company_approve_date}</td>
+																	<td>{item.company_hr_name}</td>
+																	<td>{item.hrapprove_date}</td>
 
-																	<td>{item.status}</td>
+																	<td>{item.status}</td>	
 
 																	<td>
 																		<Link
@@ -321,7 +353,7 @@ const ExpenseListHr
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Approved.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -345,8 +377,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('1'); }}
+															className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('1'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -363,8 +395,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('2'); }}
+															className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('2'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -380,8 +412,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('3'); }}
+															className={this.state.activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('3'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -399,8 +431,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('4'); }}
+															className={this.state.activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('4'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -428,30 +460,30 @@ const ExpenseListHr
 													<tbody>
 														<tr>
 															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
+															<th class="active" width="140">Expense Name</th>
 															<th class="active" width="100">Added By</th>
-															<th class="active" width="100">Added on</th>
-															<th class="active" width="100">Comapny Approval </th>
+															<th class="active" width="80">Added on</th>
+															<th class="active" width="120">Comapny Approval </th>
 															<th class="active" width="100">Approval date</th>
-															<th class="active" width="100">HR Name</th>
+															<th class="active" width="80">HR Name</th>
 															<th class="active" width="100">Status Changed On</th>
 
-															<th class="active" width="100">Status</th>
-															<th class="active" width="100">Action</th>
+															<th class="active" width="80">Status</th>
+															<th class="active" width="80">Action</th>
 
 														</tr>
-														{articlesList ?
-															articlesList.map((item, index) => {
+														{approved ?
+															approved.map((item, index) => {
 																return <tr>
-																	<td>{index + 1}</td>
-																	<td>{item.name}</td>
+																<td>{index + 1}</td>
+																	<td>{item.title}</td>
 
-																	<td>{item.addedBy}</td>
-																	<td>{item.addedOn}</td>
-																	<td>{item.companyName}</td>
-																	<td>{item.companyDate}</td>
-																	<td>{item.hrName}</td>
-																	<td>{item.hrDate}</td>
+																	<td>{item.user.employee_name}</td>
+																	<td>{item.submit_date}</td>
+																	<td>{item.company_admin_name}</td>
+																	<td>{item.company_approve_date}</td>
+																	<td>{item.company_hr_name}</td>
+																	<td>{item.hrapprove_date}</td>
 
 																	<td>{item.status}</td>
 
@@ -506,7 +538,7 @@ const ExpenseListHr
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -528,8 +560,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('1'); }}
+															className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('1'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -546,8 +578,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('2'); }}
+															className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('2'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -563,8 +595,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('3'); }}
+															className={this.state.activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('3'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -582,8 +614,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('4'); }}
+															className={this.state.activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('4'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -611,31 +643,31 @@ const ExpenseListHr
 												<table class="table table-bordered">
 													<tbody>
 														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
+														<th class="active" width="50">S#</th>
+															<th class="active" width="140">Expense Name</th>
 															<th class="active" width="100">Added By</th>
-															<th class="active" width="100">Added on</th>
-															<th class="active" width="100">Comapny Approval </th>
+															<th class="active" width="80">Added on</th>
+															<th class="active" width="120">Comapny Approval </th>
 															<th class="active" width="100">Approval date</th>
-															<th class="active" width="100">HR Name</th>
+															<th class="active" width="80">HR Name</th>
 															<th class="active" width="100">Status Changed On</th>
 
-															<th class="active" width="100">Status</th>
-															<th class="active" width="100">Action</th>
+															<th class="active" width="80">Status</th>
+															<th class="active" width="80">Action</th>
 
 														</tr>
-														{articlesList ?
-															articlesList.map((item, index) => {
+														{rejected ?
+															rejected.map((item, index) => {
 																return <tr>
 																	<td>{index + 1}</td>
-																	<td>{item.name}</td>
+																	<td>{item.title}</td>
 
-																	<td>{item.addedBy}</td>
-																	<td>{item.addedOn}</td>
-																	<td>{item.companyName}</td>
-																	<td>{item.companyDate}</td>
-																	<td>{item.hrName}</td>
-																	<td>{item.hrDate}</td>
+																	<td>{item.user.employee_name}</td>
+																	<td>{item.submit_date}</td>
+																	<td>{item.company_admin_name}</td>
+																	<td>{item.company_approve_date}</td>
+																	<td>{item.company_hr_name}</td>
+																	<td>{item.hrapprove_date}</td>
 
 																	<td>{item.status}</td>
 
@@ -692,7 +724,7 @@ const ExpenseListHr
 											<div class="col-xs-12 col-md-6">
 												<form class="form-inline form-searchbar">
 													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Search Expense.." />
+														<input type="text" class="form-control" onChange={this.searchItem} placeholder="Search Expense.." />
 													</div>
 													<button type="submit" class="btn btn-default">Search</button>
 
@@ -714,8 +746,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('1'); }}
+															className={this.state.activeTab == '1' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('1'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -732,8 +764,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('2'); }}
+															className={this.state.activeTab == '2' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('2'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -749,8 +781,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('3'); }}
+															className={this.state.activeTab == '3' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('3'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -768,8 +800,8 @@ const ExpenseListHr
 													<NavItem>
 														<NavLink
 
-															className={activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
-															onClick={() => { toggle('4'); }}
+															className={this.state.activeTab == '4' ? 'activeTab' : 'noneActiveTab'}
+															onClick={() => { this.toggle('4'); }}
 															style={{
 																margin: 0,
 																marginTop: 10,
@@ -797,31 +829,31 @@ const ExpenseListHr
 												<table class="table table-bordered">
 													<tbody>
 														<tr>
-															<th class="active" width="50">S#</th>
-															<th class="active" width="200">Expense Name</th>
+														<th class="active" width="50">S#</th>
+															<th class="active" width="140">Expense Name</th>
 															<th class="active" width="100">Added By</th>
-															<th class="active" width="100">Added on</th>
-															<th class="active" width="100">Comapny Approval </th>
+															<th class="active" width="80">Added on</th>
+															<th class="active" width="120">Comapny Approval </th>
 															<th class="active" width="100">Approval date</th>
-															<th class="active" width="100">HR Name</th>
+															<th class="active" width="80">HR Name</th>
 															<th class="active" width="100">Status Changed On</th>
 
-															<th class="active" width="100">Status</th>
-															<th class="active" width="100">Action</th>
+															<th class="active" width="80">Status</th>
+															<th class="active" width="80">Action</th>
 
 														</tr>
-														{articlesList ?
-															articlesList.map((item, index) => {
+														{expenses ?
+															expenses.map((item, index) => {
 																return <tr>
 																	<td>{index + 1}</td>
-																	<td>{item.name}</td>
+																	<td>{item.title}</td>
 
-																	<td>{item.addedBy}</td>
-																	<td>{item.addedOn}</td>
-																	<td>{item.companyName}</td>
-																	<td>{item.companyDate}</td>
-																	<td>{item.hrName}</td>
-																	<td>{item.hrDate}</td>
+																	<td>{item.user.employee_name}</td>
+																	<td>{item.submit_date}</td>
+																	<td>{item.company_admin_name}</td>
+																	<td>{item.company_approve_date}</td>
+																	<td>{item.company_hr_name}</td>
+																	<td>{item.hrapprove_date}</td>
 
 																	<td>{item.status}</td>
 
@@ -861,5 +893,26 @@ const ExpenseListHr
 
 		);
 	}
+}
 
-export default ExpenseListHr
+let mapStateToProps = (store) => {
+
+	return {
+		admin: store.AdminReducer
+	}
+}
+
+let mapDispatchToProps = (dispatch) => {
+
+	return ({
+		// approved: id =>{
+		//     dispatch(approveByAdmin(id))
+		// },
+		// reject: id =>{
+		//     dispatch(rejectByAdmin(id))
+		// }
+	})
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExpenseHr));
+export let expenseGroupErr, addExpenseGroupSuccess, getExpenseList

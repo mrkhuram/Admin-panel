@@ -5,20 +5,22 @@ import { confirmPassword } from '../redux/actions/authAction'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import { toast } from 'react-toastify';
+import Toast from 'light-toast';
 
 
 class SettingCompany extends React.Component {
 
     constructor(props){
         super(props)
-        // this.notiErr()
-        notify = ()=>{
-            this.notifyErr()
-        }
-        notify()
+        passwordDidntMatch = (parm) => {
+            if(parm === "err"){
+      
+            Toast.fail('Wrong Password, Try Again.', 2000, () => {
+      
+            });
+          }
+          }
+          passwordDidntMatch() 
     }
 
     state = {
@@ -40,14 +42,21 @@ class SettingCompany extends React.Component {
 
     submitHandler = (e) => {
         e.preventDefault()
+        if(this.state.password !== ''){
         this.props.confirmPasswordFirst(this.state)
+        }else{
+            Toast.fail('Password Required, Try Again.', 2000, () => {
+      
+            });
+        }
+
     }
 
 
     
     
 
-    notifyErr = () => toast.error("Sorry your request didn't complete", { autoClose: 2000 })
+    // notifyErr = () => toast.error("Sorry your request didn't complete", { autoClose: 2000 })
     
 
     render() {
@@ -57,7 +66,7 @@ class SettingCompany extends React.Component {
                 <div className="content-wrapper"
                     style={{ marginTop: 60 }}
                 >
-                <ToastContainer position="top-right"  style={{zIndex: 1111}}/>
+                {/* <ToastContainer position="top-right"  style={{zIndex: 1111}}/> */}
 
                     <div id="order_preview" className="wow fadeInUp content_box settingDiv"
                         style={{ visibility: "visible", animationName: "fadeInUp", margin: 'auto' }}>
@@ -124,4 +133,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingCompany));
-export let notify
+export let passwordDidntMatch
