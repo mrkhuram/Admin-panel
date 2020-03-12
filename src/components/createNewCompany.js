@@ -6,6 +6,7 @@ import 'react-intl-tel-input/dist/main.css';
 import { createCompany } from '../redux/actions/companyAction'
 
 import Toast from 'light-toast';
+import axios from 'axios'
 
 
 import {
@@ -19,24 +20,73 @@ class NewCompany extends React.Component {
   constructor() {
     super()
 
+    getPaymentType = () => {
+
+      let header = {
+        headers: {
+          'Content-Type': 'application/json',
+          "x-sh-auth": localStorage.getItem('token')
+        }
+      }
+      axios.get('https://mr-expense-backend.herokuapp.com/admin/get_all_payment_type', header)
+        .then(res => {
+          console.log(res.data);
+
+          this.setState({
+            allPayment: res.data.expense_group,
+          })
+        })
+    }
+
+    
+    getExpenseGroup = ()=>{
+
+      let header = { 
+          headers: {
+              'Content-Type': 'application/json',
+              "x-sh-auth" : localStorage.getItem('token')
+          }
+      }
+      axios.get('https://mr-expense-backend.herokuapp.com/admin/list_expense',header)
+      .then(res =>{
+          console.log(res.data);
+          
+          this.setState({
+              allExpenses: res.data.expense_group,
+              // paymentList: res.data.expense_group
+          })
+
+          
+      })
+  }
+
+
+    getPaymentType()
+    getExpenseGroup()
+
+
+
+
+
+
     successFul = (parm) => {
-      if(parm === "success"){
+      if (parm === "success") {
 
         Toast.success('Successfully Created...!!', 2000, () => {
-          
+
         });
       }
     }
     createdFail = (parm) => {
-      if(parm === "err"){
+      if (parm === "err") {
 
-      Toast.fail('Email Already in use, Try Again.', 2000, () => {
+        Toast.fail('Email Already in use, Try Again.', 2000, () => {
 
-      });
-    }
+        });
+      }
     }
     successFul()
-    createdFail() 
+    createdFail()
   }
 
 
@@ -63,17 +113,17 @@ class NewCompany extends React.Component {
   }
 
   emailRequired = () => {
-   
+
 
     Toast.fail('Fill all the fields, Try Again.', 2000, () => {
 
     });
-  
+
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    let { 
+    let {
       company_name,
       work_email,
       ph_no,
@@ -84,10 +134,10 @@ class NewCompany extends React.Component {
       email_template,
       services
     } = this.state
-    if(company_name,work_email,ph_no,employee_limit,payment_type,expense_group,email_template,services,expense_image){
+    if (company_name, work_email, ph_no, employee_limit, payment_type, expense_group, email_template, services, expense_image) {
 
       this.props.create_company(this.state)
-    }else{
+    } else {
       this.emailRequired()
     }
 
@@ -176,13 +226,20 @@ class NewCompany extends React.Component {
 
                     <div class="form-group">
                       <label for="pwd">Payment Type</label>
-                      <input type="number" class="form-control" required name="payment_type" onChange={this.onChangeHandler} />
-                      {/* <select class="form-control" required name='payment_type' onChange={this.onChangeHandler}>
-                        <option value="" >Select Payment Type</option>
+                      {/* <input type="number" class="form-control" required name="payment_type" onChange={this.onChangeHandler} /> */}
+                      <select class="form-control" required name='payment_type' onChange={this.onChangeHandler}>
 
-                        <option value="12">Cheque</option>
-                        <option value="15">Credit Card</option>
-                      </select> */}
+                        <option value="" >Select Payment Type</option>
+                        {
+                          this.state.allPayment ?
+                          this.state.allPayment.map((item)=>{
+                        
+                        return <option value={item.payment_type}>{item.payment_type}</option>
+                          })
+                          : ''
+                        }
+                        {/* <option value="15">Credit Card</option> */}
+                      </select>
                     </div>
 
 
@@ -193,16 +250,20 @@ class NewCompany extends React.Component {
                   <form encType="multipart/form-data">
                     <div class="form-group">
                       <label for="pwd">Expense Group</label>
-                      <input type="number" class="form-control" required name="expense_group" onChange={this.onChangeHandler} />
+                      {/* <input type="number" class="form-control" required name="expense_group" onChange={this.onChangeHandler} /> */}
 
-                      {/* <select class="form-control" required name='expense_group' onChange={this.onChangeHandler}>
+                      <select class="form-control" required name='expense_group' onChange={this.onChangeHandler}>
                         <option value="">Select Expense Group</option>
+                        {
+                          this.state.allExpenses ?
+                          this.state.allExpenses.map((item)=>{
+                        
+                        return <option value={item.expense_name}>{item.expense_name}</option>
+                          })
+                          : ''
+                        }
 
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-
-                      </select> */}
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="pwd">Expense Image</label>
@@ -241,7 +302,7 @@ class NewCompany extends React.Component {
                         <span class="checkbox_slider round"></span>
                       </label>
                     </div>
-  
+
                     <button type="submit" class="btn btn-default" onClick={this.onSubmit}
                       style={{ marginTop: 10, float: 'right', padding: '8px 16px', fontSize: 16 }}
                     >Create</button>
@@ -274,6 +335,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewCompany));
-export let successFul, createdFail
-
-
+export let successFul, createdFail,getPaymentType,getExpenseGroup

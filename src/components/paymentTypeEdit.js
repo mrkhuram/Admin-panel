@@ -27,7 +27,16 @@ class EditPaymentType extends React.Component {
     constructor(props){
         super(props)
       
+
+        this.state = props.id
+
         
+    }
+
+    componentDidMount(){
+        // console.log(this.state);
+        
+        this.forceUpdate()
     }
 
     state = {
@@ -113,7 +122,7 @@ class EditPaymentType extends React.Component {
                                             <label for="pwd">Payment Type</label>
                                             <input type="text" className="form-control"
                                                 name="payment_type"
-                                                placeholder={this.props.id.payment_type}
+                                                value={this.state.payment_type}
                                                 style={{
                                                     width: "100%",
                                                 }}
@@ -167,3 +176,4 @@ let mapDispatchToProps = (dispatch) => {
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditPaymentType));
 // export let paymentTypeErr, addNewPaymentType,getPaymentType
+   

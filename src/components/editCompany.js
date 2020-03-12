@@ -40,6 +40,8 @@ class EditCompany extends React.Component {
     successFulEdit()
     editFail() 
 
+    
+   this.state = props.location.companyInd.company
 
   }
 
@@ -48,10 +50,11 @@ class EditCompany extends React.Component {
     console.log(this.props.location.companyInd.company);
     this.company = this.props.location.companyInd.company
     console.log(this.state);
-    this.setState({
-      companyInd: this.company
-    })
-    console.log(this.state);
+    // this.setState({
+    //   ...this.company
+    // })
+    // console.log(this.state);
+    this.forceUpdate()
 
 
 
@@ -111,7 +114,9 @@ class EditCompany extends React.Component {
   }
   render() {
 
-    let company = this.props.location.companyInd
+    // let company = this.props.location.companyInd.company
+    // console.log(company);
+    
 
     return (
 
@@ -144,7 +149,7 @@ class EditCompany extends React.Component {
                       <label for="pwd">Company Name</label>
                       <input type="text" class="form-control" name="company_name"
                         
-                        placeholder={this.company ? this.company.company_name : ''}
+                        value={this.state ? this.state.company_name : ''}
                         onChange={this.onChangeHandler}
                       />
                     </div>
@@ -154,14 +159,14 @@ class EditCompany extends React.Component {
                         // value='work@gmail.com' 
                         name="work_email" 
 
-                        placeholder={this.company ? this.company.work_email : ''}
+                        value={this.state ? this.state.work_email : ''}
                         onChange={this.onChangeHandler} />
                     </div>
                     <div class="form-group">
                       <label for="pwd">Phone</label>
                       <input type="text" class="form-control"
 
-                        placeholder={this.company ? this.company.ph_no : ''}
+                        value={this.state ? this.state.ph_no : ''}
 
                         name="ph_no" onChange={this.onChangeHandler} />
                       {/* <IntlTelInput
@@ -176,7 +181,7 @@ class EditCompany extends React.Component {
                     <div class="form-group">
                       <label for="pwd">Employee Limit</label>
                       <input type="number" class="form-control"
-                        placeholder={this.company ? this.company.employee_limit : ''}
+                        value={this.state ? this.state.employee_limit : ''}
 
                         // value='13'
                         name="employee_limit" onChange={this.onChangeHandler} />
@@ -186,7 +191,7 @@ class EditCompany extends React.Component {
                       <label for="pwd">Payment Type</label>
                       <select class="form-control" name='payment_type' onChange={this.onChangeHandler}>
                         <option value="client">Select Payment Type</option>
-                        <option value="" selected>{this.company ? this.company.payment_type : ''}</option>
+                        <option value="" selected>{this.state ? this.state.payment_type : ''}</option>
                         <option value="1" > Cheque</option>
                         <option value="2" >Credit Card</option>
                       </select>
@@ -203,7 +208,7 @@ class EditCompany extends React.Component {
                       <select class="form-control"  name='expense_group' onChange={this.onChangeHandler}>
                         {/* <option value="client">Select Expense Group</option> */}
 
-                        <option value="" selected>{this.company ? this.company.expense_group : ''}</option>
+                        <option value="" selected>{this.state ? this.state.expense_group : ''}</option>
 
                         <option value="reader">2</option>
                         <option value="reader">3</option>
@@ -215,7 +220,7 @@ class EditCompany extends React.Component {
                       <select class="form-control"  name='expense_image' onChange={this.onChangeHandler}>
                         {/* <option value="client">Select Expense Image</option> */}
 
-                        <option value="before" selected>{this.company ? this.company.expense_image : ''}</option>
+                        <option value="before" selected>{this.state ? this.state.expense_image : ''}</option>
                         <option value="client">Yes</option>
                         <option value="reader" >No</option>
 
@@ -226,7 +231,7 @@ class EditCompany extends React.Component {
                       <select class="form-control" name='email_template' onChange={this.onChangeHandler}>
 
                         {/* <option value="client">Select Email Templates</option> */}
-                        <option value="template" selected>{this.company ? this.company.email_template : ''}</option>
+                        <option value="template" selected>{this.state ? this.state.email_template : ''}</option>
 
                         <option value="client">1</option>
 
@@ -293,4 +298,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditCompany));
-export let successFulEdit,editFail
+export let successFulEdit,editFail   

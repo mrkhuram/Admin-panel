@@ -1373,3 +1373,8 @@ input:focus, select:focus{
     border: 'none' !important;
     padding: 0px  !important;
 }
+
+.form-group:hover{
+    background-color: none !important;
+    
+}

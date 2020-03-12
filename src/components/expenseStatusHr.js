@@ -534,7 +534,7 @@ class ExpenseHr extends React.Component {
 															<th class="active" width="100">Status Changed On</th>
 
 															<th class="active" width="80">Status</th>
-															<th class="active" width="80">Action</th>
+															{/* <th class="active" width="80">Action</th> */}
 
 														</tr>
 														{approved ?
@@ -552,7 +552,7 @@ class ExpenseHr extends React.Component {
 
 																	<td>{item.status}</td>
 
-																	<td>
+																	{/* <td>
 																		<Link
 
 																			to='#'
@@ -566,7 +566,7 @@ class ExpenseHr extends React.Component {
 
 																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
 
-																	</td>
+																	</td> */}
 																</tr>
 															}) : <></>
 														}
@@ -720,7 +720,7 @@ class ExpenseHr extends React.Component {
 															<th class="active" width="100">Status Changed On</th>
 
 															<th class="active" width="80">Status</th>
-															<th class="active" width="80">Action</th>
+															{/* <th class="active" width="80">Action</th> */}
 
 														</tr>
 														{rejected ?
@@ -738,7 +738,7 @@ class ExpenseHr extends React.Component {
 
 																	<td>{item.status}</td>
 
-																	<td>
+																	{/* <td>
 																		<Link
 
 																			to='#'
@@ -752,7 +752,7 @@ class ExpenseHr extends React.Component {
 
 																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
 
-																	</td>
+																	</td> */}
 																</tr>
 															}) : <></>
 														}
@@ -908,7 +908,7 @@ class ExpenseHr extends React.Component {
 															<th class="active" width="100">Status Changed On</th>
 
 															<th class="active" width="80">Status</th>
-															<th class="active" width="80">Action</th>
+															{/* <th class="active" width="80">Action</th> */}
 
 														</tr>
 														{expenses ?
@@ -926,7 +926,7 @@ class ExpenseHr extends React.Component {
 
 																	<td>{item.status}</td>
 
-																	<td>
+																	{/* <td>
 																		<Link
 
 																			to='#'
@@ -940,7 +940,7 @@ class ExpenseHr extends React.Component {
 
 																			class="badge red" > <FontAwesomeIcon icon={faTimes} className='iconCompany' /></Link>
 
-																	</td>
+																	</td> */}
 																</tr>
 															}) : <></>
 														}

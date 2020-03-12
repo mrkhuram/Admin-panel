@@ -37,7 +37,7 @@ class ExpenseGroup extends React.Component {
                     allPayment: res.data.expense_group,
                     paymentList: res.data.expense_group
                 })
-                // console.log(this.state.allPayment[4].expense_type);
+
                 
             })
         }

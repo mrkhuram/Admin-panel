@@ -19,14 +19,20 @@ class EditExpenseGroup extends React.Component {
 
 
 
+
+    constructor(props){
+        super(props)
+
+        this.state = props.location.expenseItem.expense
+    }
+
+
     expense = null
     componentDidMount() {
       console.log(this.props.location.expenseItem.expense);
       this.expense = this.props.location.expenseItem.expense
      
-      this.setState({
-        expense: this.expense
-      })
+    this.forceUpdate()
   
   
   
@@ -87,11 +93,10 @@ class EditExpenseGroup extends React.Component {
                                     <form>
                                         <div class="form-group">
                                             <label for="pwd">Group Name</label>
-                                            <input type="text" class="form-control" name="companyName"
-                                                placeholder={this.state.expense ? this.state.expense.expense_name : ''}
+                                            <input type="text" class="form-control" name="expense_name"
+                                                value={this.state ? this.state.expense_name : ''}
                                                 onChange={this.onChangeHandler}
                                                 style={{
-
                                                     width: '60%'
                                                 }} />
                                         </div>
@@ -101,31 +106,32 @@ class EditExpenseGroup extends React.Component {
                                             <table class="table table-bordered">
                                                 <tbody>
                                                   
-                                                    {this.state.expense ? this.state.expense.expense_type.map((item, index) => {
-
-                                                        return <tr>
+                                                    {this.state ? this.state.expense_type.map((item, index) => {
+                                                            // console.log(item);
+                                                            
+                                                        return <>
                                                        
-                                                            <div className="form-group"
-                                                           
-                                                            >
+                                                    
+                                                        
+                                                        <div className="form-group"
+                                                        
+                                                        >
+                                                        
+                                                             <label for="pwd">
 
-                                                                <label for="pwd">
+                                                                Describe Expense
 
-                                                                    Describe Expense
-    
                                                                 </label>
+                                                           
+                                                            <textarea type="text" className="form-control"
+                                                                name={item}
+                                                                onChange={this.onChangeHandler}
 
-                                                                <textarea type="text" className="form-control"
-                                                                    value={item.group_name}
-                                                                    data-id={index}
-                                                                    placeholder={item}
-                                                                    onBlur={this.onBlurhandling}
-                                                                 
-
-                                                                >
-                                                                </textarea>
-                                                            </div>
-                                                        </tr>
+                                                            >
+                                                            </textarea>
+                                                        </div>
+                                                
+                                                        </>
                                                     }) : <></>}
                                                 </tbody>
                                             </table>
